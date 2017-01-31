@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: PrM_Dependence_KtoM_DissipationRatio.aux
 The style file: ieeetr.bst
 Database file #1: PrM_Dependence_KtoM_DissipationRatio.bib
-You've used 5 entries,
+You've used 3 entries,
             1876 wiz_defined-function locations,
-            513 strings with 4348 characters,
-and the built_in function-call counts, 1370 in all, are:
-= -- 147
-> -- 38
+            500 strings with 4030 characters,
+and the built_in function-call counts, 788 in all, are:
+= -- 82
+> -- 23
 < -- 0
-+ -- 15
-- -- 10
-* -- 90
-:= -- 193
-add.period$ -- 5
-call.type$ -- 5
-change.case$ -- 5
++ -- 9
+- -- 6
+* -- 53
+:= -- 117
+add.period$ -- 3
+call.type$ -- 3
+change.case$ -- 3
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 83
-empty$ -- 121
-format.name$ -- 10
-if$ -- 345
+cite$ -- 3
+duplicate$ -- 47
+empty$ -- 70
+format.name$ -- 6
+if$ -- 196
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 5
-newline$ -- 18
-num.names$ -- 5
-pop$ -- 8
+int.to.str$ -- 3
+missing$ -- 3
+newline$ -- 12
+num.names$ -- 3
+pop$ -- 5
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 65
+skip$ -- 35
 stack$ -- 0
-substring$ -- 71
-swap$ -- 43
+substring$ -- 35
+swap$ -- 23
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 14
-width$ -- 6
-write$ -- 57
+while$ -- 8
+width$ -- 4
+write$ -- 35

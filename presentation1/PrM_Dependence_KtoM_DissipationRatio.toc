@@ -5,11 +5,10 @@
 \beamer@sectionintoc {2}{Reynolds Numbers and the Magnetic Prandtl Number}{16}{0}{2}
 \beamer@subsectionintoc {2}{1}{Reynolds Numbers}{17}{0}{2}
 \beamer@subsectionintoc {2}{2}{Magnetic Prandtl Number}{26}{0}{2}
-\beamer@subsectionintoc {2}{3}{Energy dependence on $Pr_M$}{28}{0}{2}
-\beamer@sectionintoc {3}{DNS of Turbulent Dynamos}{30}{0}{3}
-\beamer@subsectionintoc {3}{1}{Governing Equations}{31}{0}{3}
-\beamer@subsectionintoc {3}{2}{Results}{35}{0}{3}
-\beamer@sectionintoc {4}{Shell and $1D$ Models}{38}{0}{4}
-\beamer@subsectionintoc {4}{1}{Shell Model}{39}{0}{4}
-\beamer@subsectionintoc {4}{2}{Driven 1D Model}{41}{0}{4}
-\beamer@sectionintoc {5}{Conclusions}{43}{0}{5}
+\beamer@sectionintoc {3}{DNS of Turbulent Dynamos}{28}{0}{3}
+\beamer@subsectionintoc {3}{1}{Governing Equations}{29}{0}{3}
+\beamer@subsectionintoc {3}{2}{Results}{33}{0}{3}
+\beamer@sectionintoc {4}{Shell and $1D$ Models}{36}{0}{4}
+\beamer@subsectionintoc {4}{1}{Shell Model}{37}{0}{4}
+\beamer@subsectionintoc {4}{2}{Driven 1D Model}{39}{0}{4}
+\beamer@sectionintoc {5}{Conclusions}{41}{0}{5}
