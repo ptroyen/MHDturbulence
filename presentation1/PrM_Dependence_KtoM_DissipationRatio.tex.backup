@@ -1,0 +1,467 @@
+\documentclass{beamer}
+%\usetheme{Berlin}
+\usecolortheme{seahorse}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{xmpmulti}
+
+\title{Magnetic Prandtl Number Dependence of the Kinetic-to-Magnetic Dissipation Ratio}
+\subtitle{Presented by Andr\'es Cathey}
+\author{Axel Brandenburg}
+\institute{KTH Royal institute of Technology and Stockholm University}
+\date{2014}
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+\begin{frame}
+\frametitle{Overview}
+\tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Overview}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\section{Magnetohydrodynamics}
+
+\subsection{What exactly is MHD?}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{What exactly is MHD?}
+ 
+ \begin{itemize}
+  \item Electrically conducting fluids.
+  \begin{itemize}
+   \item Plasmas.
+   \item Liquid metals.
+   \item Electrolytes.
+  \end{itemize}
+
+  \item<2-> Moving $\rho$ generate currents.
+  %\item<3-> Assume continuous flow.% $\partial_t \bm{E} = \bm{0}$.
+  \item<3-> Amp\'ere's law: $\bm{\nabla} \times \bm{B} = \mu_0 \bm{J}$.
+  \item<4-> Faraday's law: $\bm{\nabla} \times \bm{E} = - \partial_t \bm{B}$.
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{What exactly is MHD?}
+ 
+ Navier-Stokes equations
+ \begin{figure}
+  \includegraphics[width=8cm]{img/navier-stokes-portraits}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{What exactly is MHD?}
+ 
+ Maxwell equations
+ \begin{figure}
+  \includegraphics[width=8cm]{img/jcmb}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{What exactly is MHD?}
+ 
+ Maxwell equations
+ \begin{figure}
+  \includegraphics[width=8cm]{img/maxwells_eqns}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{What exactly is MHD?}
+ 
+ Numerical simulations
+ \begin{figure}
+  \includegraphics[width=7cm]{img/halos}
+  \centering
+  \caption{Cosmological simulation showing dark matter halos.}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{What exactly is MHD?}
+ 
+ Numerical simulations
+ \begin{figure}
+  \includegraphics[width=4.25cm]{img/plasma_sim}
+  \centering
+  \caption{Radial component of magnetic field amplitude in an unstable n=1 kink mode in DIII-D. MHD Stability code MARS.}
+ \end{figure}
+
+\end{frame}
+
+
+\subsection{Examples}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{Examples: Laboratory Plasma}
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{img/tokamak_turbulence}
+  \label{Fig:1}
+  \caption{Snapshot from a numerical simulation of plasma turbulence in the ASDEX Upgrade tokamak with the nonlinear gyrokinetic code GENE. Dr. Jenko}
+  \centering
+ \end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{Examples: Magnetic Dynamos - Astrophysical Scales}
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{img/jupiter_dynamo}
+  \label{Fig:2}
+  \caption{Jupiter cut open (2014). Dr. Krummheuer \& Dr. Wicht}
+  \centering
+ \end{figure}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics}
+ \framesubtitle{Examples: MHD Turbulence - Astrophysical Scales}
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{img/solar_flare}
+  \label{Fig:3}
+  \caption{Ultra-high-resolution numerical simulation of a coronal mass ejection and associated flare. Solar and Space Physics (2010)}
+  \centering
+ \end{figure}
+
+\end{frame}
+
+\section{Reynolds Numbers and the Magnetic Prandtl Number}
+
+\subsection{Reynolds Numbers}
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Reynolds Number}
+ 
+ \begin{align}
+  Re = \frac{\text{inertial forces}}{\text{viscous forces}} =  \frac{u\,L}{\nu} \nonumber
+ \end{align}
+ 
+ 
+ %$Re \sim 40 \text{ to} \sim 1000$
+
+ 
+ \transduration<0-5>{0}
+ \multiinclude[format=png, end=5, graphics={width=\textwidth}]{img/vortex}
+  Wikimedia Commons (2014)
+\end{frame}
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Reynolds Number}
+ 
+  \begin{figure}[t]
+  \includegraphics[width=4.5cm]{img/reynolds_smoke}
+  \label{Fig:4}
+  \centering
+ \end{figure}
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Magnetic Reynolds Number}
+ 
+ Ideal MHD equations: Perfectly conducting fluids. 
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Magnetic Reynolds Number}
+ 
+  \begin{align}
+  Re_M = \frac{\text{inertial forces}}{\text{diffusive forces}} =  \frac{u\,L}{\eta} \nonumber
+ \end{align}
+ 
+\end{frame}
+
+\subsection{Magnetic Prandtl Number}
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Magnetic Prandtl Number}
+ 
+  \begin{align}
+  Pr_M = \frac{Re_M}{Re} =  \frac{\nu}{\eta} \nonumber
+ \end{align}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Magnetic Prandtl Number}
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{img/PrM_spectrum}
+  \caption{Map of ``typical'' objects in the plane $(Re,Re_M)$. Yellow dashed lines are $Pr_M$ isolines. \cite{plunian2013shell}.}
+  \centering
+ \end{figure}
+ 
+ %Earth dynamo: $Pr_M \sim \mathcal{O}(10^{-7})$.
+ 
+ %Inside the Sun: $Pr_M \sim \mathcal{O}(10^{-3})$.
+ 
+ %Thin accretion disks: $Pr_M \sim \mathcal{O}(10^0)$.
+ 
+ %Solar corona: $Pr_M \sim \mathcal{O}(10^4) - \mathcal{O}(10^8)$. \cite{hood2011solar}
+ 
+\end{frame}
+
+\subsection{Energy dependence on $Pr_M$}
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Energy dependence on $Pr_M$}
+ 
+ \begin{figure}[t]
+  \includegraphics[width=7cm]{img/E_u_vs_b_PrM2015}
+  \caption{Kinetic $E_u$ and magnetic $E_b$ energies as a function of $Pr_M$ in the dynamic phase \cite{guervilly2015generation}.}
+  \centering
+ \end{figure}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Reynolds Numbers and the Magnetic Prandtl Number}
+ \framesubtitle{Energy dependence on $Pr_M$}
+ 
+ \begin{figure}[t]
+  \includegraphics[width=7cm]{img/Pr_M_Brandenburg2010}
+  \caption{Kinetic $\epsilon_K$ to magnetic $\epsilon_M$ dissipation rate as a function of $Pr_M$ ``after'' asymptotical regime \cite{brandenburg2011dissipation}.}
+  \centering
+ \end{figure}
+\end{frame}
+
+
+\section{DNS of Turbulent Dynamos}
+
+\subsection{Governing Equations}
+
+\begin{frame}
+ \frametitle{DNS of Turbulent Dynamos}
+ \framesubtitle{Governing Equations}
+ 
+ Forced MHD turbulence of a gas with isothermal equation of state: $p=\rho c_s^2$.
+ 
+ \begin{align}
+  \frac{D ln \rho}{Dt} =& - \bm{\nabla} \cdot \bm{u} \nonumber \\
+  \frac{D \bm{u}}{Dt} =& -c_s^2 \bm{\nabla} ln \rho - 2 \bm{\Omega} \times \bm{u} + \bm{f} \nonumber \\
+  & + \rho^{-1} [\bm{J} \times \bm{B} + \bm{\nabla} \cdot (2\nu \rho \bm{\mathcal{S}})] \nonumber \\
+  \frac{\partial \bm{A}}{\partial t} =&\,\, \bm{u} \times \bm{B} - \eta \mu_0 \bm{J} \nonumber
+ \end{align}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS of Turbulent Dynamos}
+ \framesubtitle{Governing Equations}
+ 
+ Kinetic and Magnetic energies.
+
+\begin{align}
+  &\frac{d}{dt} \langle \rho u^2 /2 \rangle = \langle p \bm{\nabla \cdot u} \rangle + \langle \bm{u} \cdot (\bm{J} \times \bm{B}) \rangle  + \langle \rho \bm{u \cdot f} \rangle - \langle 2\rho \nu \mathcal{S}^2 \rangle \nonumber \\
+  &\frac{d}{dt} \langle B^2 / 2\mu_0 \rangle = - \langle \bm{u} \cdot (\bm{J} \times \bm{B}) \rangle - \langle \eta \mu_0 J^2 \rangle \nonumber
+ \end{align}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS of Turbulent Dynamos}
+ \framesubtitle{Governing Equations}
+ 
+ Kinetic and Magnetic energies.
+
+ \begin{align}
+  &\frac{d}{dt} \langle \rho u^2 /2 \rangle = \langle p \bm{\nabla \cdot u} \rangle + \langle \bm{u} \cdot (\bm{J} \times \bm{B}) \rangle  + \langle \rho \bm{u \cdot f}\rangle - \langle 2\rho \nu \mathcal{S}^2 \rangle  \nonumber \\
+  &\frac{d}{dt} \langle B^2 / 2\mu_0 \rangle = - \langle \bm{u} \cdot (\bm{J} \times \bm{B}) \rangle - \langle \eta \mu_0 J^2 \rangle \nonumber
+ \end{align}
+ 
+ Dissipation rates.
+ 
+ \begin{align}
+  \epsilon_K = \langle 2 \rho \nu \mathcal{S}^2 \rangle, \qquad \epsilon_M = \langle \eta \mu_0 J^2 \rangle \nonumber
+ \end{align}
+
+
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS of Turbulent Dynamos}
+ \framesubtitle{Governing Equations}
+
+ \begin{figure}[t]
+  \includegraphics[width=7cm]{img/reservoirs}
+  \caption{Flow of energy sketch \cite{brandenburg2014magnetic}.}
+  \centering
+ \end{figure}
+
+\end{frame}
+
+\subsection{Results}
+
+\begin{frame}
+ \frametitle{DNS of Turbulent Dynamos}
+ \framesubtitle{Simulations and Results}
+ 
+ Pencil code (NORDITA)
+ 
+ \begin{figure}[t]
+  \includegraphics[width=7cm]{img/pencil-code}
+  \caption{Snapshot of Pencil-code GitHub repository.}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS of Turbulent Dynamos}
+ \framesubtitle{Simulations and Results}
+ 
+ Energy ratio approximately independent on $Pr_M$.
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{img/energy_ratio}
+  \caption{Energy ratio $E_K/E_M$ dependence on $Pr_M$ for large-scale dynamo (blue) and smal-scale dynamos (orange and red) \cite{brandenburg2014magnetic}.}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS of Turbulent Dynamos}
+ \framesubtitle{Simulations and Results}
+ 
+ Dissipation ratio dependency on $Pr_M$.
+ 
+ \begin{figure}[t]
+  \includegraphics[width=7cm]{img/dissipation_ratio1}
+  \caption{Dissipation ratio $\epsilon_K/\epsilon_M$ dependence on $Pr_M$ for non-helical forcing ($\sigma = 0$) and for fully helical forcing ($\sigma = 1$). \cite{brandenburg2014magnetic}.}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\section{Shell and $1D$ Models}
+
+\subsection{Shell Model}
+
+\begin{frame}
+ \frametitle{Shell and $1D$ Models}
+ \framesubtitle{Shell Model}
+ 
+ Similar equations than before - same conserved quantities.
+ 
+ Time integration scheme: Adams-Bashforth
+ %\begin{align}
+  %&s=1 \qquad y_{n+1} = y_n + h f(t_n, y_n)\qquad\text{Euler integration} \nonumber \\
+  %&s=2 \qquad y_{n+2} = y_{n+1} + h \left(\frac{3}{2}f(t_{n+1}, y_{n+1})-\frac{1}{2}f(t_n, y_n)\right) \nonumber \\
+  %&s=3 \qquad y_{n+3} = y_{n+2} + h \left(\frac{23}{12}f_{n+2}^{n+2}-\frac{4}{3}f_{n+1}^{n+1} + \frac{5}{12}f_n^n \right) \nonumber
+ %\end{align}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Shell and $1D$ Models}
+ \framesubtitle{Shell Model}
+ 
+ Dissipation ratio dependency on $Pr_M$.
+ 
+ \begin{figure}[t]
+  \includegraphics[width=7cm]{img/dissipation_ratio2}
+  \caption{Dissipation ratio $\epsilon_K/\epsilon_M$ dependence on $Pr_M$ \cite{brandenburg2014magnetic}. Red shows simulations made by Plunian and Stepanov \cite{plunian2010cascades}.}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\subsection{Driven 1D Model}
+
+\begin{frame}
+ \frametitle{Shell and $1D$ Models}
+ \framesubtitle{Driven $1D$ Model}
+ 
+ Neglecting gas pressure:
+ 
+ \begin{align}
+  &\frac{\partial u}{\partial t} = -u u' - b b' + \tilde{\nu} u''  \nonumber \\
+  &\frac{\partial b}{\partial t} \nonumber
+ \end{align}
+
+ 
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}
+ \frametitle{Conclusions}
+ 
+ \begin{enumerate}
+  \item<1-> Obtained relations for the kinetic-to-magnetic dissipation ratio for a broad range of $Pr_M$ values.
+  \item<2-> Confirmed  earlier results that for large-scale dynamos, the ratio $\epsilon_K / \epsilon_M$ is proportionate to $Pr_M^{0.6}$.
+  \item<3-> Discovered scaling laws ($\epsilon_K / \epsilon_M \sim Pr_M^q$) for fully helical and non-helical forcing. Where $q\approx [0.6 - 2/3]$ for the former and $q\approx 1/3$ for the latter.
+  \item<4-> Consistent results to previous simulations regarding the kinetic-to-magnetic dissipation ratio were acquired.
+ \end{enumerate}
+ 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{References}
+
+\setbeamerfont{bibliography item}{size=\footnotesize}
+\setbeamerfont{bibliography entry author}{size=\footnotesize}
+\setbeamerfont{bibliography entry title}{size=\footnotesize}
+\setbeamerfont{bibliography entry location}{size=\footnotesize}
+\setbeamerfont{bibliography entry note}{size=\footnotesize}
+\setbeamertemplate{bibliography item}[text]
+\bibliographystyle{ieeetr}
+\bibliography{PrM_Dependence_KtoM_DissipationRatio}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Shell Models}
+ \framesubtitle{Energy profiles with shell model}
+  
+   \begin{figure}[t]
+  \includegraphics[width=5cm]{img/E_B_profile}
+  \caption{Compensated time-averaged kinetic and magnetic energy spectra for
+shell models at three values of $Pr_M$ \cite{brandenburg2014magnetic}.}
+  \centering
+ \end{figure}
+  
+\end{frame}
+
+
+
+\end{document}
