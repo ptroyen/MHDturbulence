@@ -1,0 +1,20 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {chapter}{\numberline {2}Hydrodynamics and turbulence}{3}
+\contentsline {section}{\numberline {2.1}Non-conducting fluids}{3}
+\contentsline {section}{\numberline {2.2}Turbulence}{4}
+\contentsline {section}{\numberline {2.3}Correlation functions}{5}
+\contentsline {section}{\numberline {2.4}Turbulent length scales}{5}
+\contentsline {chapter}{\numberline {3}Magnetohydrodynamics}{9}
+\contentsline {section}{\numberline {3.1}MHD equations}{9}
+\contentsline {section}{\numberline {3.2}MHD turbulence}{11}
+\contentsline {section}{\numberline {3.3}Dynamo action}{12}
+\contentsline {chapter}{\numberline {4}Design and/or development (of my project)}{14}
+\contentsline {chapter}{\numberline {5}Results and Analysis}{15}
+\contentsline {section}{\numberline {5.1}Some results}{15}
+\contentsline {subsection}{\numberline {5.1.1}More results}{15}
+\contentsline {section}{\numberline {5.2}Discussion of your results}{16}
+\contentsline {chapter}{\numberline {6}Conclusions}{17}
+\contentsline {chapter}{\numberline {A}Stuff that's too detailed}{18}
+\contentsline {section}{\numberline {A.1}{\rm B\kern -.05em{\sc i\kern -.025em b}\kern -.08em T\kern -.1667em\lower .7ex\hbox {E}\kern -.125emX}}{18}
+\contentsline {section}{\numberline {A.2}Producing your documents using \texttt {pdflatex}}{19}
+\contentsline {chapter}{\numberline {B}Stuff that won't be read by anyone}{21}

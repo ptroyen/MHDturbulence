@@ -1,0 +1,589 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{graphics}
+\usepackage{fullpage,epsf,graphicx, amstext,url,bm,amsmath, amssymb} 
+
+%
+% head.sty is no longer needed
+%
+%\usepackage{head,fullpage,epsf,graphicx, amstext,url} 
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+%                       This is a basic LaTeX Template
+%                       for the MSc Dissertation report
+%
+\parindent=0pt          %  Switch off indent of paragraphs 
+\parskip=5pt            %  Put 5pt between each paragraph  
+%
+%                       This section generates a title page
+%                       Edit only the sections indicated to put
+%                       in the project title, and submission date
+%
+
+\vspace*{0.1\textheight}
+
+\begin{center}
+        \huge{\bfseries Study of the Onset of Dynamo Action in Magnetohydrodynamics}\\
+\end{center}
+
+\bigskip
+
+\begin{center}
+        \large{Andr\'es Cathey Cevallos}\\      % Replace with your name
+        \bigskip
+        \large{August 18, 2017}        % Submission Date
+\end{center}
+
+%%% If necessary, reduce the number 0.4 below so the University Crest
+%%% and the words below it fit on the page.
+%%% Don't let the crest and the wording below it flow onto the next page!
+\vspace*{0.35\textheight}
+
+\begin{center}
+        \includegraphics[width=35mm]{crest.pdf}
+\end{center}
+
+\medskip
+
+\begin{center}
+
+%%%
+%%% Change Theoretical to Mathematical if appropriate
+%%%
+\large{
+  MSc in Theoretical Physics\\[0.8ex]
+  The University of Edinburgh\\[0.8ex]
+  2017
+}
+
+\end{center}
+
+\newpage
+
+
+\pagenumbering{roman}
+
+\begin{abstract}
+This is where you summarise what is in your thesis. It should
+be around 100 words, but not more than 200 words.
+\end{abstract}
+
+\pagenumbering{roman}
+
+
+\textbf{Declaration} - goes here. Write some examples!
+
+For example, MC generation code, measurement code, fit code, whether
+calculations were done using Mathematica, with(out) gamma matrix code,
+master integrals, etc.
+
+\newpage
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+\begin{titlepage}
+\vspace*{2in}
+% an acknowledgements section is completely optional but if you decide
+% not to include it you should still include an empty {titlepage}
+% environment as this initialises things like section and page numbering.
+\section*{Acknowledgements}
+
+Put your acknowledgements here. Thanking your supervisor for his/her
+help is standard practice, but you don't have to do this\ldots
+
+This template is is modification of the one for the MSc in High
+Performance Computing, which is apparently descended from a template
+developed by Prof Charles Duncan for MSc students in Meteorology. His
+acknowledgement follows:
+
+\emph{This template has been produced with help from many former
+  students who have shown different ways of doing things. Please make
+  suggestions for further improvements.}
+
+Some parts of this template were lifted unashamedly from the Edinburgh
+MPhys project report guide, with little or no modification. I have no
+idea who wrote the first version of that\ldots
+
+You don't have to use \LaTeX\ for your dissertation. You can use
+Microsoft Word or Apple Pages if you wish, but it's \emph{much} easier
+to typeset equations in \LaTeX, and references look after
+themselves. Whatever you use, your dissertation should have the same
+general structure, and it should look similar to this one --
+especially the front page.
+
+
+\end{titlepage}
+
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+
+Magnetic fields in astrophysical scales have been extensively studied analytically and numerically. From Larmor's publications regarding the Earth's magnetic field to present day numerical simulations of astrophysical magnetic structures, the prevalent mechanism used to explain these magnetic fields is the dynamo effect~\cite{sir1919larmor}. Dynamo theory tries to explain how exactly a fluid that conducts electricity\footnote{The study of magnetic fields generated as a result of electrically conducting fluids, and how they modify the fluids' dynamics is commonly referred to as Magnetohydrodynamics.} can generate a magnetic field. It is straight forward to see how a rotating ring of electrically conducting fluid can generate a magnetic field in the same way that a ring with electric current does. Dynamo theory has been subdivided into different categories based on the particular physical characteristics of the systems which host dynamos. The first distinction is between kinematic dynamos, which considers the flow to be known and not affected by the magnetic field (these can be used in scenarios with very weak magnetic fields), and (magneto)hydromagnetic, or nonlinear, dynamo for which the flow can be affected by the magnetic field through the Lorentz force~\cite{brandenburg2007hydromagnetic}.
+
+Kinematic (or linear) dynamo theory led to the understanding of several basic principles of dynamos. However, most astrophysically relevant dynamos cannot be dealt with kinematic dynamo theory alone due to the magnetic fields that are generated being too dynamically important~\cite{brandenburg2005astrophysical}. Thanks to advances in numerical simulations (starting with S. Orszag's pioneering work on direct numerical simulations~\cite{orszag1970analytical}) nonlinear dynamo theory has seen meaningful advances. One example of this is the impact it had on Kazantsev's theory~\cite{kazantsev1968enhancement} of the small scale dynamo, since faster computers allowed the study of higher Reynolds number simulations in hydromagnetic turbulence. A topic which is currently being studied with numerical simulations is the case of the non helical small scale dynamo. This is said to be relevant to the origin of magnetic field clusters. An interesting feature that has been recently observed is that when a system with fixed magnetic diffusivity undergoes a considerable decrease of kinematic viscosity the velocity field is too turbulent and it will be harder to excite the dynamo~\cite{schekochihin2004critical}. 
+
+Most of the complications that surround the topic of hydromagnetic dynamos are due to the turbulent nature of the flows that spawn them. Turbulence, as a matter of fact, seems to be the underlying reason behind the emergence (and disappearance) of small scale dynamos. The work presented here is mainly concerned on the onset of dynamo action and the effect that an excess (or absence) of turbulence in the velocity field has on it. An important dimensionless parameter for MHD is the \textit{magnetic Prandtl number}, $Pr_M=\nu/\eta$, which is the relation of the kinematic viscosity $\nu$ and the magnetic diffusivity $\eta$ of the system. Several numerical simulations of homogeneous isotropic turbulence are made in order to study small scale dynamo action, and those with $Pr_M<1$ (very turbulent velocity field) are ultimately compared to the literature~\cite{schekochihin2004critical}. On the other hand, the simulations with more laminar velocity fields are also shown to host no small scale dynamo action, as expected by~\cite{schnack2009lectures}. This scenario is interesting as it is related to magnetic fields of larger scales, such as those of interstellar mediums, protogalaxies, early Universe, etc.~\cite{schekochihin2002small}
+
+
+\chapter{Hydrodynamics and turbulence}
+
+Before dealing directly with the theoretical aspect of magnetohydrodynamics it is helpful to include a review of the dynamics that rule the flow of non-conducting fluids. Since this work is mainly concerned on homogeneous isotropic MHD, the focus of the brief review on hydrodynamics presented below is of the same nature. 
+
+\section{Non-conducting fluids}
+
+The Navier-Stokes equations describe the dynamics of non-conducting Newtonian fluids. The case of interest is with incompressible fluids, which means that the fluid's density remains constant and can be set to unity. In this case, the velocity field's temporal evolution then can be written as:
+
+\begin{align}
+ \partial_t \bm u + (\bm u \cdot \bm \nabla) \bm u = - \bm \nabla p + \nu \nabla^2 \bm u + \bm f_u
+ \label{eq2.1}
+\end{align}
+
+The incompressibility condition indicates that: 
+
+\begin{align}
+ \bm \nabla \cdot \bm u = \bm 0
+ \label{eq2.2}
+\end{align}
+
+Here the velocity field is the vector $\bm u$, $p$ is the pressure on the fluid, $\nu$ is the kinematic viscosity\footnote{Viscosity is a measure of the friction of the fluid with itself.}, and $\bm f_u$ is an external forcing function that excited the fluid. The nonlinear term, $(\bm u \cdot \bm \nabla) \bm u$, is the one responsible for energy transfer and mixing across different spatial scales, i.e. it is primarily responsible for the turbulent nature of the flow. The first two terms are usually combined by using what is called a advective derivative $\partial / \partial_t + \bm u \cdot \bm \nabla$. The pressure term obviously takes into account how the velocity field changes when there is a difference (gradient) of pressure. Then there is the dissipative term, $\nu \nabla^2 \bm u$, which accounts for the energy that is lost due to the fluid's friction with itself.
+
+Very different dynamics are to be expected depending on whether the nonlinear term or the dissipative term dominates. The Reynolds number $Re$ is an important, dimensionless, quantity that is often used to describe fluids. It is a good measure to quantitatively determine when a fluid has turbulence. It can be said that when a non conducting fluid goes from low Reynolds number to a high Reynolds number it is undergoing a transition from laminar to turbulent flow. Comparing the influence of the non-linear, inertial, term of eqn.~\ref{eq2.1} and the term related to the viscous dissipation it is possible to obtain an expression for such dimensionless quantity, where $L$ and $u$ are simply the length scale and velocity characteristic of the flow\footnote{For a fluid moving along a pipe, $L$ could be the diameter of the pipe and $u$ the rms velocity of the fluid.}.
+
+\begin{align}
+ \frac{\vert (\bm u \cdot \bm \nabla) \bm u \vert}{\vert \nu \nabla^2 \bm u \vert} \sim \frac{u \frac{1}{L} u}{\nu \frac{1}{L^2} u} \sim \frac{u L}{\nu} \equiv Re \nonumber
+\end{align}
+
+\section{Turbulence}
+\label{sec2.2}
+
+It was already mentioned that turbulence is an important, and the complicated, part of hydrodynamics. In order to provide a mathematical description of such a chaotic phenomenon it is necessary to make use of statistics for the velocity field, such that it is of the form of eqn.~\ref{eq2.3} into an average component $\langle \bm U \rangle$ and a randomly fluctuating one $\bm u$, so $\langle \bm u \rangle = \bm 0$ (and for the magnetic field alike when dealing with electrically conducting fluids). Furthermore, in order to study the global characteristics of turbulence, and not just macroscopic effects related to the specific geometry of a physical system, the concept of \textit{Homogeneous} and \textit{Isotropic} turbulence (HIT) is considered~\cite{biskamp1997nonlinear}.
+
+\begin{align}
+ \bm U = \langle \bm U \rangle + \bm u
+ \label{eq2.3}
+\end{align}
+
+In particular, homogeneous isotropic turbulence is obtained by having the fluctuating part of the velocity field to be independent of position, in order for the homogeneity condition to hold, and of direction, for the isotropy to be fulfilled. This is equivalent of $\bm u$ being invariant of spatial translation and of rotational translations, respectively. However, the concept of isotropy that will be considered is that of isotropy without mirror-symmetry, i.e. invariant under $SO(3)$-transformations~\cite{biskamp1997nonlinear}. This means that the system can have kinetic helicity (topologically, helicity is a measure of the handedness of a specific field)~\cite{brandenburg2005astrophysical, hughes1996kinetic}. It should be noted that HIT does not appear in real-world fluids. Due to boundary conditions spatial invariance is not achieved, and any non zero mean velocity field violates isotropy\footnote{It is possible to bypass this problem by considering a Galilean transformation that moves with the mean velocity field.}. However, turbulent fluids far from boundary conditions (like oceanic flows) are often considered, to a good approximation, to be describable with HIT. As such, HIT can be viewed as a way to simplify a complex problem~\cite{LinkmannMoritzFrederikLeon2016Spim}. 
+
+\section{Correlation functions}
+
+For homogeneous turbulence, it is required that the equal time two-point correlation functions:
+
+\begin{align}
+ C_{ij}^{uu}(\bm r, t) = \langle u_i(\bm x, t) u_j(\bm x + \bm r, t) \rangle
+ \label{eq2.4}
+\end{align}
+
+are independent of $\bm x$~\cite{biskamp1997nonlinear}. These functions then only depend on the displacement, $\bm r$. The kinetic energy is a variable that is defined through the two-point correlation function of eqn.~\ref{eq2.4} as $E_K = \frac{1}{2} \langle \bm u (\bm x) \cdot \bm u (\bm x) \rangle$, which is also independent of position. In order to look at the length scales related to these turbulent fluid flows it is helpful to define the longitudinal correlation functions, which only take the field's component in the direction of $\bm r$: 
+
+\begin{align}
+ C_{LL}^{uu}(\bm r, t) = \langle u_L(\bm x, t)u_L(\bm x + \bm r, t) \rangle,
+ \label{eq2.5}
+\end{align}
+
+where the longitudinal velocity field is defined by $u_L(\bm x)=\bm u \cdot \bm r / \vert r \vert$. 
+
+\section{Turbulent length scales}
+\label{sec2.4}
+
+Turbulence is nonlinear by nature, it could be said that the nonlinear component of eqn.~\ref{eq2.1} is the one responsible for the development of turbulence. The reason behind this is that $(\bm u \cdot \bm \nabla) \bm u$ takes energy from large length scales and mixes it towards the smaller length scales. Once energy reaches very small scales, comparable to the mean free path of the fluid in question, it starts to rapidly dissipate. Since viscosity is a measure of a fluid's inner friction, and thus of the amount of energy dissipated through heat, it is clear that the length scales where energy is dissipated (as well as the rate at which it is dissipated) will depend on the kinematic viscosity $\nu$. 
+
+It can be said that there are three important length scales associated with homogeneous isotropic turbulence. It is possible to follow a \textit{Gedankenexperiment} as done by D. Schnack~\cite{schnack2009lectures}. Imagine a perfect coffee cup as an infinitely long cylinder of radius $a$ and whose walls do not affect the fluid's flow. Now think of a perfect spoon that is permanently stirring the fluid and exciting a circular eddy with velocity $\bm U_{spoon}$ and radius $a$ as well, as shown in fig.~\ref{fig2.1}.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.4\linewidth]{{img/perfect_mug}.png}
+  \caption{Perfect cup with single excited eddy~\cite{schnack2009lectures}.}
+  \label{fig2.1}
+\end{figure}
+
+It is clear that energy is being input into the system and it is being done at the largest length scales. If no pressure is present and an incompressible fluid is inside the perfect coffee cup, the evolution of the velocity field is described by eqn.~\ref{eq2.6}.
+
+\begin{align}
+ \frac{\partial U}{\partial t} + U \frac{\partial U}{\partial t} &= \nu \frac{\partial^2 U}{\partial t^2}
+ \label{eq2.6}
+\end{align}
+
+The initial velocity is $U(t=0)=U_0 \sin(k_0 x)$, where $k_0=\pi/a$ ($\lambda_0=2a$). It is possible to assume that at long wavelengths viscous effects are negligible, since $Re=U_0 a / \nu \gg 1$, then a short time later, $t=\Delta t \ll 1/(k_0 U_0)$, the velocity is defined by:
+
+\begin{align}
+ U(t=\Delta t) &= U(t=0) - \Delta t U \frac{\partial U}{\partial t} \nonumber \\
+ &= U_0 \sin k_0 x - \Delta t (U_0 \sin k_0 x)(k_0 U_0 cos k_0 x) \nonumber \\
+ &= U_0 \sin k_0 x - \frac{1}{2} k_0 \Delta t U_0^2 \sin 2k_0 x \nonumber
+\end{align}
+
+This velocity field a short time after the spoon started to stir the fluid has maintained a component in the largest wavelength $\lambda_0$, and one with exactly half of it! Clearly, the nonlinear component of eqn.~\ref{eq2.6} has managed to transfer energy from larger to smaller length scales. After another small time interval energy is transfered to even smaller length scales.
+
+\begin{align}
+ U(t=\Delta t) =& U_0 \sin k_0 x - U_1 \sin 2k_0 x \nonumber \\
+ U(t=2\Delta t) =& (U_0-3\Delta t U_1 U_0) \sin k_0 x \nonumber \\
+ &- (U_1 + k_0 \Delta t U_0^2) \sin 2 k_0 x \nonumber \\
+ &+ 3 \Delta t k_0 U_1 U_0 \sin 3 k_0 x \nonumber \\
+ &- 2\Delta t k_0 U_1^2 \sin 4 k_0 x \nonumber 
+\end{align}
+
+This effect of energy transfer from the larger to the smaller length scales is commonly referred to as the \textit{energy cascade}. The reason for this is that when the energy is plotted\footnote{In hydrodynamics it is common to transform to Fourier space in order to study the systems at play, and specially for Direct Numerical Simulations.} as a function of the wave number $k$, the most energy remains in the smallest wave numbers because energy is constantly being input into the system by the perfect spoon (largest wave numbers) and it decreases until the largest wave numbers are reached $k_D$ - the ones related to viscous dissipation, as shown in the spectral plot of fig.~\ref{fig2.2}\footnote{The y-axis ($\varepsilon(k)$) it indicates energy.}.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{{img/cascade}.png}
+  \caption{Energy cascade form large to small length scales (wavelengths)~\cite{schnack2009lectures}.}
+  \label{fig2.2}
+\end{figure}
+
+From the \textit{Gedankenexperiment} above, it is clear that there are three important length scales related homogeneous isotropic turbulence. The largest one is that at which energy is input into the system, and consequently the one which contains most of the kinetic energy, then the inertial range defines the intermediary length scales where the system's nonlinearity dominates, but viscous effects are also important. Finally, the smallest length scale is related to energy dissipation from viscous effects. When dealing with numerical simulations, the contribution of all these length scales has to be determined in order to have a properly resolved simulation.
+
+In order to obtain the characteristic length scale relevant to the system (\textbf{integral scale}), eqn.~\ref{eq2.5} is used. This describes the correlation of the fluctuating component of the velocity field at the large scales. This is then used to obtain the Reynolds number~\cite{mccomb1990physics}. To do so, a corresponding characteristic velocity needs to be defined. Since the type of turbulence that is being studied is HIT, it is possible to take the root-mean-squared velocity to be the aforementioned characteristic velocity. This rms velocity is defined with the kinetic energy $E_K=\frac{1}{2}(u_x^2+u_y^2+u_z^2)=\frac{3}{2}u_{rms}^2$ since the isotropy condition requires rotational invariance, and thus $\langle u_x \rangle = \langle u_y \rangle = \langle u_z \rangle$.
+
+\begin{align}
+ L_u(t) &= \frac{1}{U^2} \int_0^\infty C_{LL}^{uu}(\bm r, t) dr \nonumber \\
+ U&=u_{rms}=\sqrt{\frac{2}{3}E_K} \nonumber
+\end{align}
+
+A smaller length scale that determines the inertial range mentioned above is the \textbf{Taylor length scale}. It is also referred to as the turbulent length scale for this very reason. With the energy dissipation rate as $\varepsilon$, and the kinetic viscosity $\nu$, the Taylor microscale is defined~\cite{LinkmannMoritzFrederikLeon2016Spim}:
+
+\begin{align}
+ \lambda_u = \sqrt{\frac{15 \nu}{\varepsilon}} u_{rms} \nonumber
+\end{align}
+
+Finally, the smallest length scales of the system are close to the \textbf{Kolmogorov microscale}. At this scale (large wave numbers), most energy is being dissipated into heat~\cite{mccomb1990physics}. Working through dimensional analysis it is possible to arrive at the following length scale related to viscous dissipation:
+
+\begin{align}
+ \ell_\nu = \left( \frac{\nu^3}{\varepsilon} \right)^{\frac{1}{4}} \nonumber
+\end{align}
+
+From it, it is possible to determine the wave number related to the viscous dissipation, which is then determined by eqn.~\ref{eq2.7}. These large wave numbers will then be necessary to determine important parameters for a given numerical simulation. 
+
+\begin{align}
+ k_\nu = \left( \frac{\varepsilon}{\nu^3} \right)^{\frac{1}{4}} \label{eq2.7}
+\end{align}
+
+\chapter{Magnetohydrodynamics}
+
+The field of magnetohydrodynamics (MHD) studies electrically conducting fluids. These can occur in different scales from the flow of liquid sodium in laboratories to the plasma inside nuclear fusion reactors or to the movement of material inside the cores of planets and stars. 
+
+\section{MHD equations}
+
+In general, the equations that govern these fluids are obtained by a combination of Navier-Stokes equations and Maxwell equations. Said governing equations are the following:
+
+\begin{align}
+\partial_t \bm u &= - \frac{1}{\rho} \bm \nabla p - (\bm u \cdot \bm \nabla) \bm u + \frac{1}{\rho} (\bm \nabla \times \bm b) \times \bm b + \nu \nabla^2 \bm u + \bm f_u \label{eq3.1} \\
+\partial_t \bm b &= (\bm b \cdot \nabla) \bm u - (\bm u \cdot \bm \nabla) \bm b + \eta \nabla^2 \bm b + \bm f_b \label{eq3.2} \\
+\bm \nabla \cdot &\bm u = 0 \qquad \text{and} \qquad \bm \nabla \cdot \bm b = 0 \label{eq3.3}
+\end{align}
+
+Here the velocity and magnetic fields are defined as $\bm u$ and $\bm b$, respectively and are in units of velocity, $\rho$ denotes the density and can be set to $\rho = 1$ due to the incompressibility condition of eqn.~\ref{eq3.3}, $p$ is the thermodynamic pressure on the fluid, and the kinematic viscosity it denoted by $\nu$. The magnetic diffusivity $\eta=(\mu_0\sigma)^{-1}$ is another intrinsic property of the fluid that is directly related to its electric conductivity $\sigma$. Finally, $\bm f_u$ and $\bm f_b$ are external kinetic (mechanic) and magnetic forcing that could be present. 
+
+A brief, verbal description of the terms in the above equations is important now. The pressure term in the kinetic equation is simply saying that when there exists a gradient in the pressure within a fluid, then it will undergo acceleration towards areas of lower pressure. The non-linear term $(\bm u \cdot \bm \nabla)\bm u$ is the inertial term and it is responsible for the transfer of kinetic energy in the turbulent cascade, as it was explained in section~\ref{sec2.4}. The next term, $(\bm \nabla \times \bm b) \times \bm b$, is simply the influence of the Lorentz force to the fluid's velocity field. The $\nu \nabla^2 \bm u$ term in eqn.~\ref{eq3.1} is related to the dissipation of energy due to viscosity - that is energy being transformed from kinetic to heat due to friction  within the fluid. This happens in the lowest spatial scales and it is where most energy is dissipated.
+
+The first term in the right hand side of eqn.~\ref{eq3.2}\footnote{Equation~\ref{eq3.2} is often referred to as the \textit{Induction equation}.}, $(\bm b \cdot \bm \nabla)\bm u$, is the stretching of the magnetofluid's magnetic field lines due to the flow - this term is responsible for conversion of kinetic energy to magnetic energy. The next term in the r.h.s of eqn.~\ref{eq3.2}, $(\bm u \cdot \bm \nabla)\bm b$, is related to the advection of the magnetic field lines by the fluid's flow. Finally, the term $\eta \nabla^2 \bm b$ is related to diffusion of energy through the magnetic channel. These last two terms can be compared to obtain a similar quantity to the Reynolds number, but for the magnetic contribution. This ratio is also related to turbulence, but magnetic in nature, and it is called the magnetic Reynolds number. 
+
+\begin{align}
+ \frac{\vert (\bm u \cdot \bm \nabla) \bm b \vert}{\vert \eta \nabla^2 \bm b \vert} \sim \frac{u \frac{1}{L} b}{\eta \frac{1}{L^2} b} \sim \frac{u L}{\eta} \equiv Re_M \nonumber
+\end{align}
+
+Large $Re_M$ means that the evolution of the magnetic field is primarily due to the fluid's flow, and the most extreme case of this scenario is when the magnetofluid is perfectly conducting ($\eta = 0$) and it is called ``ideal MHD''. Small $Re_M$ means that $\bm b$'s evolution is mainly due to the magnetic diffusivity. Typical values of magnetic Reynolds number are the following~\cite{LinkmannMoritzFrederikLeon2016Spim}:
+
+\begin{center}
+\begin{tabular}{| c | c |}
+ \hline
+ Liquid metals & $Re_M \sim 10^{-3}\,-\,10^{-1}$ \\ 
+ \hline
+ Planet interiors & $Re_M \sim 100\,-\,300$ \\ 
+ \hline
+ Solar convection zone & $Re_M \sim 10^{6}\,-\,10^{9}$ \\ 
+ \hline
+ Interstellar or intergalactic medium & $Re_M \sim 10^{18}\,-\,10^{29}$ \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+The relation of these dimensionless quantities gives another important dimensionless parameter, called the magnetic Prandtl number, $Pr_M$. This parameter describes through which channel the majority of the energy is dissipated (kinetic or magnetic).
+
+\begin{align}
+ Pr_M = \frac{Re_M}{Re} = \frac{\nu}{\eta} \nonumber
+\end{align}
+
+Magnetic Prandtl numbers lower than one mean that most of the energy in the system is being dissipated through the kinetic channel, i.e. through kinematic viscosity. It also means that the kinetic channel is more turbulent than the magnetic one. Conversely, when $Pr_M$ is larger than one, then the magnetic channel is dissipating the majority of the system's energy, and there is less kinetic turbulence than magnetic turbulence. Examples of systems with low and high magnetic Prandtl numbers can be seen in fig.~\ref{fig3.1}. In said image, there are yellow dotted lines which are of constant $Pr_M$ (denoted by $Pm$ in the figure). For unitary magnetic Prandtl number there is a computer and the label DNS - this is related to the fact that it is very complicated to go to high (magnetic) Reynolds numbers with direct numerical simulations, and thus, so far, most results have been obtained in the area around $Pr_M \sim 1$. 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.73\textwidth]{img/PrM_spectrum}
+\caption{Magnetic Prandtl number isolines~\cite{plunian2013shell}.}
+\label{fig3.1}
+\end{figure}
+
+Despite older studies of MHD turbulence have been centered at magnetic Prandtl numbers close to unity, faster computers mean that it is possible to investigate at regions that are drifting away from $Pr_M\sim1$. However, current Direct Numerical Simulations (DNS) methods still cannot move too far away from unity magnetic Prandtl number, and recent papers have reported reaching up to $Pr_M=[10^{-3}:10^3]$~\cite{brandenburg2011dissipation, sahoo2011systematics}. Said pair of papers report the appearance of a power law dependence of the magnetic Prandtl number for the ratio of kinetic and magnetic energy dissipation. Namely, that $\varepsilon_K/\varepsilon_M~\alpha~Pr_M^{0.6}$ for decaying, helical turbulence. These, however, deal exclusively with the large scale dynamo, and thus go beyond the scope of this research.
+
+\section{MHD turbulence}
+
+As it was mentioned in section~\ref{sec2.2}, turbulence is a complicated process that can be simplified by taking statistical methods, and by restricting the type of turbulence. This comes at a cost, of course, and in the case of homogeneous isotropic turbulence the price is that what is being studied is an extremely idealised system. However, global characteristics of turbulence can be learned from its study.
+
+As it was mentioned before, in a hydrodynamic fluid, high Reynolds numbers are related to turbulent flow, while low Reynolds numbers describe laminar flow. A similar behaviour occurs for electrically conducting fluids. The dimensionless quantity that helps describe turbulence in the magnetic channel is the magnetic Reynolds number, which has been defined above to be inversely proportional to the magnetic diffusivity. Even more comparisons can be made between MHD turbulence and hydrodynamic turbulence. To start with, the study of MHD turbulence also takes a mean component and a fluctuating one for the velocity and magnetic fields:
+
+\begin{align}
+ \bm U = \langle \bm U \rangle + \bm u \nonumber \\
+ \bm B = \langle \bm B \rangle + \bm b \nonumber
+\end{align}
+
+It is worth mentioning once more that the fluctuating components of the above equations ought to follow homogeneity (invariance due to spatial transformations) and isotropy without mirror-symmetry (invariance due to $SO(3)$-transformations) conditions. Additionally, the mean value of \textbf{both} fields has to be zero. As it was mentioned before, a nonzero mean value of the velocity field is not a big problem because using a Galilean coordinate transformation solves the problem, but the same cannot be said for the magnetic field. An average magnetic field will make the flow highly anisotropic, but the perpendicular components to $\langle B \rangle$ may develop small scale structures that would then dissipate energy through $\eta$ while keeping $\langle B \rangle$ smoothly varying. As a consequence, isotropic MHD can have either no average magnetic field and be three dimensional, or it can be two dimensional and represent the perpendicular plane to a nonzero $\langle B \rangle$~\cite{biskamp1997nonlinear}. This means that when looking at HIT for MHD, any system that has a nonzero average magnetic field then the isotropy condition cannot be properly studied. 
+
+Regarding the parallels that can be drawn between MHD and hydrodynamic turbulence, an interesting one are the length scales associated with turbulent processes in the kinetic channel have their magnetic analogues. Using the magnetic field's longitudinal equal time correlation function with itself, eqn.~\ref{eq3.4}, a magnetic integral scale can be defined, which describes the larger scales for the system's magnetic field.
+
+\begin{align}
+ C_{LL}^{bb}(\bm r, t) &= \langle b_L(\bm x, t) b_L(\bm x + \bm r, t) \rangle \label{eq3.4} \\
+ L_b(t) &= \frac{1}{B^2} \int_0^\infty C_{LL}^{bb}(\bm r, t) dr \nonumber
+\end{align}
+
+Similarly, there is a Kolmogorov microscale related to magnetic diffusion:
+
+\begin{align}
+ \ell_\eta = \left( \frac{\eta^3}{\varepsilon} \right)^{\frac{1}{4}} \nonumber
+\end{align}
+
+Where $\eta$ is the magnetic diffusivity and $\varepsilon$ is the total energy dissipation. From it, a wave number related to dissipation through the magnetic channel is obtained (eqn.~\ref{eq3.5}).
+
+\begin{align}
+ k_\eta = \left( \frac{\varepsilon}{\eta^3} \right)^{\frac{1}{4}} \label{eq3.5}
+\end{align}
+
+\section{Dynamo action}
+
+The discovery of the mechanism that powers the Earth's magnetic field, dynamo theory, began when William Gilbert proposed that it was a consequence of Earth itself being magnetic in \textit{De Magnete}. After Michael Faraday's invention of the non-fluid dynamo, Joseph Larmor in 1919 suggested that a convective fluid dynamo could be generating the magnetic field. Elsasser theorised that geomagnetism is generated by electric currents in Earth's fluid outer core -- this is the presently accepted notion~\cite{stern2002millennium}. Additionally, convection of the outer core has been shown to be the reason why ohmic decay does not kill Earth's magnetic field, which has been (to some extent) modeled numerically~\cite{glatzmaier1995three}. Problems with accurately modeling geomagnetism arise due to the fact of small scale fluctuations of the electrically conducting fluid(s) that located in Earth's outer core.
+
+In the context of MHD, dynamo action refers to the conversion of kinetic energy to magnetic energy. The study of dynamos in physics was primarily driven by the quest to determine what is the underlying reason for the magnetic fields in the universe (large scale), as well as their structure, dynamics and maintenance. The term ``dynamo action'' can be loosely defined as a process that can generate and/or amplify magnetic fields. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Design and/or development (of my project)}
+
+This section should be written in standard scientific
+language. Standard techniques in your research field should not be
+written out in detail. In computational projects this section should
+be used to explain the algorithms used and the layout of the
+computational code. A copy of the actual code may be given in the
+appendices if appropriate.
+
+This section should emphasise the philosophy of the approach used and
+detail novel techniques. However please note: this section should not
+be a blow-by-blow account of what you did throughout the project. It
+should not contain large detailed sections about things you tried and
+found to be completely wrong! However, if you find that a technique
+that was expected to work failed, that is a valid result and should be
+included.
+
+Here logical structure is particularly important, and you may find
+that to maintain good structure you may have to present the
+explorations/calculations/computations/whatever in a different order
+from the one in which you carried them out.
+
+
+\chapter{Results and Analysis}
+
+This section should detail the obtained results in a clear,
+easy-to-follow manner. It is important to make clear what are original
+results and what are repeats of previous calculations or computations.
+Remember that long tables of numbers are just as boring to read as
+they are to type-in!
+
+Use graphs to present your results wherever practicable.
+
+Results or computations should be presented with uncertainties
+(errors), both statistical and systematic where applicable.
+
+Be selective in what you include: half a dozen \emph{e.g.}~tables that
+contain wrong data you collected while you forgot to switch on the
+computer are not relevant and may mask the correct results.
+
+
+\section{Some results}
+Here are some results.
+
+\subsection{More results}
+When showing results you are likely to use tables and graphs. You can
+create tables easily in \LaTeX.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{||r|c|l||}
+\hline
+\textbf{File names} & \textbf{Satellite} & \textbf{Resolution}\\
+\hline
+  worldr            &  Meteosat          &   5km\\
+  worldg            &  Meteosat          &   5km\\
+  worldb            &  Meteosat          &   5km\\
+\hline
+\end{tabular}
+\end{center}
+\caption{This is a simple table. More complicated tables can have
+headings which pass over more than one column}
+\label{simple_table}
+\end{table}
+
+If you want to produce fancier tables than shown in Table \ref{simple_table}
+refer to the \LaTeX\ manual or ask Google.
+
+\section{Discussion of your results}
+
+This section should give a picture of what you have taken out of your
+project and how you can put it into context.
+
+This section should summarise the results obtained, detail conclusions
+reached, suggest future work, and changes that you would make if you
+repeated the project.
+
+\chapter{Conclusions}
+
+This is the place to put your conclusions about your work. You can
+split it into different sections if appropriate. You may want to include
+a section of future work which could be carried out to continue your
+research.
+
+The conclusion section should be at least one page long, preferably 2
+pages, but not much longer.
+
+\appendix
+% the appendix command just changes heading styles for appendices.
+
+\chapter{Stuff that's too detailed}
+
+Appendices should contain all the material which is considered too
+detailed to be included in the main body of the text, but which is
+important enough to be included in the thesis.
+
+Perhaps this is a good place to mention \BibTeX.
+
+You can do references in the simple way explained in the introduction,
+or you can use \BibTeX.
+
+
+\section{\BibTeX}
+\label{sec:bibtex}
+
+It is convenient to use \BibTeX\ to compile your bibliography.  First
+you need to create a .bib file e.g.  you may call it ref.bib Then you
+can put all your references into the file with entries such as
+\begin{verbatim}
+@Book{ob:bornwolf,
+     author = "Born, M and Wolf, E",
+     title  = "Principles of Optics",
+     publisher = "Cambridge University Press",
+     year = 1999,
+     edition = {7th},
+}
+
+@Article{jr:ashkin,
+Author = {A. Ashkin and J.M. Dziedzic and J.E. Bjorkholm and S. Chu},
+Title = "Observation of a single beam gradient force optical tap for 
+dielectric particles",
+Journal = "Optics Letters",
+Volume = 11,
+Pages = "288-290",
+Year = 1986}
+
+@INPROCEEDINGS{seger,
+ author = {J. Seger and H.J. Brockman},
+ title = {What is bet-hedging?},
+ editors={P.H. Harvey and L. Partridge},
+ booktitle = {Oxford Surveys in Evolutionary Biology},
+ year={1987},
+ page={18},
+ publisher={Oxford University Press},
+ place={Oxford}}
+\end{verbatim}
+for a book, an article in a journal or an article in a proceedings volume
+respectively.
+
+Inside your \LaTeX\ file
+you should include 
+\begin{verbatim}
+\bibliographystyle{unsrt}                      
+and
+\bibliography{ref}
+\end{verbatim}
+The first command determines the reference style, here plain and 
+unsorted. With this referencing style 
+a numerical referencing system (which is now the most
+common in physics literature) is used and the numbering of references
+will be the order in which they appear in the document. Alternatively, 
+you could use
+a customised `style file' but there is no real need.  The second
+command just inputs your .bib file Note that only the references cited
+in the text will appear in the bibliography so you can have spare
+references in your .bib file.
+
+
+You use the name you have given to an entry (e.g.
+for the book example above the name is ob:bornwolf)
+to cite the relevant article
+by using the cite command in your \LaTeX\ file e.g. 
+\begin{verbatim}
+\cite{ob:bornwolf}
+\end{verbatim}
+
+
+\section{Producing your documents using \texttt{pdflatex}}
+
+To use pdflatex your figures need to be in pdf format.  You can convert almost any image file to pdf using \texttt{convert}.  e.g. \texttt{convert myfigure.png myfigure.pdf}.
+
+The first time you should type:
+\begin{verbatim}
+  pdflatex ProjectReport
+  bibtex ProjectReport
+  pdflatex ProjectReport
+  pdflatex ProjectReport
+\end{verbatim} 
+This first time you run\texttt{pdflatex} it will produce a
+\texttt{ProjectReport.aux}.  The \BibTeX\ command reads in the
+bibliography file and makes the files \texttt{ProjectReport.bbl} and
+\texttt{ProjectReport.blg} files.  These files are read in the next
+\texttt{pdflatex} command, but you'll still have ``undefined
+cross-reference'' errors which are sorted out by the last
+\texttt{pdflatex} command.
+
+Subsequently, you should only need to do one (or two)
+\texttt{pdflatex}s, or \texttt{pdfbibtex} followed by
+\texttt{pdflatex} twice if you change any references.
+
+\vspace{5mm} You may also use plain \texttt{latex} instead of
+\texttt{pdflatex}.  This requires you to use postscript graphics
+instead of pdf.
+
+
+
+
+\chapter{Stuff that won't be read by anyone}
+
+Some people include in their thesis a lot of detail, particularly lots
+of tables containing raw results, figures of intermediate results, or
+computer code which no-one will ever read. You should be careful that
+anything like this you include should contain some element of
+uniqueness which justifies its inclusion.
+
+\bibliography{MSc-dissertation}
+\bibliographystyle{unsrt}
+
+\end{document}
+

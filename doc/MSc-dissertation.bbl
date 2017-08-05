@@ -1,0 +1,97 @@
+\begin{thebibliography}{10}
+
+\bibitem{schnack2009lectures}
+D.D. Schnack.
+\newblock {\em Lectures in Magnetohydrodynamics: With an Appendix on Extended
+  MHD}.
+\newblock Lecture Notes in Physics. Springer Berlin Heidelberg, 2009.
+
+\bibitem{plunian2013shell}
+Franck Plunian, Rodion Stepanov, and Peter Frick.
+\newblock Shell models of magnetohydrodynamic turbulence.
+\newblock {\em Physics Reports}, 523(1):1--60, 2013.
+
+\bibitem{sir1919larmor}
+J~Sir.
+\newblock Larmor, how could a rotating body such as the sun become a magnet?,
+  rep.
+\newblock In {\em 87th Meeting Brit. Assoc. Adv. Sci. Bournemgouth, John Murray
+  London}, pages 159--160, 1919.
+
+\bibitem{brandenburg2007hydromagnetic}
+Axel Brandenburg.
+\newblock Hydromagnetic dynamo theory.
+\newblock {\em Scholarpedia}, 2(3):2309, 2007.
+
+\bibitem{brandenburg2005astrophysical}
+Axel Brandenburg and Kandaswamy Subramanian.
+\newblock Astrophysical magnetic fields and nonlinear dynamo theory.
+\newblock {\em Physics Reports}, 417(1):1--209, 2005.
+
+\bibitem{orszag1970analytical}
+Steven~A Orszag.
+\newblock Analytical theories of turbulence.
+\newblock {\em Journal of Fluid Mechanics}, 41(2):363--386, 1970.
+
+\bibitem{kazantsev1968enhancement}
+AP~Kazantsev.
+\newblock Enhancement of a magnetic field by a conducting fluid.
+\newblock {\em Sov. Phys. JETP}, 26(5):1031--1034, 1968.
+
+\bibitem{schekochihin2004critical}
+Alexander~A Schekochihin, Steven~C Cowley, Jason~L Maron, and James~C
+  McWilliams.
+\newblock Critical magnetic prandtl number for small-scale dynamo.
+\newblock {\em Physical review letters}, 92(5):054502, 2004.
+
+\bibitem{schekochihin2002small}
+Alexander~A Schekochihin, Jason~L Maron, Steven~C Cowley, and James~C
+  McWilliams.
+\newblock The small-scale structure of magnetohydrodynamic turbulence with
+  large magnetic prandtl numbers.
+\newblock {\em The Astrophysical Journal}, 576(2):806, 2002.
+
+\bibitem{biskamp1997nonlinear}
+D.~Biskamp.
+\newblock {\em Nonlinear Magnetohydrodynamics}.
+\newblock Cambridge Monographs on Plasma Physics. Cambridge University Press,
+  1997.
+
+\bibitem{hughes1996kinetic}
+David~W Hughes, Fausto Cattaneo, and Eun-jin Kim.
+\newblock Kinetic helicity, magnetic helicity and fast dynamo action.
+\newblock {\em Physics Letters A}, 223(3):167--172, 1996.
+
+\bibitem{LinkmannMoritzFrederikLeon2016Spim}
+Moritz Frederik~Leon Linkmann.
+\newblock Self-organisation processes in (magneto)hydrodynamic turbulence,
+  2016.
+
+\bibitem{mccomb1990physics}
+William~D McComb.
+\newblock The physics of fluid turbulence.
+\newblock {\em Chemical Physics}, 1990.
+
+\bibitem{brandenburg2011dissipation}
+Axel Brandenburg.
+\newblock Dissipation in dynamos at low and high magnetic prandtl numbers.
+\newblock {\em Astronomische Nachrichten}, 332(1):51--56, 2011.
+
+\bibitem{sahoo2011systematics}
+Ganapati Sahoo, Prasad Perlekar, and Rahul Pandit.
+\newblock Systematics of the magnetic-prandtl-number dependence of homogeneous,
+  isotropic magnetohydrodynamic turbulence.
+\newblock {\em New Journal of Physics}, 13(1):013036, 2011.
+
+\bibitem{stern2002millennium}
+David~P Stern.
+\newblock A millennium of geomagnetism.
+\newblock {\em Reviews of geophysics}, 40(3), 2002.
+
+\bibitem{glatzmaier1995three}
+Gary~A Glatzmaier and Paul~H Roberts.
+\newblock A three-dimensional self-consistent computer simulation of a
+  geomagnetic field reversal.
+\newblock 1995.
+
+\end{thebibliography}

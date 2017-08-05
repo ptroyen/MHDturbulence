@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: MSc-dissertation.aux
+The style file: unsrt.bst
+Database file #1: MSc-dissertation.bib
+Warning--empty journal in glatzmaier1995three
+You've used 17 entries,
+            1791 wiz_defined-function locations,
+            553 strings with 6087 characters,
+and the built_in function-call counts, 3450 in all, are:
+= -- 315
+> -- 117
+< -- 1
++ -- 48
+- -- 31
+* -- 224
+:= -- 556
+add.period$ -- 52
+call.type$ -- 17
+change.case$ -- 15
+chr.to.int$ -- 0
+cite$ -- 18
+duplicate$ -- 160
+empty$ -- 364
+format.name$ -- 31
+if$ -- 764
+int.to.chr$ -- 0
+int.to.str$ -- 17
+missing$ -- 18
+newline$ -- 87
+num.names$ -- 17
+pop$ -- 42
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 65
+stack$ -- 0
+substring$ -- 224
+swap$ -- 26
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 36
+width$ -- 19
+write$ -- 183
+(There was 1 warning)
