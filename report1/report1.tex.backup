@@ -1,0 +1,487 @@
+\documentclass[a4paper,12pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[margin=0.8in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+%\documentclass{minimal}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+    frame=single,
+    breaklines=true,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+\lstdefinelanguage{numpy}{
+    keywords = {mean}
+}
+
+\title{Initial Runs and Onset of Dynamo Action}
+\author{B098688}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+ This report outlines the first steps made towards studies on magnetohydrodynamic (MHD) turbulence. After a brief theory review, the MHD code eDNS\footnote{eDNS is a hydrodynamic direct numerical simulation (DNS) code written by Sam Yoffe during his PhD studies in the University of Edinburgh and later modified by Moritz Linkmann that allowed to simulate MHD as well.} was used to study the onset of dynamo action in kinematically forced simulations with low turbulence. This was done by two different methods: the first was to keep the magnetic Prandtl number ($Pr_M$) constant and vary the kinematic viscosity of the simulation ($\nu$) in order to probe at different values of magnetic diffusivity ($\eta$) through the relation $\nu = \eta Pr_M$. The second method was to keep the kinematic viscosity constant and vary $Pr_M$ in order to obtain the same values of magnetic diffusivity. Finally, a substantial difference in the onset of dynamo action was observed when the system was injected with kinematic helicity.
+\end{abstract}
+
+\section{Introduction}
+
+The field of magnetohydrodynamics studies electrically conducting fluids. This can occur in different scales from the flow of liquid sodium in laboratories to the plasma inside nuclear fusion reactors or to the movement of material inside the cores of planets and stars. In general, the equations that govern these fluids are obtained by a combination of Navier-Stokes equations and Maxwell equations. Said governing equations are the following:
+
+\begin{align}
+\partial_t \bm u &= - \frac{1}{\rho} \bm \nabla p - (\bm u \cdot \bm \nabla) \bm u + \frac{1}{\rho} (\bm \nabla \times \bm b) \times \bm b + \nu \nabla^2 \bm u + \bm f_u \label{eq1} \\
+\partial_t \bm b &= (\bm b \cdot \nabla) \bm u - (\bm u \cdot \bm \nabla) \bm b + \eta \nabla^2 \bm b + \bm f_b \label{eq2} \\
+\bm \nabla \cdot &\bm u = 0 \qquad \text{and} \qquad \bm \nabla \cdot \bm b = 0 \label{eq3}
+\end{align}
+
+Here the velocity and magnetic fields are defined as $\bm u$ and $\bm b$, respectively, $\rho$ denotes the density and can be set to $\rho = 1$ due to the incompressibility condition of eqn.~\ref{eq3}, and $p$ is the thermodynamic pressure on the fluid. The kinematic viscosity $\nu$ is an intrinsic property of the fluid that measures how prone is the fluid to flow - honey is more viscous than water and this is translated to a smaller value for $\eta$ for the latter - and thus also related to friction within the fluid. The magnetic diffusivity $\eta$ is another intrinsic property of the magnetofluid that is directly related to its electric conductivity. Finally, $\bm f_u$ and $\bm f_b$ are external kinetic (mechanic) and magnetic forcing that could be present. 
+
+A brief, verbal description of the terms in the above equations is important now. The pressure term in the kinetic equation is simply saying that when there exists a gradient in the pressure within a fluid, then it will undergo acceleration towards areas of lower pressure. The non-linear term $(\bm u \cdot \bm \nabla)\bm u$ is the inertial term and it is responsible for the transfer of kinetic energy in the turbulent cascade\footnote{The turbulent cascade, or energy cascade, refers to the transfer of energy from the large scales to the small scales, where energy is dissipated through the fluid's viscosity.}. The next term is simply the influence of the Lorentz force to the fluid's velocity field. The last term in eqn.~\ref{eq1} is related to the dissipation of energy due to viscosity - that is energy being transformed from kinetic to heat due to friction within the fluid. 
+
+The Reynolds number $Re$ is an important, dimensionless, quantity that is often used to describe fluids. It is a good measure to numerically determine when a fluid has turbulence. It can be said that when a non conducting fluid goes from low Reynolds number to a high Reynolds number it is undergoing a transition from laminar to turbulent flow. Comparing the influence of the non-linear, inertial, term of eqn.~\ref{eq1} and the term related to the viscous dissipation it is possible to obtain an expression for such dimensionless quantity.
+
+\begin{align}
+ \frac{\vert (\bm u \cdot \bm \nabla) \bm u \vert}{\vert \nu \nabla^2 \bm u \vert} \sim \frac{u \frac{1}{L} u}{\nu \frac{1}{L^2} u} \sim \frac{u L}{\nu} \equiv Re \nonumber
+\end{align}
+
+This important quantity is determined by $L$, which is simply the characteristic length scale of the system, basically the size of the largest scales of the system. 
+
+The first term in the right hand side of eqn.~\ref{eq2}, $(\bm b \cdot \bm \nabla)\bm u$, is the stretching of the magnetofluid's magnetic field lines due to the flow - this term is responsible for conversion of kinetic energy to magnetic energy in the large scales. The next term in the r.h.s of eqn.~\ref{eq2}, $(\bm u \cdot \bm \nabla)\bm b$, is related to the advection of the magnetic field lines by the fluid's flow. Finally, the term $\eta \nabla^2 \bm b$ is related to diffusion of energy through the magnetic channel. These last two terms can be compared to obtain a similar quantity to the Reynolds number, but for the magnetic contribution. This is also related to turbulence, but magnetic in nature, and it is called the magnetic Reynolds number. 
+
+\begin{align}
+ \frac{\vert (\bm u \cdot \bm \nabla) \bm b \vert}{\vert \eta \nabla^2 \bm b \vert} \sim \frac{u \frac{1}{L} b}{\eta \frac{1}{L^2} b} \sim \frac{u L}{\eta} \equiv Re_M \nonumber
+\end{align}
+
+Large $Re_M$ means that the evolution of the magnetic field is primarily due to the fluid's flow, and the most extreme case of this scenario is when the magnetofluid is perfectly conducting ($\eta = 0$) and it is called ``ideal MHD''. Small $Re_M$ means that $\bm b$'s evolution is mainly due to the magnetic diffusivity. Typical values of magnetic Reynolds number are the following:
+
+\begin{center}
+\begin{tabular}{| c | c |}
+ \hline
+ Liquid metals & $Re_M \sim 10^{-3}\,-\,10^{-1}$ \\ 
+ \hline
+ Planet interiors & $Re_M \sim 100\,-\,300$ \\ 
+ \hline
+ Solar convection zone & $Re_M \sim 10^{6}\,-\,10^{9}$ \\ 
+ \hline
+ Interstellar or intergalactic medium & $Re_M \sim 10^{18}\,-\,10^{29}$ \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+It can now be said that larger Reynolds numbers, which are related to more turbulence in the system, will undoubtedly mean that more energy is being dissipated. This arises to the appearance of a new dimensionless quantity - the magnetic Prandtl number $Pr_M$, which is simply the relation between the magnetic and kinetic Reynolds numbers. 
+
+\begin{align}
+ Pr_M = \frac{Re_M}{Re} = \frac{\nu}{\eta} \nonumber
+\end{align}
+
+Magnetic Prandtl numbers lower than one mean that most of the energy in the system is being dissipated through the kinetic channel, i.e. through kinematic viscosity. Conversely, when $Pr_M$ is larger than one, then the magnetic channel is dissipating the majority of the system's energy. This is one of the behaviours that will be consistently checked while using the eDNS code. Examples of systems with low and high magnetic Prandtl numbers can be seen in fig.~\ref{fig1}. In said image, there are yellow dashed lines which are of constant $Pr_M$ (denoted by $Pm$ in the figure). For unitary magnetic Prandtl number there is a computer and the label DNS - this is related to the fact that it is very complicated to go to high (magnetic) Reynolds numbers with direct numerical simulations, and thus, so far, most results have been obtained in the area around $Pr_M \sim 1$. This is also true for the current studies.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.73\textwidth]{img/PrM_spectrum}
+\caption{Magnetic Prandtl number isolines.}
+\label{fig1}
+\end{figure}
+
+
+\section{MHD Homogeneous Isotropic Turbulence}
+
+As it was mentioned before, in a hydrodynamic fluid, high Reynolds numbers are related to turbulent flow, while low Reynolds numbers describe laminar flow. A similar behaviour occurs for electrically conducting magnetofluids. The dimensionless quantity that helps describe turbulence in the magnetic channel is the magnetic Reynolds number, which has been defined above to be inversely proportional to the magnetic diffusivity, and directly proportional to the average (or RMS) velocity. ``But only when large fluid velocities are generated in
+the nonlinear phase of an instability or by some external stirring $Re_M$ can become large, making the system prone to turbulence''~\cite{biskamp1997nonlinear}. These circumstances can occur in strongly dynamic processes such as inside tokamak reactors or flares on the solar corona. 
+
+A proper description of turbulence can be done with statistical means. A system is said to be homogeneous if it can be considered to be spatially invariant - this occurs only if the system is large enough when compared to the turbulent scales therein. This means that quantities such as the kinetic energy, $E_k = \frac{1}{2} \langle \bm v(\bm x) \cdot \bm v(\bm x) \rangle$, are independent of position. Numerically, this is related to having periodic boundary conditions in the modeled system. This periodicity is an important part of DNS, as it allows for the use of Fourier transforms to describe quantities such as the velocity or the magnetic fields. 
+
+Isotropy in hydrodynamic systems is easily obtained through a Galilean frame transformation to go with the average velocity of the flow. This, however, cannot be mimicked in the magnetohydrodynamic case, as an average (usually external) field $\bm b_0$ cannot be disregarded with a Galilean transformation. As a consequence of this, eDNS simulates systems with no external applied magnetic field, and it is thus (fairly) isotropic\footnote{The isotropy of the system is not conserved in time - turbulent MHD is know for its self-organisation, which can induce anisotropy in the system.}.
+
+\subsection{Length Scales in Turbulent Motion}
+
+In general, and particularly in the DNS code that was used for the results obtained for this report, MHD systems are energetically driven in large scales. The non-linear term in the MHD equations then causes the system to become activated at smaller length scales too. When the system reaches small enough scales, energy dissipation ($\varepsilon = - \frac{dE}{dt}$) through viscosity and magnetic diffusivity becomes important. It is possible to track down to which scales the dissipative effects remain important - these are called the Kolmogorov microscales. 
+
+The large scale at which energy enters the system is usually called characteristic global or integral length scale. It can be said that the largest scale is not necessarily the one at which energy enters the system, but simply the scale at which the largest eddies exist. The characteristic velocity of the system can be defined with the use of the kinetic energy of the system $E_k = \frac{1}{2}(u_x^2+u_y^2+u_z^2)$ and the homogeneity condition. 
+
+\begin{align}
+ E_k=\frac{3}{2}u_{rms}^2 \nonumber
+\end{align}
+
+The smallest scales in the system are the dissipative ones and commonly referred to as Kolmogorov microscales. Note that when dissipation is not relevant, both Reynolds numbers are larger than unity, and they become more important as the Reynolds numbers become smaller and get closer to unity. Finally, when they are much smaller than unity, dissipative processes dominate the system. So if we take the RMS velocity to be the characteristic velocity of the system, and from this the characteristic length scales can be obtained through dimensionality considerations. Equation~\ref{eq4} defines the Kolmogorov microscales, and any simulation that is well resolve must ensure that these length scales are included in it. 
+
+\begin{align}
+ l_\nu = \left( \frac{\nu^3}{\varepsilon} \right)^{\frac{1}{4}} \qquad \qquad \qquad \qquad \qquad l_\eta = \left( \frac{\eta^3}{\varepsilon} \right)^{\frac{1}{4}}
+ \label{eq4}\\
+ k_\nu = \left( \frac{\varepsilon}{\nu^3} \right)^{\frac{1}{4}} \qquad \qquad \qquad \qquad \qquad k_\eta = \left( \frac{\varepsilon}{\eta^3} \right)^{\frac{1}{4}} \label{eq5}
+\end{align}
+
+The Kolmogorov length scales (eqn.~\ref{eq4}) can be related to large enough wavenumbers where these dissipative processes dominate by noting that the wavenumber is inversely proportional to distance. The eDNS code goes back and forth between spectral and configuration space in order to speed up the calculation of the non-linear terms by making use of the convolution theorem. The bulk of the code occurs in spectral space and results are expressed in terms of wavenumbers and not length scales. The simulation is initialised by setting a lattice size (to a power of two) while taking into consideration that the maximum wavenumber is roughly determined by $\frac{N}{3}$, where $N$ is the number of grid points per side of the cubic lattice. 
+
+For whatever simulation that is run, a condition that must hold is that the maximum wavenumber of the simulation needs to be larger than the wavenumbers related to the dissipative processes ($k_\nu$ and $k_\eta$). This has an important consequence in terms of the systems that can be simulated with DNS. That is, it is not possible to study systems that have too large Reynolds numbers since the maximum wavenumber is constrained by $N$ - which can go up to 2048 in the eDNS code.
+
+\section{Forced, Non-Helical, Simulations}
+
+The first set of simulations is done in a $64^3$ cubic lattice with ``large'' values of kinetic viscosity and magnetic diffusivity. These set of simulations are meant to look at the onset of dynamo action - this is where steady state kinetic energy is transformed into magnetic energy. The eDNS code receives various input parameters such as the time step size (which has to satisfy a Courant-Friedrichs-Lewy condition such that $dt < 1/(10 u_{rms} k_{max})$), the total simulation time, the kinematic viscosity, lattice size, forcing parameters, magnetic Prandtl number, and others that will be explained later on when necessary. 
+
+Since the onset of dynamo action occurs when going from a ``large'' value of magnetic diffusivity to smaller values, while keeping all other things constant. This means that there are two possible ways to do this change in $\eta$. First it is possible to keep $Pr_M$ constant, and equal to unity, while varying the kinematic viscosity, and the magnetic diffusivity with it. The second method is to keep the kinematic viscosity $\nu=0.020$ constant while varying the magnetic Prandtl number. 
+
+\subsection{$Pr_M = 1.0$ and Varying $\nu$}
+
+The $64^3$ lattice simulations with constant $Pr_M=1.0$ have the following values of kinematic viscosity: $\nu = \left[ 0.030, 0.025, 0.020, 0.015, 0.010 \right]$. They are only kinetically forced with no helicity input into the system. Since the magnetic Prandtl number is set to unity, and due to the relation $Pr_M = \nu / \eta$, the values of magnetic diffusivity are exactly the same as those for kinematic viscosity. Figures~\ref{fig2}-~\ref{fig11} show the kinetic and magnetic energy spectra for the values of of viscosity and magnetic diffusivity as well as the energy dissipation ratios. It is clear how the decrease in magnetic diffusivity causes the dynamo effect.
+
+\newpage
+
+$Re = 23.26$, $Re_M = 23.26$, $k_{max}/k_\nu = 2.58$, $k_{max}/k_\eta = 2.58$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.030_1.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $\nu=0.030$, $\eta=0.030$.}
+  \label{fig2}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.030_1.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $\nu=0.030$, $\eta=0.030$.}
+  \label{fig3}
+\end{minipage}
+\end{figure}
+
+$Re = 28.27$, $Re_M = 28.27$, $k_{max}/k_\nu = 2.25$, $k_{max}/k_\eta = 2.25$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.025_1.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $\nu=0.025$, $\eta=0.025$.}
+  \label{fig4}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.025_1.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $\nu=0.025$, $\eta=0.025$.}
+  \label{fig5}
+\end{minipage}
+\end{figure}
+
+$Re = 36.14$, $Re_M = 36.14$, $k_{max}/k_\nu = 1.88$, $k_{max}/k_\eta = 1.88$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.020_1.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $\nu=0.020$, $\eta=0.020$.}
+  \label{fig6}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.020_1.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $nu=0.020$, $\eta=0.020$.}
+  \label{fig7}
+\end{minipage}
+\end{figure}
+
+$Re = 47.16$, $Re_M = 47.16$, $k_{max}/k_\nu = 1.52$, $k_{max}/k_\eta = 1.52$.\\
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.015_1.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $\nu=0.015$, $\eta=0.015$.}
+  \label{fig8}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.015_1.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $nu=0.015$, $\eta=0.015$.}
+  \label{fig9}
+\end{minipage}
+\end{figure}
+
+$Re = 69.58$, $Re_M = 69.58$, $k_{max}/k_\nu = 1.10$, $k_{max}/k_\eta = 1.10$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.010_1.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $\nu=0.010$, $\eta=0.010$.}
+  \label{fig10}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.010_1.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $nu=0.010$, $\eta=0.010$.}
+  \label{fig11}
+\end{minipage}
+\end{figure}
+
+\subsection{$\nu = 0.020$ and Varying $Pr_M$}
+
+The $64^3$ lattice simulations with constant $\nu=0.020$ have the following values of magnetic Prandtl number: $Pr_M = \left[ 0.6667, 0.8, 1.0, 1.3333, 2.0 \right]$. These correspond to magnetic diffusivity of: $\eta = \left[ 0.030, 0.025, 0.020, 0.015, 0.010 \right]$. Roughly the same results are obtained when compared to the first method of varying the magnetic diffusivity. Despite seeing some slight differences between the two methods of varying $\eta$, it is clear that behaviouraly they have the same characteristics - that is a decrease in magnetic diffusivity leads to dynamo action being activated. The kinetic and magnetic energy spectra and dissipation rates are plotted below, from fig.~\ref{fig12}-~\ref{fig21}.
+
+\newpage
+
+$Re = 35.49$, $Re_M = 23.66$, $k_{max}/k_\nu = 1.88$, $k_{max}/k_\eta = 2.55$.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.020_0.67}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=2/3$, $\eta=0.030$.}
+  \label{fig12}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.020_0.67}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=2/3$, $\eta=0.030$.}
+  \label{fig13}
+\end{minipage}
+\end{figure}
+
+$Re = 36.84$, $Re_M = 29.47$, $k_{max}/k_\nu = 1.89$, $k_{max}/k_\eta = 2.23$.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.020_0.80}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=0.8$, $\eta=0.025$.}
+  \label{fig14}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.020_0.8}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=0.8$, $\eta=0.025$.}
+  \label{fig15}
+\end{minipage}
+\end{figure}
+
+$Re = 36.14$, $Re_M = 36.14$, $k_{max}/k_\nu = 1.88$, $k_{max}/k_\eta = 1.88$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.020_1.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=1.0$, $\eta=0.020$.}
+  \label{fig16}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.020_1.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=1.0$, $\eta=0.020$.}
+  \label{fig17}
+\end{minipage}
+\end{figure}
+
+\newpage
+
+$Re = 36.13$, $Re_M = 48.17$, $k_{max}/k_\nu = 1.87$, $k_{max}/k_\eta = 1.51$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.020_1.33}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=4/3$, $\eta=0.015$.}
+  \label{fig18}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.020_1.33}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=4/3$, $\eta=0.015$.}
+  \label{fig19}
+\end{minipage}
+\end{figure}
+
+$Re = 35.12$, $Re_M = 70.23$, $k_{max}/k_\nu = 1.85$, $k_{max}/k_\eta = 1.10$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_64_0.020_2.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=2.0$, $\eta=0.010$.}
+  \label{fig20}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/energy_dissipation_64_0.020_2.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=2.0$, $\eta=0.010$.}
+  \label{fig21}
+\end{minipage}
+\end{figure}
+
+\section{Forced, Helical, Simulations}
+
+After confirming that regardless of the method used for varying the magnetic diffusivity, the onset of dynamo action holds similar behaviour, looking into the input of kinetic helicity in the forced simulations is of interest. It is important to mention that the fact that kinetic helicity is injected into the system does not mean that the forcing rate is increased, but the eDNS code ensures that the forcing rate remains constant. This means that we can compare the simulations that we have made to observe the onset of dynamo action for non-helical forcing with new, helical, simulations. To do this, only the method where the kinematic viscosity was kept constant (and equal to $\nu=0.020$) will be shown\footnote{However, it was checked that the behaviour of the second method had the same characteristics.}.
+
+The eDNS code gives the possibility to add helicity to the system by specifying what percentage of the forcing is done in a helical fashion. Setting this to 1.0, the effect of fully-helical forcing on homogeneous, isotropic, turbulence is studied for the same values of magnetic diffusivity than the ones used to study the onset of dynamo action.
+
+$Re = 41.91$, $Re_M = 27.94$, $k_{max}/k_\nu = 1.89$, $k_{max}/k_\eta = 2.57$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_64_0.020_0.666}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=2/3$, $\eta=0.030$.}
+  \label{fig22}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_dissipation_64_0.020_0.666}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=2/3$, $\eta=0.030$.}
+  \label{fig23}
+\end{minipage}
+\end{figure}
+
+$Re = 41.74$, $Re_M = 33.39$, $k_{max}/k_\nu = 1.87$, $k_{max}/k_\eta = 2.21$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_64_0.020_0.8}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=0.8$, $\eta=0.025$.}
+  \label{fig24}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_dissipation_64_0.020_0.8}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=0.8$, $\eta=0.025$.}
+  \label{fig25}
+\end{minipage}
+\end{figure}
+
+$Re = 35.49$, $Re_M = 35.49$, $k_{max}/k_\nu = 1.90$, $k_{max}/k_\eta = 1.90$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_64_0.020_1.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=1.0$, $\eta=0.020$.}
+  \label{fig26}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_dissipation_64_0.020_1.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=1.0$, $\eta=0.020$.}
+  \label{fig27}
+\end{minipage}
+\end{figure}
+
+\newpage
+
+$Re = 36.19$, $Re_M = 48.24$, $k_{max}/k_\nu = 1.87$, $k_{max}/k_\eta = 1.51$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_64_0.020_1.333}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=4/3$, $\eta=0.015$.}
+  \label{fig28}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_dissipation_64_0.020_1.333}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=4/3$, $\eta=0.015$.}
+  \label{fig29}
+\end{minipage}
+\end{figure}
+
+$Re = 34.78$, $Re_M = 69.56$, $k_{max}/k_\nu = 1.88$, $k_{max}/k_\eta = 1.12$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_64_0.020_2.0}.png}
+  \caption{Kinetic and Magnetic Energy spectra~for $N=64$, $Pr_M=2.0$, $\eta=0.010$.}
+  \label{fig30}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/energy_dissipation_64_0.020_2.0}.png}
+  \caption{Kinetic and Magnetic Energy dissipation for $N=64$, $Pr_M=2.0$, $\eta=0.010$.}
+  \label{fig31}
+\end{minipage}
+\end{figure}
+
+It is clear that for the values of magnetic diffusivity that dynamo was not present in the non-helical simulations, in the helical ones all values of magnetic diffusivity analysed did have dynamo action. This leads to the conclusion that injecting helicity to a system leads to an amplification of dynamo action.
+
+\subsection{Energy Spectra}
+
+After observing the spectrally averaged energy profiles in time, the energies as a function of wavenumber in the end of the simulation become of interest - it would be better to make a script to average in time in the forced steady state, but this is made for brevity. Since it was observed that different methods of varying $\eta$ have the same behaviour, only the method with varying $Pr_M$ and constant $\nu$ is used to study the energy spectra. 
+
+There are a few characteristics that need to be observed in the spectral image It is known that for regular hydrodynamics the kinetic energy spectrum looks has a region of maximal energy close to low wavenumbers (which is related to the modes where energy is input into the system). The energy then decreases for higher wavenumbers - this decrease is seen as a negative slope in a log-log plot, and is usually called energy cascade and the term of eqn.~\ref{eq1} responsible for it is the $(\bm u \cdot \bm \nabla)\bm u$. Finally, close to the wavenumber related to the Kolmogorov microscale there is the region of lowest energy because this is the dissipative length scale. 
+
+When looking at MHD there is an interesting phenomenon that occurs to the profile for the magnetic energy as a function of wavenumber. Since the forcing is only through the kinetic channel and the term $(\bm b \cdot \bm \nabla) \bm u$ in eqn.~\ref{eq2} is mainly responsible for energy transfer from kinetic to magnetic energy in low wavenumber (i.e. in large length scales). 
+
+\subsubsection{Non-Helical}
+
+The (briefly) mentioned energy cascade is observed in fig.~\ref{fig32} and fig.~\ref{fig33}, which are plotted in a log-log manner, and the approximately linear downwards slope range is precisely the inertial range. The most interesting feature of the energy spectra plots is that the activation of dynamo action (in fig.~\ref{fig33}) is observed as the magnetic energy spectrum exceeds that of the kinetic energy spectrum - \textbf{I believe that this is due to inverse energy cascade, but I am not completely sure about that.} 
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/spectra_64_0.020_0.666}.png}
+  \caption{$E_M(k)$ and $E_K(k)$ for $N=64$, $Pr_M=2/3$, $\eta=0.030$.}
+  \label{fig32}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/No_HELICITY/spectra_64_0.020_1.333}.png}
+  \caption{$E_M(k)$ and $E_K(k)$ for $N=64$, $Pr_M=4/3$, $\eta=0.015$.}
+  \label{fig33}
+\end{minipage}
+\end{figure}
+
+\subsubsection{Helical}
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/spectra_64_0.020_0.666}.png}
+  \caption{$E_M(k)$ and $E_K(k)$ for $N=64$, $Pr_M=2/3$, $\eta=0.030$.}
+  \label{fig34}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/UHELICITY/spectra_64_0.020_1.333}.png}
+  \caption{$E_M(k)$ and $E_K(k)$ for $N=64$, $Pr_M=4/3$, $\eta=0.015$.}
+  \label{fig35}
+\end{minipage}
+\end{figure}
+
+The helical results have a, somewhat, similar behaviour than fig.~\ref{fig33}. That is, all three scenarios have dynamo action activated (it was seen in the wavenumber averaged kinetic and magnetic energy plots that all helical simulations had dynamo action activated). In these spectral plots (figs.~\ref{fig34} and~\ref{fig35}) it is clear that these dynamo action is related to magnetic energy being higher than kinetic energy in high wavenumbers (or small length scales). The main difference between the helical simulations and the non-helical simulation with dynamo action activated is at which wavenumber the magnetic energy surpasses the kinetic energy. In the latter case, it occurs close to the maximum wavenumber, while in the former $E_M$ surpasses $E_K$ close to the wavenumber where kinetic energy is input into the system. 
+
+Next thing that would be interesting to do is to use magnetic forcing instead of kinetic, and with injecting magnetic helicity then. Looking at the behaviour of this scenario should be informative too. 
+
+\section{Conclusion}
+
+This report was a detailed description of the initial work done for a dissertation on MHD simulations. The first section tried to clear out some of the fundamental physics behind the code used to simulate magnetohydrodynamics. The form of the non-linear equations that describe MHD was explained along with the terms therein. A short detail of some important, dimensionless, parameters in MHD (Reynolds numbers and magnetic Prandtl number) were discussed and their origin was explained. A few remarks were made regarding MHD turbulence and the length scales important to the processes that rule homogeneous, isotropic, turbulence in MHD were defined (the Kolmogorov microscales). 
+
+Using the eDNS code, forced simulations were studied with and without helicity. The onset of dynamo action for forced, non-helical, was studied by keeping the kinematic viscosity constant ($\nu = 0.020$) and varying the magnetic Prandtl number (in order to vary the magnetic diffusivity) and by maintaining $Pr_M=1.0$ and varying $\nu$. The two different methods showed no qualitative differences, and thus for the subsequent studies of helicity only the first method was used (constant $\nu$ and varying $Pr_M$).
+
+For the non-helical simulations, large values of magnetic diffusivity ($\eta = [0.030-0.020]$)
+\newpage
+
+\bibliographystyle{unsrt}
+\bibliography{report1}
+
+\end{document}

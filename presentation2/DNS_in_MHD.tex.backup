@@ -1,0 +1,490 @@
+\documentclass{beamer}
+%\usetheme{Berlin}
+\usecolortheme{seahorse}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{xmpmulti}
+%\usepackage[backend=bibtex]{biblatex}
+%\bibliography{DNS_in_MHD}
+
+\title{Use of Direct Numerical Simulations for Studies on Magnetohydrodynamics}
+\author{Andr\'es Cathey}
+\institute{The University of Edinburgh}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+\begin{frame}
+\frametitle{Overview}
+\tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Overview}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\section{Direct Numerical Simulations (DNS)}
+
+\subsection{Foundations}
+
+\begin{frame}
+ \frametitle{Direct Numerical Simulations (DNS)} %unrivalled in accuracy and in the level of description provided
+ \framesubtitle{Foundations}
+ 
+ \begin{itemize}
+  \item Subsection of Computational Fluid Dynamics.
+  %\begin{itemize}
+   %\item Solve PDEs that govern the motion of real fluids.
+  %\end{itemize}
+  \item<2-> Navier-Stokes equation for an incompressible fluid ($\bm \nabla \cdot \bm U = 0$): \begin{equation}
+                                \frac{\partial \bm U}{\partial t} + (\bm U \cdot \bm \nabla) \bm U = - \frac{1}{\rho} \bm \nabla P + \nu \nabla ^ 2 \bm U + \bm F
+                               \end{equation}
+  \item<3-> Reynolds number: \begin{equation}
+                              Re = \frac{\text{inertial forces}}{\text{viscous forces}} = \frac{u L}{\nu}
+                             \end{equation} % onset of turbulence
+
+  \item<4-> Non-linear term allows energy transfer from large to and from small scales.
+  %That plus viscous term are key in the modelling of turbulence. 
+  %the cost is extremely high; and the computer requirements increase so rapidly with Reynolds number that the applicability of the approach is limited to flows of low or moderate Reynolds numbers.
+ \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+ \frametitle{Direct Numerical Simulations (DNS)}
+ \framesubtitle{Foundations}
+ 
+ \begin{itemize}
+  \item Pioneered by Orszag and Patterson (1972) and Rogallo (1981).
+  \item<2-> Pseudo-spectral method.%, with velocity field as (finite) Fourier series. % (i.e. Fourier Space).
+  \item<3-> High computational cost. \begin{itemize}
+                                      \item<4-> $N^3$ grid points in a cubical domain with sides of length $L=2\pi$. 
+                                      \item<5-> Can be related to the Reynolds number (Landau and Liftshitz, 1959).
+                                      \item<6-> Has to represent large-scales.
+                                      \item<7-> Grid spacing $\Delta x$ small enough to resolve dissipative scales.
+                                     \end{itemize}
+
+  % N^3 wavenumber are analysed. 
+ \end{itemize}
+\end{frame}
+
+\subsection{Method}
+
+\begin{frame}
+ \frametitle{Direct Numerical Simulations (DNS)}
+ \framesubtitle{Method}
+ 
+ %isotropic velocity field with zero mean: U = u (u is the variation of the velocity field)
+ 
+ Start with a reformulated Navier Stokes equation in Fourier space. % Solenoidal NSE: system with boundary is zero at infinity and there are no mean velocities or externally applied pressure gradients.
+ 
+ \begin{equation}
+  \left( \frac{\partial}{\partial t} - \nu \nabla^2 \right) u_\alpha (\bm k, t) = M_{\alpha \beta \gamma}(\bm k) \left[ \sum_{\bm j + \bm l = \bm k} u_\beta (\bm j, t) u_\gamma (\bm l, t) \right]
+ \end{equation}%M is a symmetric operator
+ 
+ % I won't go into this, but it arises after introducing the zero boundary conditions at infinity and expressing the pressure (with the use of Green's functions) as a function of the velocity field. 
+ A discretisation in time and wavenumber is needed to obtain a numerical solution. % this means bounding the summation and it generates aliasing errors.
+ 
+ \begin{equation}
+  k_\alpha = \frac{2 \pi}{L} n_\alpha \qquad \qquad \qquad n_\alpha = 0, 1, \ldots, N - 1
+ \end{equation}
+ % clearly the size of the simulation depends on the number of wavenumbers calculated. K wavenumbers are calculated.
+ 
+ %This is equivalent to analysing a cubical grid with \Delta x = L / K = \pi / k_{max}
+ 
+ Non-linear term:
+ 
+ \begin{equation}
+  A_{\beta \gamma} (\bm k, t) = \sum_{\bm j + \bm l = \bm k} u_\beta (\bm j, t) u_\gamma (\bm l, t)
+ \end{equation}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Direct Numerical Simulations (DNS)}
+ \framesubtitle{Method}
+ 
+ The non-linear term is computationally costly. The convolution theorem can help with that.
+ 
+ \begin{enumerate}
+  \item Perform Fast Fourier Transform on velocity fields ($u_\alpha (\bm x, t)$). % numerically (and in C++) this is done with FFTW. cost ~ O(N ln(N))
+  \item<2-> Convolve the transformed fields. \begin{equation}
+                                              A_{\beta \gamma} (\bm x, t) = u_\beta (\bm x, t) u_\gamma (\bm x, t)
+                                             \end{equation}
+  \item<3-> Transform $A_{\beta \gamma} (\bm x, t)$ to $A_{\beta \gamma} (\bm k, t)$ to obtain the l.h.s term in the solenoidal Navier Stokes equation.
+  \item<4-> Use a suitable finite-differences method for evolving the velocity field in time~\cite{mccomb1990physics}. 
+ \end{enumerate}
+
+\end{frame}
+
+\subsection{Why Pseudo-Spectral?}
+
+\begin{frame}
+ \frametitle{Direct Numerical Simulations (DNS)}
+ \framesubtitle{Why Pseudo-Spectral?}
+ 
+ So... Why pseudo-spectral? \pause
+ 
+ Performing FFT can be a costly endeavor. ($N \log_2 N$) \pause
+ \vspace{1cm}
+ 
+ {\color{red}Decrease in computational cost!} \pause
+ 
+ Arithmetic operations required for calculating the non-linear term:
+ \begin{itemize}
+  \item Before FFT: $\mathcal O (N^6)$.
+  \item<5-> After FFT: $\mathcal O (N^3 \log_2 N)$.
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Direct Numerical Simulations (DNS)}
+ \framesubtitle{Why Pseudo-Spectral?}
+ 
+ Considerations for DNS code~\cite{yoffe2013investigation}:
+ 
+ \begin{itemize}
+  \item<2-> Time-stepping strategy.
+  \item<3-> Aliasing errors.
+  \item<4-> Implementation of parallelisation.
+  \item<5-> Benchmarking.
+ \end{itemize}
+
+
+\end{frame}
+
+
+\section{Magnetohydrodynamics with DNS}
+
+\subsection{Framework}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics with DNS}
+ \framesubtitle{Framework}
+ 
+ Magnetohydrodynamics (MHD) study electrically conducting fluids. \pause
+ 
+ Equations of fluid motion are obtained by combining Navier Stokes equations with Maxwell's equations.
+ 
+ \begin{equation}
+  \frac{\partial \bm u}{\partial t} + (\bm u \cdot \bm \nabla) \bm u = - \frac{1}{\rho} \bm \nabla P + \frac{1}{\rho} (\bm \nabla \times \bm b) \times \bm b + \nu \nabla ^ 2 \bm u + \bm f_u
+ \end{equation} % (nabla cross b) cross b == (b dot nabla) b
+ 
+ \begin{equation}
+  \frac{\partial \bm b}{\partial t} + (\bm u \cdot \bm \nabla) \bm b = (\bm b \cdot \bm \nabla) \bm u + \eta \nabla ^ 2 \bm b + \bm f_b
+ \end{equation} \pause
+ 
+ \begin{equation}
+  Re = \frac{u L}{\nu} \qquad \qquad \qquad \qquad Re_m = \frac{u L}{\eta}
+ \end{equation}
+
+
+\end{frame}
+
+\subsection{Magnetic Prandtl Number}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics with DNS}
+ \framesubtitle{Magnetic Prandtl Number}
+ 
+ \begin{align}
+ Re = \frac{\text{inertial forces}}{\text{viscous forces}} =  \frac{u\,L}{\nu} \nonumber \qquad
+ Re_M = \frac{\text{inertial forces}}{\text{diffusive forces}} =  \frac{u\,L}{\eta} \nonumber
+ \end{align}\pause
+ 
+ \begin{equation}
+  Pr_M = \frac{Re_M}{Re} =  \frac{\nu}{\eta}
+ \end{equation} \pause
+ 
+ $Pr_m < 1$ when most energy is dissipated through the magnetic channel.
+ 
+ $Pr_m > 1$ when most energy is dissipated through the kinetic (viscous) channel.
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Magnetohydrodynamics with DNS}
+ \framesubtitle{Magnetic Prandtl Number}
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{img/PrM_spectrum}
+  \caption{Map of ``typical'' objects in the plane $(Re,Re_M)$. Yellow dashed lines are $Pr_M$ isolines. \cite{plunian2013shell}.}
+  \centering
+ \end{figure}
+ 
+ %Earth dynamo: $Pr_M \sim \mathcal{O}(10^{-7})$.
+ 
+ %Inside the Sun: $Pr_M \sim \mathcal{O}(10^{-3})$.
+ 
+ %Thin accretion disks: $Pr_M \sim \mathcal{O}(10^0)$.
+ 
+ %Solar corona: $Pr_M \sim \mathcal{O}(10^4) - \mathcal{O}(10^8)$. \cite{hood2011solar}
+ 
+\end{frame}
+
+\section{DNS at Work}
+
+\subsection{Non-unity Magnetic Prandtl Number}
+
+\begin{frame}
+ \frametitle{DNS at Work}
+ \framesubtitle{Non-unity Magnetic Prandtl Number}
+ 
+ A well known research on non-unity magnetic Prandtl numbers is:\vspace{1cm}
+ 
+ G. Sahoo, P. Perlekar, and R. Pandit, “Systematics of the magnetic-prandtl-number dependence of homogeneous, isotropic magnetohydrodynamic turbulence”.\vspace{1cm}\pause
+ 
+ Range of achieved Magnetic Prandtl Numbers: $[0.01:10]$.
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS at Work}
+ \framesubtitle{Non-unity Magnetic Prandtl Number}
+ 
+ Sahoo et. al. use a DNS method with:
+ 
+ \begin{itemize}
+  \item Time-stepping strategy is the Adams-Bashforth scheme. %this uses an interpolation method. dt satisfies Courant–Friedrichs–Lewy condition (convergence condition).
+  \item<2-> $N = 512$ and $N = 1024$.
+  \item<3-> Study decaying and statistically steady turbulence. 
+  \item<4-> $2/3-$rule as a dealiasing method. 
+ \end{itemize}
+
+ 
+ %$f_u, f_b = 0$ for decaying turbulence.
+ 
+ %Steady forcing for statistically steady simulation (think of $\partial / \partial t \rightarrow 0 $).
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS at Work}
+ \framesubtitle{Non-unity Magnetic Prandtl Number}
+ 
+ \begin{itemize}
+  \item Time-stepping strategy is the Adams-Bashforth scheme. %this uses an interpolation method. dt satisfies Courant–Friedrichs–Lewy condition (convergence condition).
+  \item<2-> $N = 512$ and $N = 1024$.
+  \item<3-> Study decaying and statistically steady turbulence. 
+  \item<4-> $2/3-$rule as a dealiasing method. 
+ \end{itemize}
+
+ 
+ %$f_u, f_b = 0$ for decaying turbulence.
+ 
+ %Steady forcing for statistically steady simulation (think of $\partial / \partial t \rightarrow 0 $).
+ 
+\end{frame}
+
+\subsection{Results}
+
+%\begin{frame}
+ %\frametitle{DNS at Work}
+ %\framesubtitle{Results}
+ 
+ %$Pr_M = 0.1$ \pause
+ 
+ %\begin{figure}[ht]
+        %\begin{minipage}[b]{0.45\linewidth}
+         %   \centering
+          %  \includegraphics[width=\textwidth]{img/energy_a1}
+           % \caption{Time evolution of total (red), kinetic (green), and magnetic (blue) energies. \cite{sahoo2011systematics}.}
+   %         \label{fig:a}
+    %    \end{minipage}
+     %   \hspace{0.05cm}
+      %  \begin{minipage}[b]{0.46\linewidth}
+       %     \centering
+        %    \includegraphics[width=\textwidth]{img/energy_a2}
+         %   \caption{Time evolution of total, kinetic, and magnetic energy dissipation. \cite{sahoo2011systematics}.}
+          %  \label{fig:b}
+        %\end{minipage}
+    %\end{figure}
+ 
+%\end{frame}
+
+%\begin{frame}
+ %\frametitle{DNS at Work}
+ %\framesubtitle{Results}
+ 
+ %$Pr_M = 0.1$
+ 
+ %\begin{figure}
+ % \includegraphics[width=0.6\textwidth]{img/energy_a3}
+  %\caption{Magnetic-to-Kinetic energy ratio for $Pr_M = 0.1$\cite{sahoo2011systematics}.}
+  %\centering
+ %\end{figure}
+ 
+%\end{frame}
+
+%\begin{frame}
+ %\frametitle{DNS at Work}
+ %\framesubtitle{Results}
+ 
+ %$Pr_M = 10.0$
+ 
+  %   \begin{figure}[ht]
+   %     \begin{minipage}[b]{0.45\linewidth}
+    %        \centering
+     %       \includegraphics[width=\textwidth]{img/energy_e1}
+      %      \caption{Time evolution of total (red), kinetic (green), and magnetic (blue) energies. \cite{sahoo2011systematics}.}
+       %     \label{fig:a}
+       % \end{minipage}
+       % \hspace{0.05cm}
+       % \begin{minipage}[b]{0.46\linewidth}
+       %     \centering
+        %    \includegraphics[width=\textwidth]{img/energy_e2}
+         %   \caption{Time evolution of total, kinetic, and magnetic energy dissipation. \cite{sahoo2011systematics}.}
+         %   \label{fig:b}
+        %\end{minipage}
+    %\end{figure}
+ 
+%\end{frame}
+
+%\begin{frame}
+ %\frametitle{DNS at Work}
+ %\framesubtitle{Results}
+ 
+ %$Pr_M = 10.0$
+ 
+ %\begin{figure}
+  %\includegraphics[width=0.6\textwidth]{img/energy_e3}
+  %\caption{Magnetic-to-Kinetic energy ratio for $Pr_M = 10.0$\cite{sahoo2011systematics}.}
+  %\centering
+ %\end{figure}
+ 
+%\end{frame}
+
+\begin{frame}
+ \frametitle{DNS at Work}
+ \framesubtitle{Results}
+ 
+ Study decaying simulations with varying magnetic Prandtl Number. \pause
+ 
+ \begin{equation}
+  \bm f_u = \bm 0 \qquad \qquad \qquad \bm f_b = \bm 0
+ \end{equation}
+
+ 
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{DNS at Work}
+ \framesubtitle{Results}
+ 
+ Runs (f-h) have higher Reynolds numbers compared to their (a-e) equivalents.
+ 
+ \begin{figure}
+  \includegraphics[width=0.95\textwidth]{img/energies_prm}
+  \caption{Total (red), kinetic (green), and magnetic (blue) energies for a:~$Pr_M = 0.1$, b:~$Pr_M = 0.5$, c:~$Pr_M = 1.0$, d:~$Pr_M = 5.0$, e:~$Pr_M = 10.0$, f:~$Pr_M = 1.0$, g:~$Pr_M = 5.0$, h:~$Pr_M = 10.0$ \cite{sahoo2011systematics}.}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS at Work}
+ \framesubtitle{Results}
+ 
+ Runs (f-h) have higher Reynolds numbers compared to their (a-e) equivalents.
+ 
+ \begin{figure}
+  \includegraphics[width=0.95\textwidth]{img/energy_dissipation_prm.png}
+  \caption{Total (red), kinetic (green), and magnetic (blue) energy dissipation ratios for a:~$Pr_M = 0.1$, b:~$Pr_M = 0.5$, c:~$Pr_M = 1.0$, d:~$Pr_M = 5.0$, e:~$Pr_M = 10.0$, f:~$Pr_M = 1.0$, g:~$Pr_M = 5.0$, h:~$Pr_M = 10.0$ \cite{sahoo2011systematics}.}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{DNS at Work}
+ \framesubtitle{Results}
+ 
+ Runs (f-h) have higher Reynolds numbers compared to their (a-e) equivalents.
+ 
+ \begin{figure}
+  \includegraphics[width=0.95\textwidth]{img/energy_relation_prm}
+  \caption{Total (red), kinetic (green), and magnetic (blue) energies for a:~$Pr_M = 0.1$, b:~$Pr_M = 0.5$, c:~$Pr_M = 1.0$, d:~$Pr_M = 5.0$, e:~$Pr_M = 10.0$, f:~$Pr_M = 1.0$, g:~$Pr_M = 5.0$, h:~$Pr_M = 10.0$ \cite{brandenburg2014magnetic}.}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+
+
+\section{Conclusions}
+
+\begin{frame}
+ \frametitle{Conclusions}
+ 
+ \begin{enumerate}
+  \item<1-> Direct Numerical Simulations look in a large spectral range.
+  \item<2-> To avoid extremely high computational complexity ($\mathcal{O}(N^6)$), convolution theorem and FFTs can help.
+  \item<3-> Increases in computing power will allow broadening $Pr_M$ ranges under study.
+ \end{enumerate}
+ 
+\end{frame}
+
+\begin{frame}
+\frametitle{References}
+
+\setbeamerfont{bibliography item}{size=\footnotesize}
+\setbeamerfont{bibliography entry author}{size=\footnotesize}
+\setbeamerfont{bibliography entry title}{size=\footnotesize}
+\setbeamerfont{bibliography entry location}{size=\footnotesize}
+\setbeamerfont{bibliography entry note}{size=\footnotesize}
+\setbeamertemplate{bibliography item}[text]
+
+\bibliographystyle{ieeetr}
+\bibliography{DNS_in_MHD}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Aliasing Errors}
+  
+ \begin{figure}[t]
+  \includegraphics[width=0.8\textwidth]{img/aliasing}
+  \caption{Aliasing exemplified.}
+  \centering
+ \end{figure}
+  
+\end{frame}
+
+\begin{frame}
+ \frametitle{Run Information}
+  
+ \begin{figure}[t]
+  \includegraphics[width=0.95\textwidth]{img/run_info}
+  \caption{$k_{max}$ is the magnitude of the largest-magnitude wave vectors resolved in these DNS studies which use the $2/3$ dealiasing rule; $k_{max} \approx 170.67$ and $341.33$ for $N = 512$ and $1024$, respectively~\cite{sahoo2011systematics}.}
+  \centering
+ \end{figure}
+  
+\end{frame}
+
+\begin{frame}
+ \frametitle{Shell Models}
+ \framesubtitle{Energy profiles with shell model}
+  
+   \begin{figure}[t]
+  \includegraphics[width=5cm]{img/E_B_profile}
+  \caption{Compensated time-averaged kinetic and magnetic energy spectra for
+shell models at three values of $Pr_M$ \cite{brandenburg2014magnetic}.}
+  \centering
+ \end{figure}
+  
+\end{frame}
+
+
+\end{document}

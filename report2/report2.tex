@@ -1,0 +1,353 @@
+\documentclass[a4paper,12pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[margin=0.8in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+    frame=single,
+    breaklines=true,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+\lstdefinelanguage{numpy}{
+    keywords = {mean}
+}
+
+\title{More on the (non-Helical) Onset of Dynamo Action}
+\author{Andr\'es Cathey Cevallos}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+
+ A detailed description of the onset of small-scale dynamo action in forced, non-helical, magnetohydrodynamic simulations is presented in this report. First, a simple theoretical description of small-scale dynamo action is provided (including how it is different from large-scale dynamo action). Afterwards, the eDNS\footnote{eDNS is a hydrodynamic direct numerical simulation (DNS) code written by Sam Yoffe during his PhD studies in the University of Edinburgh and later modified by Moritz Linkmann that allowed to simulate MHD as well.} code was then used to perform simulations and find the parameters (magnetic diffusivity and magnetic Prandtl number) that allow for small-scale dynamo action on non-helical simulations. A system to check if dynamo action is activated for a given simulation is proposed using an ``ensemble average'' of the total magnetic energy at the end of the simulation. It is known that there is an important correlation between the magnetic Reynolds number and the onset of dynamo action~\cite{biskamp1997nonlinear}. However, and motivated by~\cite{schekochihin2004critical}, a critical, lower than unity, magnetic Prandtl number is of interest for forced, non-helical, simulations that have achieved small-scale dynamo action at $Pr_M \geq 1$. Finally, a few comments are made regarding the conditions for obtaining a fully resolved simulation.
+\end{abstract}
+
+\section{Introduction}
+
+The study of dynamos in physics was primarily driven by the quest to determine what is the underlying reason for the magnetic fields in the universe (large scale), as well as their structure, dynamics and maintenance. The term ``dynamo action'' can be loosely defined as a process that can generate and/or amplify magnetic fields. Examples of intriguing magnetic fields, that were finally explained through dynamo action, are the magnetic fields of Earth and the Sun. The reversals of the polarity in their dipolar fields have been recorded by geology and by studying sunspots, respectively. These phenomena are adequately explained by posing that the magnetic fields of these celestial bodies arise due to dynamo action. 
+
+To provide a more consistent description of dynamo action consider an electrically conducting fluid that occupies a finite volume $V$ and surface $S$. This magnetofluid is characterised by a magnetic diffusivity $\eta$, and it is surrounded by a vacuum of volume $\hat{V}$. These two volumes denote the volume of the entire universe, such that $V_\infty = V + \hat{V}$. A set of constraints exist for this fluid:
+
+\begin{align}
+ \bm \nabla \cdot \bm u &= 0 \qquad \qquad \text{within V} \nonumber\\
+ \bm u \cdot \bm{\hat{n}} &= 0 \qquad \qquad \text{on S} \nonumber
+\end{align}
+
+The velocity field $\bm u$ and the current density $\bm J$ exist only within $V$, but not in $\hat{V}$. The magnetic field $\bm b$ occupies $V_\infty$ and it is entirely produced by the current density $\bm J$. The characteristic length of this system is the size of the largest eddies - these being constrained to the volume $V$.\footnote{I found this on~\cite{schnack2009lectures}, and it makes sense for the hydrodynamic eddies. Are these the only ones that matter for the characteristic length?} This means that we can define this characteristic length as $L \sim V^{1/3}$. We know that the magnetic field will behave as a dipolar field at large enough distances, which means that it will decay as $b \sim 1/r^3$ as $r \rightarrow \infty$. The equation that governs the temporal evolution of the magnetic field is the following: 
+
+\begin{align}
+ \frac{\partial \bm b}{\partial t} = \bm \nabla \times (\bm u \times \bm b) + \eta \nabla^2 \bm b \qquad \qquad &\text{in V}
+ \label{eq2.1} \\
+ \bm \nabla \times \bm b = \bm 0 \qquad \qquad &\text{in $\hat{V}$} \label{eq2.2}
+\end{align}
+
+The latter is a constraint on having current density in the outer volume. It is possible to take an initial condition of the from $\bm b(\bm r, t=0) = \bm b_0(\bm r)$, and to define the total magnetic energy as eqn.~\ref{eq2.3}, which does not diverge since $\vert \bm b \vert^2 dV \sim 1/r^3$. Due to the diffusive term in eqn.~\ref{eq2.1}, if the velocity field is $\bm u = \bm 0$ at all times, then the total magnetic energy will go to zero as time increases. That is $E_M(t) = 0$ as $t \rightarrow \infty$.
+
+\begin{align}
+ E_M(t) = \frac{1}{2 \mu_0} \int_{V_\infty} \vert \bm b \vert^2 dV
+ \label{eq2.3}
+\end{align}
+
+A definition of dynamo action will be more complete now: \textit{For a given velocity field $\bm u$ and magnetic diffusivity $\eta$, it can be said that $\bm u$ acts as a dynamo if the total magnetic energy does not decay to zero as time goes to infinity ($E_M (t) \neq 0$ as $t \rightarrow \infty$)}~\cite{schnack2009lectures}.
+
+\subsection{Kinematically Possible Flows}
+
+A few comments can be made regarding the velocity field $\bm u$ of eqn.~\ref{eq2.1}. It is required that $\bm u$ be \textit{kinematically possible}. That is, it must follow the continuity equation and there can be no outgoing flow. In general, the joint field $\left[ \bm u(\bm r, t), \rho(\bm r, t) \right]$ must satisfy the equations:
+
+\begin{align}
+ \frac{\partial \rho}{\partial t} + \bm \nabla \cdot \rho \bm u &= 0 \nonumber \\
+ \bm u \cdot \bm{\hat{n}} &= 0 \nonumber
+\end{align}
+
+%Looking only at incompressible flows ($d \rho/dt = 0$, where $d / dt=\partial /\partial t + \bm u \cdot \bm \nabla$ is the Lagrangian or advective derivative), then kinematically possible velocity fields require that $\nabla \cdot \bm u = 0$ and $\bm u \cdot \bm{\hat{n}} = 0$. Treating the velocity field like this means that the Lorentz force, i.e. the back-reaction from the magnetic field on the velocity field, is not taken into consideration. This can be justified by the fact that the kinetic energy is usually greater than the magnetic energy in the realm that will be studied, and because it results in a linear theory. 
+
+There has been much theoretical work done in the study of dynamo action, from which it has been found that there are several scenarios where dynamo action is not possible. These are denoted by the so called antidynamo theorems, like the Cowling's theorem, which states that dynamo action is impossible in axisymmetric systems. Other antidynamo theorems say that toroidal (in the direction of rotation) magnetic fields in axisymmetric systems cannot be maintained, others that purely toroidal flows, or that two dimensional plane motions, cannot lead to dynamo action. All of these theorems imply that a key component for dynamo action is the breaking of symmetry, like three dimensionality, for example. A famous example of this is the ``stretch-twist-fold'' flow introduced by S.I. Vainshtain and Ya. B. Zeldovich~\cite{schnack2009lectures}.
+
+For a determined velocity field, obtaining the magnetic field is a linear problem. In fact, three main cases are commonly studied. The first is for steady velocity, where solutions of the magnetic field are considered to be of the form $\bm b(\bm r, t) = \bm b(\bm r) e^{\sigma t}$. Subsequently, the induction equation (eqn.~\ref{eq2.4}) becomes an eigenvalue problem associated with the dynamo rate $\sigma$. There will be a certain value of magnetic Reynolds number for with the real part of $\sigma$ turns positive - this is called the critical magnetic Reynolds number for the onset of dynamo action. 
+
+\begin{align}
+\partial_t \bm b &= (\bm b \cdot \nabla) \bm u - (\bm u \cdot \bm \nabla) \bm b + \eta \nabla^2 \bm b \label{eq2.4}
+\end{align}
+
+Another extensively studied case is that of the velocity field being periodic in time. In this scenario the induction equation will have solutions with a periodic component and an exponential component. Similarly to the previous case that was mentioned, a critical magnetic Reynolds number is also key for the onset of dynamo action. Finally, a stationary, random, velocity field is also common in the literature. For all three cases, the critical magnetic Reynolds number is the value at which inductive processes overcome diffusive ones~\cite{tobias2011mhd}.
+ 
+\subsection{The $\alpha$ effect\protect\footnote{Motivated by~\cite{schnack2009lectures}}}
+
+When dealing with turbulent scenarios it is straightforward to think of both the velocity and the magnetic fields to be a mean value plus a ``randomly'' varying component (eqn.~\ref{eq2.5} and~\ref{eq2.6}, respectively). There are important length scales related to these components: say that $L$ is the scale of variation for the mean values ($\bm U_0(\bm r, t)$ and $\bm B_0(\bm r, t)$), while $l_0$ is the one for the fluctuating components ($\bm u(\bm r, t)$ and $\bm b(\bm r, t)$).
+
+\begin{align}
+ \bm U(\bm r, t) &= \bm U_0(\bm r, t) + \bm u(\bm r, t) \label{eq2.5} \\
+ \bm B(\bm r, t) &= \bm B_0(\bm r, t) + \bm b(\bm r, t) \label{eq2.6}
+\end{align}
+
+This representation has an underlying spatial and temporal separation of scales. Namely, $l_0<<L$ and $l_0/\tilde{u} << L/U_0$. This is called mean-field dynamo theory. Through algebraic manipulation, the MHD equations combined with the mean-field dynamo theory equations lead to the following: 
+
+\begin{align}
+ \frac{\partial \bm B_0}{\partial t} &= \bm \nabla \times (\bm U_0 \times \bm B_0) + \bm \nabla \times \mathcal{\bm E} + \eta \nabla^2 \bm B_0 \\
+ \frac{\partial \bm b}{\partial t} &= \bm \nabla \times (\bm U_0 \times \bm b) + \bm \nabla \times (\bm u \times \bm B_0) + \bm \nabla \times \bm G + \eta \nabla^2 \bm b
+\end{align}
+
+with 
+
+\begin{align}
+ \mathcal{\bm E} &= \langle \bm u \times \bm b \rangle \nonumber \\
+ \bm G &= \bm u \times \bm b - \mathcal{\bm E} \nonumber
+\end{align}
+
+If the system is considered at the beginning to have $\bm B_0 = 0$, then at $t=0$,
+
+\begin{align}
+ \frac{\partial \bm b}{\partial t} = \bm \nabla \times (\bm u \times \bm B_0) \nonumber
+\end{align}
+
+Considering a constant mean velocity field, and changing to a frame of reference moving with it ($\bm U_0 \times \bm B_0 = \bm 0$), a weakly interacting mean magnetic field, and that the variation $\bm b$ and $\mathcal{\bm E}$ are linear in $\bm B_0$, it is possible to write:
+
+\begin{align}
+ \mathcal{E}_i = \alpha_{ij} B_{0j} \label{eq2.7}
+\end{align}
+
+The term $\alpha_{ij}$ is a pseudo-tensor that can be decomposed into its symmetric and an antisymmetric parts:
+
+\begin{align}
+ \alpha_{ij}^{(S)} &= \frac{1}{2} (\alpha_{ij} + \alpha_{ji}) \nonumber \\
+ \alpha_{ij}^{(A)} &= \frac{1}{2} (\alpha_{ij} - \alpha_{ji}) = -\varepsilon_{ijk} a_k \qquad \text{ where } a_k = -\frac{1}{2} \varepsilon_{lmk}\alpha_{lm} \nonumber \\
+ \text{such that: } \qquad \alpha_{ij} &= \alpha_{ij}^{(S)} - \varepsilon_{ijk}a_{k} \nonumber
+\end{align}
+
+From which eqn.~\ref{eq2.7} becomes:
+
+\begin{align}
+ \mathcal{E}_i = \alpha_{ij}^{(S)} + (\bm a \times \bm B_0)_i \nonumber
+\end{align}
+
+This means that the antisymmetric component of the pseudo-tensor $\alpha_{ij}$ contributes only to an increase of the mean velocity field. It follows from this that the symmetric part of $\alpha_{ij}$ contributes to drive the magnetic field, i.e. it is the component that is related to the magnetic dynamo! When the system is isotropic and homogeneous, then the off-diagonal components of the $\alpha_{ij}$ pseudo-tensor are zero, as well as the antisymmetric part of it.
+
+\begin{align}
+ \alpha_{ij} = \alpha \delta_{ij} \nonumber
+\end{align}
+
+The pseudo-scalar, $\alpha$, ``must change sign under coordinate inversion''~\cite{schnack2009lectures}, and since it is dependent on the properties of the variations of the velocity field, then the latter cannot have reflection symmetry. For non-zero values of $\alpha$, $\mathcal{\bm E} = \alpha \bm B_0$ generates a current:
+
+\begin{align}
+ \bm J = \sigma \mathcal{\bm E} = \sigma \alpha \bm B_0 \nonumber
+\end{align}
+
+Where $\sigma$ is the electric conductivity and it is inversely proportional to the magnetic diffusivity $\eta$. The electric field produces the aforementioned current that is parallel to the mean magnetic field. Were there no fluctuations the only current would be $\bm J_{\bot} = \sigma \bm U_0 \times \bm B_0$, which is clearly perpendicular to $\bm B_0$. The appearance of the current due to the fluctuations is called the $\alpha$-effect.
+
+As it was mentioned before, $\bm u$ must not have reflection symmetry in order to obtain dynamo action. Mathematically, this means that the mean value of the cross product of the variations of the velocity field and of the vorticity (the variation of the kinematic helicity) must be different from zero ($\langle \bm u \cdot \bm \omega \rangle \neq 0$, where the vorticity is $\bm \omega = \bm \nabla \times \bm u$). This means that the random field $\bm u$ needs to have some helicity in order for dynamo action to be obtained.
+
+Regarding the influence of the magnetic diffusivity in terms of the appearance of dynamo action, it is intuitive to note that too much dissipation would mean that all the energy would diffuse, and that the dynamo would not be able to function. However, and maybe less intuitively, the magnetic diffusivity $\eta = \mu_0/\sigma$ cannot be zero in order for the dynamo to operate~\cite{schnack2009lectures}. I believe that this is intimately tied to the fact that there exists a critical magnetic Prandtl number $PrM_c < 1$ that kills the dynamo for a value of $\eta$ that observes small-scale dynamo action with $Pr_M \geq 1$.
+
+\subsection{Small-scale dynamo}
+
+Magnetic fields are prevalent throughout the universe: planets, stars, and galaxies can have and sustain dynamic magnetic fields. It is often stated that there are two types of magnetic fields in these domains: large-scale fields (ones that create spatially coherent magnetic fields of sizes comparable to the astrophysical bodies that generate them) and small-scale fields (magnetic fields associated with the turbulent motion of the magnetofluid, and these exist at smaller scales). The leading explanation for both of these fields is the turbulent dynamo, which can amplify an initial (seed) magnetic field into a non-linear steady state~\cite{schekochihin2004simulations}.
+
+Two types of dynamos are responsible for the magnetic fields described above. Sufficiently random (spatially or temporally) 3D velocity fields can amplify spatially small magnetic field fluctuations through processes like the stretch-twist-fold mentioned before. This is then referred to as a small-scale dynamo (SSD) and since it exists in small length scales it is said to be possible to study it in a homogeneous and isotropic scenario. On the other hand, large-scale dynamo (LSD) action generates magnetic fields on the larger spatial scales, and in order to study processes related to the LSD it is necessary to have some type of turbulence like in the SSD case, but to drop the homogeneity condition and look at large-scale features characteristic to specific scenarios like boundary conditions, helicity, rotation, etc. This is what is needed to determine the large-scale magnetic fields generated by the Sun or the Earth~\cite{schekochihin2004simulations}.
+
+From a theoretical view point it is interesting to look at the small-scale dynamo since it does not depend on the specific properties of any system and it can be viewed as a more global study. It is, in fact, the aim of this work to further study the homogeneous isotropic MHD turbulence and its relation to SSD. \\
+
+
+
+This report details studies done regarding the onset of dynamo action by changing the kinematic viscosity and the magnetic diffusivity of forced, non-helical simulations on magnetohydrodynamic homogeneous isotropic turbulence in a cubic grid. The first thing that is important is how to tell whether or not dynamo action has been reached. For the purpose of trying to determine if dynamo action is obtained in simulations from the eDNS code the method used was to check the value of the time-averaged total magnetic energy (once the steady state of the simulation was reached). This is motivated by the definition of dynamo action given by D. Schnack~\cite{schnack2009lectures}. For simulations with $Pr_M$ larger than unity it was possible to identify a critical magnetic Reynolds number $Re_M$. After doing this it was possible to obtain a critical magnetic Prandtl number for which dynamo action is shut down. This qualitatively agrees with the results shown in~\cite{schekochihin2004critical}.
+
+\section{Forced, non-helical, simulations}
+
+Having explained the basic concepts of small-scale dynamo action and the importance of turbulence for its sustainment, it is now possible to use numerical tools in order to further study SSD. Using the eDNS code that solves the MHD equations (eqns.~\ref{eq2.8}~-~\ref{eq2.10}) on a 3D grid by forward time steps through Heun's method\footnote{Heun's method is a second order predictor corrector scheme~\cite{LinkmannMoritzFrederikLeon2016Spim}.}. The non-linear term is dealt with by using the pseudospectral method (Fourier transforming the fields to coordinate space, convolving, and Fourier transforming them back to configuration space).
+
+\begin{align}
+ \partial_t \bm u &= - \frac{1}{\rho} \bm \nabla p - (\bm u \cdot \bm \nabla) \bm u + \frac{1}{\rho} (\bm \nabla \times \bm b) \times \bm b + \nu \nabla^2 \bm u + \bm f_u \label{eq2.8} \\
+\partial_t \bm b &= (\bm b \cdot \nabla) \bm u - (\bm u \cdot \bm \nabla) \bm b + \eta \nabla^2 \bm b + \bm f_b \label{eq2.9} \\
+\bm \nabla \cdot &\bm u = 0 \qquad \text{and} \qquad \bm \nabla \cdot \bm b = 0 \label{eq2.10}
+\end{align}
+
+For the following simulations the forcing that was done was exclusively kinetic, i.e. $\bm f_b = \bm 0$, and there was no injection of helicity (which will be studied in a future report). Looking at these non-helical simulations the question about when did the onset of dynamo action occurs came up. Looking at $Pr_M \sim 1$ runs lead to the conclusion that there exists a critical value for the magnetic diffusivity $\eta$ for which small-scale dynamo action appears. This is obviously related to a critical magnetic Reynolds number since $Re_M=uL/\eta$. The range of magnetic Prandtl number was then broadened and it was seen that this critical value of magnetic Reynolds number depends on $Pr_M$. The first thing that was necessary to study the onset of small-scale dynamo action was to define a way to determine weather there was dynamo action or not in a specific simulation.
+
+\subsection{Small-scale dynamo detection}
+
+
+Choosing the method for determining whether or not small-scale 	dynamo action is achieved needs to be explained in detail. It is important to state once more that the type of simulations that have been performed are of a Homogeneous and Isotropic nature. This means that due to ergodicity, taking time averages can be associated with taking ensemble averages~\cite{biskamp1997nonlinear}. With this in mind, we can observe the total (wavenumber summed) magnetic and kinetic energies' temporal evolution for a particular simulation (one that has not achieved dynamo action) in fig.~\ref{fig2.1}, and for a simulation that has achieved dynamo action in fig.~\ref{fig2.2}. We use the time interval $60$ to $100$ to take a temporal average. The value of the total magnetic energy over this average will be used to determine the onset of dynamo action.
+
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/energy_256_0.004_0.2}.png}
+  \caption{Total kinetic and magnetic energy for $N=256$, $\nu=0.004$, $\eta=0.02$.}
+  \label{fig2.1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/energy_128_0.02_2.0}.png}
+  \caption{Total kinetic and magnetic energy for $N=128$, $\nu=0.02$, $\eta=0.01$.}
+  \label{fig2.2}
+\end{minipage}
+\end{figure}
+
+The definition given by~\cite{schnack2009lectures}, where dynamo action is said to be achieved if the total magnetic energy as time goes to infinity is non-zero, is used to determine if a simulation has obtained dynamo action or not. Obviously the exact definition cannot be used since simulations do not run forever. However, it is noted that all simulations reach a steady state in the time interval $[60:100]$ of code time. This means that any $E_M(t)$ within the aforementioned time interval can be considered to be $E_M(t\rightarrow \infty)$. Using the ergodic theorem we can take a time average in the $[60:100]$ interval to be an ensemble average of multiple simulations with time going to infinity.
+
+It is also interesting to look at the instantaneous transfer of magnetic energy from negative to positive in the wavenumber range that is being worked on. In particular, for the two previous simulations, the transfer of magnetic energy, $T_b(k)$, are plotted in fig.~\ref{fig2.3}. It is clear that the transfer of magnetic energy in the simulation that has achieved the small-scale dynamo ($N=256$, $\nu=0.004$, $Pr_M=0.2$) is considerably higher than that for the simulation without SSD. This will be true for the other simulations in this report. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\linewidth]{{img/sp_Tb_0.004_0.02}.png}
+  \caption{Instantaneous transfer of magnetic energy from negative to positive as a function of wavenumber.}
+  \label{fig2.3}
+\end{figure}
+
+The previous report had looked at various simulations with different parameters of viscosity and magnetic diffusivity for forced, non-helical, simulations, and it was found that the most important parameter for the onset of dynamo action was the magnetic diffusivity $\eta$. This was subsequently encouraged by~\cite{tobias2011mhd}, where the existence of a critical magnetic Reynolds number for the onset of dynamo action is emphasised. While this $Re_M^{crit.}$ does exist, its value highly depends on the magnetic Prandtl number, as is suggested in~\cite{schekochihin2004critical}, and confirmed with the simulations performed for this report.
+
+\subsection{Dependence on $\eta$ and $Pr_M$}
+
+In order to look for instances where dynamo action is activated a two dimensional grid is made with magnetic diffusivity on the x-axis and magnetic Prandtl number on the y-axis. Simulations are run for the respective parameters and then a heat map is made where the z-axis has the total magnetic energy in the end of the simulation (once the system reached a steady state). A total of 99 simulations are made in order to generate the data used. However, most of these simulations were done in cubic grids of $N^3=64^3$, which are very fast and computationally inexpensive. This is due to the fact that for the simulations with no (or little) small-scale dynamo action the scales at which dissipation occur (both in the kinetic and magnetic channels) at wavenumbers that can be resolved with $N=64$ grids. For consistency, fig.~\ref{fig2.4} shows the resolution criteria $min(k_{max} / k_\eta, k_{max} / k_\nu)$ for each simulation and it can be seen that all of these simulations have good resolutions (it is said that a simulation is properly resolved if the grid is large enough to resolve at least over 25\% of the largest dissipative wavenumber). 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\linewidth]{img/dynamo_ks}
+  \caption{Heat map of $min(k_{max}/k_\eta, k_{max}/k_nu)$.}
+  \label{fig2.4}
+\end{figure}
+
+The minimum number in the z-axis of fig.~\ref{fig2.4} is $min(k_{max} / k_\eta, k_{max} / k_\nu) = 1.284$. This means that all the simulations in the two dimensional grid generated are properly resolved. A similar heat map is made with much more interesting information. Namely, it has the value of the ``ensemble average'' of the magnetic energy in the steady state of the simulations. This is shown in fig.~\ref{fig2.5}. The magnetic Reynolds number ($Re_M = u_{rms} L / \eta$) is calculated by using the kinetic integral length scale that is obtained in the end of each simulation, the root-mean-squared velocity, which due to the system being homogeneous can be calculated as $u_{rms} = \sqrt{2 E_{kin} / 3}$. It is then no surprise than the values of the magnetic Reynolds number are similar for simulations with equal $\eta$.  For this figure, the values of magnetic Reynolds number are very similar in each column, and their average is equal to:
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c| }
+\hline
+ $\eta$ & 0.01 & 0.0125 & 0.015 & 0.0175 & 0.02 & 0.0225 & 0.025 & 0.0275 & 0.03 \\ \hline
+ $Re_M$ & $66\pm9$ & $54\pm7$ & $45\pm6$ & $38\pm5$ & $34\pm4$ & $30\pm4$ & $27\pm4$ & $24\pm3$ & $22\pm3$ \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{img/dynamo_Emag}
+  \caption{Heat map of dynamo action onset.}
+  \label{fig2.5}
+\end{figure}
+
+It is clear that the ensemble-averaged value of the total magnetic energy has a strong dependence on the magnetic diffusion (and thus on the magnetic Reynolds number). Higher values of $\eta$ (lower $Re_M$) do not manage to activate dynamo action regardless of the value of magnetic Prandtl number. To confirm this statement, a simulation with $\eta=0.03$ and $Pr_M=10$ is performed, and the total magnetic energy's time evolution is plotted in fig.~\ref{fig2.6}, where it drops to zero before code time equals 20, i.e. there is no dynamo action for this parameters. It looks like in order to obtain dynamo action it is necessary to have a minimum degree of magnetic turbulence (a sufficiently high value of magnetic Reynolds number). This alone, however, does not guarantee that dynamo action will be achieved!
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\linewidth]{{img/energy_64_0.3_10.0}.png}
+  \caption{Simulation with high magnetic diffusivity and high kinematic viscosity showing no small-scale dynamo action.}
+  \label{fig2.6}
+\end{figure}
+
+It is interesting to note that the critical magnetic Reynolds number shows a strong dependence on the magnetic Prandtl number, which is in agreement with~\cite{schekochihin2004critical}. This means that for a simulation that has dynamo action for $Pr_M \geq 1$ ($Pr_M=Re_M/Re$), there is a critical value of $Pr_M^{crit.}<1$ that will shut down the dynamo. Following the trend in fig.~\ref{fig2.5} it is expected that decreasing the value of $\eta$ will lead to a critical magnetic Prandtl number closer to zero. In fact,~\cite{schekochihin2004critical} suggests two possible scenarios: in the limit $\eta \rightarrow 0$ a finite $Pr_M^{crit.}$ exists, or there exists a very small value of $\eta$ for which the critical magnetic Prandtl number goes to zero. Whichever scenario that is true means that 
+
+\subsection{Temporal image of $E_M(60:100)$}
+
+Having seen which simulations seem to have activated small-scale dynamo action it is worthwhile to look at physical quantities such as the magnetic energy in what we have referred to as the ``steady state'' range ($t = [60:100]$). The following images look at various plots of the magnetic energy in the end of the simulations for different values of $\eta$. Each figure has different values of $Pr_M$ for one value of magnetic diffusivity. 
+
+The first two graphs (fig.~\ref{fig2.7} and fig.~\ref{fig2.8}) correspond to columns 1 and 3 in fig.~\ref{fig2.5}, from left to right. They show the total magnetic energy in the time interval that is used to get the ensemble average. As is told by the heat map, at small $Pr_M$ little, or no, small-scale dynamo action should be observed. This is clearly evidenced in the graphs shown. The dashed purple line is clearly showing very little magnetic energy for the $\eta=0.01$ graph, and it even seems that it has not reached a steady state, but it continues to decrease, which suggests that this simulation will ultimately loose all magnetic energy in the end. This means that for $\eta=0.01$ ($Re_M=66\pm9$) the critical magnetic Prandtl number is somewhere between $Pr_M^{crit.}=[0.2, 0.8]$. Since we have more simulations it is possible to look into this and see a finer $Pr_M$ range (fig.~\ref{fig2.9}), where it looks that two simulations ($Pr_M=0.2$ and $Pr_M=0.4$) are loosing magnetic energy and correspond to no small-scale dynamo action. This leads to the conclusion that $Pr_M^{crit.}$ lies in the range $[0.4:0.6]$, for $\eta=0.01$.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/Emag/ss_0.0100}.png}
+  \caption{Total magnetic energy for $\eta=0.01$ in $t=[60:100]$.}
+  \label{fig2.7}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/Emag/ss_0.0150}.png}
+  \caption{Total magnetic energy for $\eta=0.015$ in $t=[60:100]$.}
+  \label{fig2.8}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\linewidth]{{img/ss_0.0100}.png}
+  \caption{Total magnetic energy for $\eta=0.01$ showing two simulations with SSD and two without.}
+  \label{fig2.9}
+\end{figure}
+
+The second figure, fig.~\ref{fig2.8}, appears to be decreasing in all simulations. By looking at longer times it can be seen that for no value of magnetic Prandtl number does small-scale dynamo action exist. This is verified by making longer simulations, which can be seen in fig.~\ref{fig2.10}. There is clearly some transfer of energy from the kinetic to the magnetic channel, which is why the collapse of the magnetic energy takes a long time, but without sustaining magnetic energy at $t\rightarrow \infty$, the simulation is said to lack small-scale dynamo action.
+
+\begin{figure}[!ht]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/longRUN/ss_0.0150}.png}
+  \caption{Total magnetic energy for $\eta=0.015$ in $t=[100:600]$.}
+  \label{fig2.10}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/longRUN/ss_0.0175}.png}
+  \caption{Total magnetic energy for $\eta~=~0.0175$ in $t=[100:600]$.}
+  \label{fig2.11}
+\end{minipage}
+\end{figure}
+
+
+An interesting column in fig.~\ref{fig2.5} is $\eta=0.0175$ since there appears to have very little dynamo action (in comparison to the smaller $\eta$ simulations) in the few simulations close to $Pr_M \sim 1$. This could be just a very low-energy dynamo or that the decay of magnetic energy has not been complete by code time $t=100$, but the fact that the simulations with $\eta=0.015$ had no small-scale dynamo leads to believe that the latter is true. Plotting the total magnetic energy (fig.~\ref{fig2.11}) for longer simulations, shows that the magnetic energy for $\eta=0.0175$ goes to zero, and that regardless of the value of $Pr_M$ a simulation with $\eta=0.0175$ will not achieve small-scale dynamo action. As a matter of fact, no SSD occurs, regardless of the value of magnetic Prandtl number, for any simulation with $\eta \gtrsim 0.015$. This is probably related to a more general threshold magnetic Reynolds number, which is the largest value of magnetic Reynolds number that shows no SSD.
+
+\begin{figure}[!ht]
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.6\linewidth]{{img/longRUN/ss_0.0175}.png}
+  \caption{Simulations with $\eta=0.017$ in $t=[100:600]$ showing no small-scale dynamo action for any value of $Pr_M$.}
+  \label{fig2.13}
+\end{figure}
+
+This obviously lead to lengthening some simulations close to $Pr_M=1$ for $\eta=0.0125$, which are plotted in fig.~\ref{fig2.14}. For these simulations, small-scale dynamo action is in fact observed. Of the simulations shown in fig.~\ref{fig2.14} only that with $Pr_M=0.6$ does not have dynamo action. The critical magnetic Prandtl number for $\eta=0.0125$ appears to be somewhere in the range $Pr_M=[0.6: 0.8]$. All other simulations do maintain SSD (this was checked to be true by running until code time $t=1200$). The magnetic Reynolds numbers for the simulations of fig.~\ref{fig2.14} with $Pr_M=[1.4, 1.2, 1, 0.8, 0.6]$ are $Re_M=[55\pm4, 56\pm5, 55\pm4, 54\pm4, 53\pm4]$. Since the smallest value of magnetic Reynolds number of these simulations is related to a lack of small-scale dynamo action then the threshold magnetic Reynolds number is $Re_M=53\pm4$.
+
+\begin{figure}[h!]
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.7\linewidth]{{img/longRUN/ss_0.0125}.png}
+  \caption{Total magnetic energy for $\eta=0.0125$ in $t=[100:300]$.}
+  \label{fig2.14}
+\end{figure}
+
+In order to look at the transition from no small-scale dynamo action, several simulations with $\eta=0.01$ were generated. Motivated by~\cite{schekochihin2004critical} a smaller than unity value of magnetic Prandtl number was chosen ($Pr_M=0.1$) to check if small-scale dynamo action is turned off. Runs between this small value of $Pr_M$ and a very large value of it ($Pr_M=100$) were generated as well. Looking at areas with very large magnetic Prandtl number was motivated by the idea that a system with too much kinematic viscosity should also kill dynamo action. Knowing that dynamo action is dependent on the velocity field and that a system with too much viscosity might not be able to sustain a necessary velocity field from the given forcing, it is expected that a high enough value of $Pr_M$ will not allow SSD action.
+
+\begin{figure}[!ht]
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.7\linewidth]{{img/highPrM/ss_0.0100}.png}
+  \caption{Simulation with $\eta=0.01$ in $t=[60:400]$ showing small-scale dynamo action for two values of $Pr_M$.}
+  \label{fig2.16}
+\end{figure}
+
+Figure~\ref{fig2.16} shows the magnetic energy for a system with $\eta=0.01$ and different values of magnetic Prandtl numbers ($Pr_M=[100, 20, 10, 5, 1, 0.1]$). For these values, only $Pr_M=[10, 5, 1]$ allowed small-scale dynamo action to occur. The magnetic Reynolds numbers for all the simulations with $\eta=0.01$ were $Re_M=[17\pm2, 39\pm4, 52\pm5, 61\pm6, 68\pm5, 59\pm6]$ for decreasing $Pr_M$. A longer simulation for the case with $Pr_M=10$ confirms that the magnetic energy remains around $E_M\sim[0.001:0.005]$, and does not decay after enough time, i.e. sustains dynamo action.
+
+This means that there is no such thing as a threshold value of magnetic diffusivity required for a system having small-scale dynamo action, but a threshold magnetic Reynolds number. A definite value for this threshold magnetic Reynolds number is close to $Re_M^{th}=55\pm5$. This means that systems with $Re_M$ lower than this threshold value will not be able to achieve small-scale dynamo action. 
+
+\section{Conclusions}
+
+For this report a description of dynamo action was provided from a theoretical approach. A discussion on the process by which the velocity field drives a dynamo ($\alpha$ effect) was also carried out. Then a separation from small-scale and large-scale dynamos was explained. These concepts were used to determine a method for checking weather or not a forced, non-helical, simulation achieves small-scale dynamo action. After determining a procedure to distinguish weather or not small-scale dynamo action has been achieved in a particular simulation, the importance of the magnetic diffusivity and the magnetic Prandtl number was studied. The idea was to look in a transitory region where the system goes from no dynamo action to SSD due to a less-than-unity $Pr_M$. 
+
+It was observed that no kinetically forced system with magnetic diffusivity greater or equal than $\eta=0.015~[m^2/s]$ can obtain small-scale dynamo action without the input of helicity into the system. More interestingly, it was seen that there is a threshold magnetic Reynolds number below which there can be no dynamo action $Re_M^{th}=55\pm5$, that seemed to not show a dependence of the magnetic diffusivity. Following~\cite{schekochihin2004critical}'s claims that for any value of magnetic diffusivity there is a small enough magnetic Prandtl number (i.e. sufficiently high Reynolds number) that kills the small-scale dynamo (if there is one at some $Pr_M \gtrsim 1$), a series of simulations for magnetic Prandtl number smaller than unity were performed. These showed that in fact for any system with a given magnetic diffusivity that shows small-scale dynamo action when $Pr_M \gtrsim 1$, there is a cutoff at some point when $Pr_M \lesssim 1$. This means that too much turbulence in the velocity field is detrimental with dynamo action, which is theoretically expected from the $\alpha$ effect.
+
+Finally, a set of simulations was performed for very high values of magnetic Prandtl number for $\eta=0.01~[m^2/s]$ in order to see if at high enough $Pr_M$ small-scale dynamo action is also halted. For this simulations with $Pr_M=[0.1, 1, 5, 10, 20, 100]$ were performed. One very interesting feature of these simulations was that, as expected, was that there was no small-scale dynamo action for the $Pr_M=[0.1, 20, 100]$ cases. These scenarios had magnetic Reynolds numbers of $Re_M=[59\pm6, 39\pm4, 17\pm2]$, respectively. This supports the idea of a threshold magnetic Reynolds number required to obtain small-scale dynamo action. 
+
+
+
+\newpage
+
+\bibliographystyle{unsrt}
+\bibliography{report2}
+
+\end{document}

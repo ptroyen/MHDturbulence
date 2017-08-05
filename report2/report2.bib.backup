@@ -1,0 +1,21 @@
+@book{schnack2009lectures,
+  title={Lectures in Magnetohydrodynamics: With an Appendix on Extended MHD},
+  author={Schnack, D.D.},
+  isbn={9783642006883},
+  lccn={2009926863},
+  series={Lecture Notes in Physics},
+  url={https://books.google.co.uk/books?id=YLNtCQAAQBAJ},
+  year={2009},
+  publisher={Springer Berlin Heidelberg}
+}
+
+@book{biskamp1997nonlinear,
+  title={Nonlinear Magnetohydrodynamics},
+  author={Biskamp, D.},
+  isbn={9780521599184},
+  lccn={97201462},
+  series={Cambridge Monographs on Plasma Physics},
+  url={https://books.google.co.uk/books?id=OzFNhaVKA48C},
+  year={1997},
+  publisher={Cambridge University Press}
+}

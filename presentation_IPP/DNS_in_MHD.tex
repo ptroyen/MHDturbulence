@@ -1,0 +1,290 @@
+\documentclass{beamer}
+%\usetheme{Berlin}
+\usecolortheme{seahorse}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{xmpmulti}
+%\usepackage[backend=bibtex]{biblatex}
+%\bibliography{DNS_in_MHD}
+
+\title{Use of Direct Numerical Simulations for Studies on Magnetohydrodynamics}
+\author{Andr\'es Cathey}
+\institute{The University of Edinburgh}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+ \frametitle{Overview} %unrivalled in accuracy and in the level of description provided
+ \framesubtitle{Current and Future Work}
+ 
+ \begin{itemize}
+  \item Theory review of MHD and turbulent processes.
+  \item Crash course on ARCHER and Scientific Computing.
+  \item Become familiar with available MHD code (eDNS).
+  \item Determine onset of dynamo action (threshold value of magnetic Reynolds number ($Re_M$)) in forced MHD simulations.
+  \item<2-> {\color{blue}Study behaviour for different magnetic Prandtl number ($Pr_M = Re_M / Re = \nu / \eta$).}
+  \item<2-> {\color{blue}(If time allows) Study effect of helicity's effect on the inverse cascade.}
+  %\item<4-> Non-linear term allows energy transfer from large to and from small scales.
+  %That plus viscous term are key in the simulation of turbulence. 
+  %the cost is extremely high; and the computer requirements increase so rapidly with Reynolds number that the applicability of the approach is limited to flows of low or moderate Reynolds numbers.
+ \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+ \frametitle{ARCHER}
+ \framesubtitle{Crash Course}
+ 
+ \begin{itemize}
+  \item ARCHER is the largest UK National Supercomputing Service.
+  \item Run parallelised simulations of cubic boxes describing MHD turbulence.
+  \item Larger boxes require more cores to store in-code memory.
+  \item Boxes of lattice size $N^3 > 32^3$ cannot realistically be worked on regular laptops/desktops (eDNS allows to get to up to $2048^3$).
+  \item Lattice size is directly proportional to the maximum wavenumber of the simulations, and it has to be set up such that the kinetic and magnetic Kolmogorov length scales are resolved.
+ \end{itemize}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{eDNS}
+ \framesubtitle{Equations}
+ 
+ \begin{equation}
+  \partial_t \bm u = - \frac{1}{\rho} \bm \nabla p - (\bm u \cdot \bm \nabla) \bm u + \frac{1}{\rho} (\bm \nabla \times \bm b) \times \bm b + \nu \nabla^2 \bm u + \bm f_u
+ \end{equation}
+ 
+ \begin{equation}
+  \partial_t \bm b = (\bm b \cdot \bm \nabla) \bm u - (\bm u \cdot \bm \nabla) \bm b + \eta \nabla^2 \bm b + \bm f_b
+ \end{equation}
+ 
+ \begin{equation}
+  \bm \nabla \cdot \bm u = 0
+ \end{equation}
+ 
+ \begin{equation}
+  \bm \nabla \cdot \bm b = 0
+ \end{equation}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ \begin{equation}
+  k_{max} \approx \frac{N}{3} \qquad \qquad \qquad k_{max} > k_\eta,\,k_\nu
+ \end{equation}
+
+ 
+ \begin{equation}
+  k_\eta = \left( \frac{\varepsilon}{\eta^3} \right)^{1/4} \qquad \qquad \qquad k_\nu = \left( \frac{\varepsilon}{\nu^3} \right)^{1/4}
+ \end{equation}
+
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ %If magnetic Reynolds number ($Re_M$) is large enough, dynamo action occurs. 
+ Keep $Pr_M$ constant, vary $\nu$. $Re_M = 28.27$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.025_1.0}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.025$ and $\eta = 0.025$ ($Pr_M=1.0$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ Keep $Pr_M$ constant, vary $\nu$. $Re_M = 36.14$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.020_1.0}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.020$ and $\eta = 0.020$ ($Pr_M=1.0$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ Keep $Pr_M$ constant, vary $\nu$. $Re_M = 47.16$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.015_1.0}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.015$ and $\eta = 0.015$ ($Pr_M=1.0$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ Keep $Pr_M$ constant, vary $\nu$. $Re_M = 69.58$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.010_1.0}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.010$ and $\eta = 0.010$ ($Pr_M=1.0$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action (vary $Pr_M$)}
+ 
+ Keep $\nu$ constant, vary $Pr_M$. $Re_M = 29.47$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.020_0.80}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.020$ and $\eta = 0.025$ ($Pr_M=0.8$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action (vary $Pr_M$)}
+ 
+ Keep $\nu$ constant, vary $Pr_M$. $Re_M = 36.14$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.020_1.0}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.020$ and $\eta = 0.020$ ($Pr_M=1.0$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action (vary $Pr_M$)}
+ 
+ Keep $\nu$ constant, vary $Pr_M$. $Re_M = 48.17$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.020_1.33}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.020$ and $\eta = 0.015$ ($Pr_M=1.33$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action (vary $Pr_M$)}
+ 
+ Keep $\nu$ constant, vary $Pr_M$. $Re_M = 70.23$
+ 
+ \begin{figure}[t]
+  \includegraphics[width=8cm]{{img/energy_64_0.020_2.0}.png}
+  \caption{eDNS simulation with 64 lattice size and $\nu = 0.020$ and $\eta = 0.010$ ($Pr_M=2.0$).}
+  \centering
+ \end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action (vary $Pr_M$)}
+ 
+ \begin{itemize}
+  \item Both methods have similar behaviour - magnetic Reynolds number is the key component for the onset of Dynamo action.
+  \item Pick only one method.
+  \item Look at the energies in the end of the simulation as a function of wavenumber. 
+ \end{itemize}
+
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ Wavenumber summed energy and energy spectra. $\nu=0.020$. $Pr_M = 0.8$. $Re_M = 29.47$
+ 
+ \begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/energy_64_0.020_0.80}.png}
+  \caption{k-summed kinetic and magnetic Energy~for $N=64$, $\nu=0.020$, $\eta=0.025$.}
+  \label{fig10}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/spectra_64_0.020_0.8}.png}
+  \caption{Kinetic and magnetic Energy spectra for $N=64$, $\nu=0.020$, $\eta=0.025$.}
+  \label{fig11}
+\end{minipage}
+\end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ Wavenumber summed energy and energy spectra. $\nu=0.020$. $Pr_M = 1.0$. $Re_M = 36.14$
+ 
+ \begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/energy_64_0.020_1.0}.png}
+  \caption{k-summed kinetic and magnetic Energy~for $N=64$, $\nu=0.020$, $\eta=0.010$.}
+  \label{fig10}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/spectra_64_0.020_1.0}.png}
+  \caption{Kinetic and magnetic Energy spectra for $N=64$, $\nu=0.020$, $\eta=0.010$.}
+  \label{fig11}
+\end{minipage}
+\end{figure}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Current Work}
+ \framesubtitle{Onset of Dynamo Action}
+ 
+ Wavenumber summed energy and energy spectra. $\nu=0.020$. $Pr_M = 1.0$. $Re_M = 36.14$
+ 
+ \begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/energy_64_0.020_1.33}.png}
+  \caption{k-summed kinetic and magnetic Energy~for $N=64$, $\nu=0.020$, $\eta=0.015$.}
+  \label{fig10}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.95\linewidth]{{img/spectra_64_0.020_1.333}.png}
+  \caption{Kinetic and magnetic Energy spectra for $N=64$, $\nu=0.020$, $\eta=0.015$.}
+  \label{fig11}
+\end{minipage}
+\end{figure}
+ 
+\end{frame}
+
+\end{document}
