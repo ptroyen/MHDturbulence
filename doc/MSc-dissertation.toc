@@ -8,13 +8,15 @@
 \contentsline {section}{\numberline {3.1}MHD equations}{9}
 \contentsline {section}{\numberline {3.2}MHD turbulence}{11}
 \contentsline {section}{\numberline {3.3}Dynamo action}{12}
-\contentsline {chapter}{\numberline {4}Design and/or development (of my project)}{14}
-\contentsline {chapter}{\numberline {5}Results and Analysis}{15}
-\contentsline {section}{\numberline {5.1}Some results}{15}
-\contentsline {subsection}{\numberline {5.1.1}More results}{15}
-\contentsline {section}{\numberline {5.2}Discussion of your results}{16}
-\contentsline {chapter}{\numberline {6}Conclusions}{17}
-\contentsline {chapter}{\numberline {A}Stuff that's too detailed}{18}
-\contentsline {section}{\numberline {A.1}{\rm B\kern -.05em{\sc i\kern -.025em b}\kern -.08em T\kern -.1667em\lower .7ex\hbox {E}\kern -.125emX}}{18}
-\contentsline {section}{\numberline {A.2}Producing your documents using \texttt {pdflatex}}{19}
-\contentsline {chapter}{\numberline {B}Stuff that won't be read by anyone}{21}
+\contentsline {subsection}{\numberline {3.3.1}Linear and nonlinear dynamos}{14}
+\contentsline {subsection}{\numberline {3.3.2}Small scale and large scale dynamos}{15}
+\contentsline {chapter}{\numberline {4}Design and/or development (of my project)}{16}
+\contentsline {chapter}{\numberline {5}Results and Analysis}{17}
+\contentsline {section}{\numberline {5.1}Some results}{17}
+\contentsline {subsection}{\numberline {5.1.1}More results}{17}
+\contentsline {section}{\numberline {5.2}Discussion of your results}{18}
+\contentsline {chapter}{\numberline {6}Conclusions}{19}
+\contentsline {chapter}{\numberline {A}Stuff that's too detailed}{20}
+\contentsline {section}{\numberline {A.1}{\rm B\kern -.05em{\sc i\kern -.025em b}\kern -.08em T\kern -.1667em\lower .7ex\hbox {E}\kern -.125emX}}{20}
+\contentsline {section}{\numberline {A.2}Producing your documents using \texttt {pdflatex}}{21}
+\contentsline {chapter}{\numberline {B}Stuff that won't be read by anyone}{23}

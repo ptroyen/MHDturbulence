@@ -11,6 +11,11 @@ Franck Plunian, Rodion Stepanov, and Peter Frick.
 \newblock Shell models of magnetohydrodynamic turbulence.
 \newblock {\em Physics Reports}, 523(1):1--60, 2013.
 
+\bibitem{moffatt1985topological}
+Henry~K Moffatt and Michael~RE Proctor.
+\newblock Topological constraints associated with fast dynamo action.
+\newblock {\em Journal of Fluid Mechanics}, 154:493--507, 1985.
+
 \bibitem{sir1919larmor}
 J~Sir.
 \newblock Larmor, how could a rotating body such as the sun become a magnet?,
@@ -93,5 +98,19 @@ Gary~A Glatzmaier and Paul~H Roberts.
 \newblock A three-dimensional self-consistent computer simulation of a
   geomagnetic field reversal.
 \newblock 1995.
+
+\bibitem{vauinshteuin1972origin}
+SI~Vauinshteuin and Ya~B Zel'dovich.
+\newblock Origin of magnetic fields in astrophysics (turbulent" dynamo"
+  mechanisms).
+\newblock {\em Physics-Uspekhi}, 15(2):159--172, 1972.
+
+\bibitem{batchelor1950spontaneous}
+GK~Batchelor.
+\newblock On the spontaneous magnetic field in a conducting liquid in turbulent
+  motion.
+\newblock In {\em Proceedings of the Royal Society of London A: Mathematical,
+  Physical and Engineering Sciences}, volume 201, pages 405--416. The Royal
+  Society, 1950.
 
 \end{thebibliography}

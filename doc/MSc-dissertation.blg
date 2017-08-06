@@ -4,45 +4,46 @@ The top-level auxiliary file: MSc-dissertation.aux
 The style file: unsrt.bst
 Database file #1: MSc-dissertation.bib
 Warning--empty journal in glatzmaier1995three
-You've used 17 entries,
+Warning--can't use both volume and number fields in batchelor1950spontaneous
+You've used 20 entries,
             1791 wiz_defined-function locations,
-            553 strings with 6087 characters,
-and the built_in function-call counts, 3450 in all, are:
-= -- 315
-> -- 117
-< -- 1
-+ -- 48
-- -- 31
-* -- 224
-:= -- 556
-add.period$ -- 52
-call.type$ -- 17
-change.case$ -- 15
+            576 strings with 6636 characters,
+and the built_in function-call counts, 4295 in all, are:
+= -- 404
+> -- 137
+< -- 3
++ -- 56
+- -- 36
+* -- 281
+:= -- 674
+add.period$ -- 62
+call.type$ -- 20
+change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 18
-duplicate$ -- 160
-empty$ -- 364
-format.name$ -- 31
-if$ -- 764
+cite$ -- 22
+duplicate$ -- 199
+empty$ -- 449
+format.name$ -- 36
+if$ -- 960
 int.to.chr$ -- 0
-int.to.str$ -- 17
-missing$ -- 18
-newline$ -- 87
-num.names$ -- 17
-pop$ -- 42
+int.to.str$ -- 20
+missing$ -- 21
+newline$ -- 102
+num.names$ -- 20
+pop$ -- 48
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 65
+skip$ -- 88
 stack$ -- 0
-substring$ -- 224
-swap$ -- 26
-text.length$ -- 1
+substring$ -- 306
+swap$ -- 41
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 36
-width$ -- 19
-write$ -- 183
-(There was 1 warning)
+warning$ -- 2
+while$ -- 46
+width$ -- 22
+write$ -- 218
+(There were 2 warnings)
