@@ -446,13 +446,41 @@ Since similar considerations were made for the magnetic field (and $\bm \nabla \
 
 \chapter{Direct numerical simulations}
 
-Having stated \textit{some} important theoretical results regarding homogeneous isotropic turbulence (HIT) for magnetohydrodynamics (MHD), like the existence of a critical magnetic Reynolds number for small-scale dynamo action, it is important to note that the main technique for investigating turbulence is through numerical simulations. This has to do with the fact that analytic solutions for the MHD equations~(\ref{eq3.1}-~\ref{eq3.3}), even for the simplest turbulent flows, do not exist~\cite{moin1998direct}. Different numerical methods have been developed to analyse MHD turbulence depending on the specific problem that is being studied. For example, if the smaller length scales relevant to the problem can be neglected, one might want to use Reynolds-averaged Navier–Stokes (RANS) or Large Eddy Simulations (LES) for a slightly more complex description. The main motivation for choosing RANS or LES is that resolving the smaller length scales is very computationally expensive and not necessary for certain problems. However, if all the length scales in the problem need to be resolved, then Direct Numerical Simulations (DNS) ought to be used. 
+Having stated \textit{some} important theoretical results regarding homogeneous isotropic turbulence (HIT) for magnetohydrodynamics (MHD), like the existence of a critical magnetic Reynolds number for small-scale dynamo action, it is important to note that the main technique for investigating turbulence is through numerical simulations. This has to do with the fact that analytic solutions for the MHD equations~(\ref{eq3.1}-~\ref{eq3.3}), even for the simplest turbulent flows, do not exist~\cite{moin1998direct}. Different numerical methods have been developed to analyse MHD turbulence depending on the specific problem that is being studied. Jumping on the progress made for hydrodynamics, the first simulation for  dynamic MHD was published in 1980~\cite{norman2010historical}. For example, if the smaller length scales relevant to the problem can be neglected, one might want to use Reynolds-averaged Navier–Stokes (RANS) or Large Eddy Simulations (LES) for a slightly more complex description. The main motivation for choosing RANS or LES is that resolving the smaller length scales is very computationally expensive and not necessary for certain problems. However, if all the length scales in the problem need to be resolved, then Direct Numerical Simulations (DNS) ought to be used. 
 
 As far as numerical methods for solving (magneto)hydrodynamic equations go, DNS is by far the most complex and computationally expensive. As a consequence, DNS was very limited in the size of simulations that it could preform in its early stages\footnote{The size of a DNS simulation determines the wave numbers (length scales) that it can achieve, and thus the Reynolds number that can be simulated. The number of operations required for DNS scales with $Re^{9/4}$~\cite{mccomb1990physics}.}. Direct numerical simulations were developed by Orszag and Patterson in the 1970s, where they simulated 3D hydrodynamic isotropic turbulence in a periodic box of $32^3$ grid points with periodic boundary conditions~\cite{orszag1970analytical}. Around $50$ years after their pioneering work, and with the use of paralellisation and graphic card units (GPUs), the largest DNS simulation is one of $4096^3$ grid points~\cite{yokota2013petascale}. A brief account of what is DNS and how codes that use it are set up is initially provided. 
 
 \section{DNS basics}
 
 Broadly, DNS is a type of simulation that solves the Navier-Stokes equations for hydrodynamics, and the Maxwell equations as well for MHD, without the use of turbulence models. Alternatively, DNS resolves all the spatial and temporal scales related to a specific problem. In order to solve the Navier-Stokes equations, DNS uses a pseudo-spectral method. A brief description of a DNS procedure is provided in this section. 
+
+Direct numerical simulations are done in a cubic box with a predetermined number of grid points $N^3$. The size of the cubic grid is directly related to the spatial length scales that can be resolved in a simulation. In order to simulate laminar flow, small spatial scales are not too important, so small box sizes can be used. However, a fully resolved simulation of turbulent dynamics requires that small scales are reached. Orszag and Patterson's simulation with $32^3$ grid points was only able to resolve a flow with barely no turbulence - Reynolds number of $Re \sim 50$~\cite{moin1998direct}. Table~\ref{table4.1} shows how the amount of wave numbers that can be reached by increasing the box size, which can be summarised by eqn.~\ref{eq4.1}, where $\lfloor \cdot \rfloor$ denote the floor function~\footnote{This was obtained thanks to PhD. c. Mairi McKay.}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Grid points} & $\bm{ k_{max}}$ \\
+\hline
+  $16^3$            &  4          \\ \hline
+  $32^3$            &  9          \\ \hline
+  $64^3$            &  20          \\ \hline
+  $128^3$            &  41          \\ \hline
+  $256^3$            &  84          \\ \hline
+  $512^3$            &  169          \\ \hline
+  $1024^3$            &  340          \\ \hline
+  $2048^3$            &  681          \\ \hline
+\end{tabular}
+\end{center}
+\caption{This table shows the maximum wave number that can be reached for different box sizes in the eDNS code written by Dr. Sam Yoffe and modified by Dr. Moritz Linkmann~\cite{yoffe2013investigation, LinkmannMoritzFrederikLeon2016Spim}.}
+\label{table4.1}
+\end{table}
+
+\begin{align}
+ k_{max} = \left\lfloor \frac{N}{3} \right\rfloor - 1
+ \label{eq4.1}
+\end{align}
+
 
 The main problem with computational fluid dynamics is the nonlinear term $(\bm u \cdot \bm \nabla) \bm u$ in the Navier-Stokes (and MHD) equations. As it was mentioned previously, this term is directly related to turbulence in a system. In order to reformulate the Navier-Stokes equations to have only one dynamic variable, the velocity field, it is necessary to Fourier transform (FT) them and to use the incompressibility condition $\dot{p}=\bm \nabla \cdot \bm u = 0$ (or an equation of state $p=p(\rho)$)\footnote{For MHD two dynamic variables will exist, the velocity and the magnetic fields.}. This means to set the pressure term as a function of the velocity field. However, the nonlinear term remains in the new equations and now it is a convolution over all possible wave numbers~\cite{mccomb1990physics}!
  
@@ -464,11 +492,21 @@ What was mentioned above is simply a short introduction to DNS, and it is consid
 
 \section{DNS resolution}
 
-As it was mentioned in sections~\ref{sec2.4}~and~\ref{sec3.2}, problems with turbulence have various length scales associated with different physical processes. For simulations with forcing the largest length scale is commonly the one at which energy is input into the system. 
+As it was mentioned in sections~\ref{sec2.4}~and~\ref{sec3.2}, problems with turbulence have various length scales associated with different physical processes. As it was mentioned before, all simulations performed for this work force the velocity field at the larger spatial scales. This means that the largest scales that need to be resolved are the ones at which the forcing injects energy to the system - this occurs at wave numbers $k=1$ or $k=2$. Due to the nonlinear term an energy cascade (or inverse cascade) takes the energy form the smallest wave numbers (largest spatial scales) to higher wave numbers (smallest spatial scales). As it was mentioned before, the smallest length scales in turbulent flows are the ones related to dissipation due to viscosity or magnetic diffusivity, i.e. the Kolmogorov microscales (eqn.~\ref{eq4.2} for length scales, and eqn.~\ref{eq4.3} for wave numbers associated with diffusion, where $\varepsilon$ is the total energy diffusion and $\nu$ and $\eta$ are the kinetic viscosity and magnetic diffusivity, respectively)~\cite{yoffe2013investigation, LinkmannMoritzFrederikLeon2016Spim}.
 
-Although Mouschovias had already published
-by the mid 1970s 2D static models of magnetically supported clouds, it was not
-until 1980 that the first dynamic MHD simulation was published~\cite{norman2010historical}.
+\begin{align}
+ \ell_\nu = \left( \frac{\nu^3}{\varepsilon} \right)^{\frac{1}{4}} \qquad \qquad \qquad \qquad \qquad \ell_\eta = \left( \frac{\eta^3}{\varepsilon} \right)^{\frac{1}{4}}
+ \label{eq4.2}\\
+ k_\nu = \left( \frac{\varepsilon}{\nu^3} \right)^{\frac{1}{4}} \qquad \qquad \qquad \qquad \qquad k_\eta = \left( \frac{\varepsilon}{\eta^3} \right)^{\frac{1}{4}} \label{eq4.3}
+\end{align}
+
+Consequently, to fully resolve any simulation, the requirement that must be fulfilled is that $k_{max} > max(k_\nu, k_\eta)$. However, to be sure that the dissipative length scales are appropriately resolved, the following rule of thumb was followed for the simulations performed to study MHD turbulence: ${k_{max}/max(k_\nu, k_\eta)\geq1.25}$ - this is dubbed a fully resolved simulation. This means that wave numbers higher than the Kolmogorov microscales are also resolved - this is important because dissipation not \textbf{only} occurs at $k_\nu$ and $k_\eta$, but also at surrounding wave numbers as well. When $1<{k_{max}/max(k_\nu, k_\eta)<1.25}$ the simulation is said to be partially resolved. 
+
+\section{eDNS2017}
+
+All the simulations that are shown in this work were preformed in the eDNS2017 code. This code was initially written by S. Yoffe in 2012 to study hydrodynamic turbulence~\cite{yoffe2013investigation}. It was later extended my M. Linkmann to simulate MHD as well. All benchmarking for the MHD code was done by M. Linkmann as a part of his doctoral research~\cite{LinkmannMoritzFrederikLeon2016Spim}. The eDNS code first discretises the cubical box depending on table~\ref{table4.1}.
+
+Afterwards, the velocity and magnetic fields are 
 
 
 
@@ -478,9 +516,6 @@ until 1980 that the first dynamic MHD simulation was published~\cite{norman2010h
 
 
 
-Results! 
-
-A critical magnetic Reynolds number was found to be $Re_M^{crit}=55\pm5$ for simulations with $Pr_M\gtrsim1$, which is very close to a reported value of $Re_M^{crit}\sim60$ (also for $Pr_M\gtrsim1$) in~\cite{schekochihin2007fluctuation}.
 
 
 
@@ -489,6 +524,10 @@ A critical magnetic Reynolds number was found to be $Re_M^{crit}=55\pm5$ for sim
 
 
 \chapter{Critical magnetic Prandtl number for small-scale dynamos}
+
+Results!\\
+
+A critical magnetic Reynolds number was found to be $Re_M^{crit}=55\pm5$ for simulations with $Pr_M\gtrsim1$, which is very close to a reported value of $Re_M^{crit}\sim60$ (also for $Pr_M\gtrsim1$) in~\cite{schekochihin2007fluctuation}.\\
 
 
 
@@ -530,34 +569,6 @@ Be selective in what you include: half a dozen \emph{e.g.}~tables that
 contain wrong data you collected while you forgot to switch on the
 computer are not relevant and may mask the correct results.
 
-
-\section{Some results}
-Here are some results.
-
-\subsection{More results}
-When showing results you are likely to use tables and graphs. You can
-create tables easily in \LaTeX.
-
-\begin{table}[h]
-\begin{center}
-\begin{tabular}{||r|c|l||}
-\hline
-\textbf{File names} & \textbf{Satellite} & \textbf{Resolution}\\
-\hline
-  worldr            &  Meteosat          &   5km\\
-  worldg            &  Meteosat          &   5km\\
-  worldb            &  Meteosat          &   5km\\
-\hline
-\end{tabular}
-\end{center}
-\caption{This is a simple table. More complicated tables can have
-headings which pass over more than one column}
-\label{simple_table}
-\end{table}
-
-If you want to produce fancier tables than shown in Table \ref{simple_table}
-refer to the \LaTeX\ manual or ask Google.
-
 \section{Discussion of your results}
 
 This section should give a picture of what you have taken out of your
@@ -577,19 +588,15 @@ research.
 The conclusion section should be at least one page long, preferably 2
 pages, but not much longer.
 
-\appendix
+%\appendix
 % the appendix command just changes heading styles for appendices.
 
 
 
 
-\chapter{Stuff that won't be read by anyone}
+%\chapter{Stuff that won't be read by anyone}
 
-Some people include in their thesis a lot of detail, particularly lots
-of tables containing raw results, figures of intermediate results, or
-computer code which no-one will ever read. You should be careful that
-anything like this you include should contain some element of
-uniqueness which justifies its inclusion.
+%Some people include in their thesis a lot of detail, particularly lots of tables containing raw results, figures of intermediate results, or computer code which no-one will ever read. You should be careful that anything like this you include should contain some element of uniqueness which justifies its inclusion.
 
 \bibliography{MSc-dissertation}
 \bibliographystyle{unsrt}

@@ -1,5 +1,16 @@
 \begin{thebibliography}{10}
 
+\bibitem{yoffe2013investigation}
+Samuel~R Yoffe.
+\newblock Investigation of the transfer and dissipation of energy in isotropic
+  turbulence.
+\newblock {\em arXiv preprint arXiv:1306.3408}, 2013.
+
+\bibitem{LinkmannMoritzFrederikLeon2016Spim}
+Moritz Frederik~Leon Linkmann.
+\newblock Self-organisation processes in (magneto)hydrodynamic turbulence,
+  2016.
+
 \bibitem{schnack2009lectures}
 D.D. Schnack.
 \newblock {\em Lectures in Magnetohydrodynamics: With an Appendix on Extended
@@ -67,11 +78,6 @@ David~W Hughes, Fausto Cattaneo, and Eun-jin Kim.
 \newblock Kinetic helicity, magnetic helicity and fast dynamo action.
 \newblock {\em Physics Letters A}, 223(3):167--172, 1996.
 
-\bibitem{LinkmannMoritzFrederikLeon2016Spim}
-Moritz Frederik~Leon Linkmann.
-\newblock Self-organisation processes in (magneto)hydrodynamic turbulence,
-  2016.
-
 \bibitem{mccomb1990physics}
 William~D McComb.
 \newblock The physics of fluid turbulence.
@@ -124,23 +130,17 @@ Parviz Moin and Krishnan Mahesh.
 \newblock Direct numerical simulation: a tool in turbulence research.
 \newblock {\em Annual review of fluid mechanics}, 30(1):539--578, 1998.
 
-\bibitem{yokota2013petascale}
-Rio Yokota, Lorena~A Barba, Tetsu Narumi, and Kenji Yasuoka.
-\newblock Petascale turbulence simulation using a highly parallel fast
-  multipole method on gpus.
-\newblock {\em Computer Physics Communications}, 184(3):445--455, 2013.
-
-\bibitem{yoffe2013investigation}
-Samuel~R Yoffe.
-\newblock Investigation of the transfer and dissipation of energy in isotropic
-  turbulence.
-\newblock {\em arXiv preprint arXiv:1306.3408}, 2013.
-
 \bibitem{norman2010historical}
 Michael~L Norman.
 \newblock Historical perspective on astrophysical mhd simulations.
 \newblock {\em Proceedings of the International Astronomical Union},
   6(S270):7--17, 2010.
+
+\bibitem{yokota2013petascale}
+Rio Yokota, Lorena~A Barba, Tetsu Narumi, and Kenji Yasuoka.
+\newblock Petascale turbulence simulation using a highly parallel fast
+  multipole method on gpus.
+\newblock {\em Computer Physics Communications}, 184(3):445--455, 2013.
 
 \bibitem{schekochihin2007fluctuation}
 AA~Schekochihin, AB~Iskakov, SC~Cowley, JC~McWilliams, MRE Proctor, and
