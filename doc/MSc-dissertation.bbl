@@ -113,4 +113,40 @@ GK~Batchelor.
   Physical and Engineering Sciences}, volume 201, pages 405--416. The Royal
   Society, 1950.
 
+\bibitem{leorat1981fully}
+J~L{\'e}orat, A~Pouquet, and U~Frisch.
+\newblock Fully developed mhd turbulence near critical magnetic reynolds
+  number.
+\newblock {\em Journal of Fluid Mechanics}, 104:419--443, 1981.
+
+\bibitem{moin1998direct}
+Parviz Moin and Krishnan Mahesh.
+\newblock Direct numerical simulation: a tool in turbulence research.
+\newblock {\em Annual review of fluid mechanics}, 30(1):539--578, 1998.
+
+\bibitem{yokota2013petascale}
+Rio Yokota, Lorena~A Barba, Tetsu Narumi, and Kenji Yasuoka.
+\newblock Petascale turbulence simulation using a highly parallel fast
+  multipole method on gpus.
+\newblock {\em Computer Physics Communications}, 184(3):445--455, 2013.
+
+\bibitem{yoffe2013investigation}
+Samuel~R Yoffe.
+\newblock Investigation of the transfer and dissipation of energy in isotropic
+  turbulence.
+\newblock {\em arXiv preprint arXiv:1306.3408}, 2013.
+
+\bibitem{norman2010historical}
+Michael~L Norman.
+\newblock Historical perspective on astrophysical mhd simulations.
+\newblock {\em Proceedings of the International Astronomical Union},
+  6(S270):7--17, 2010.
+
+\bibitem{schekochihin2007fluctuation}
+AA~Schekochihin, AB~Iskakov, SC~Cowley, JC~McWilliams, MRE Proctor, and
+  TA~Yousef.
+\newblock Fluctuation dynamo and turbulent induction at low magnetic prandtl
+  numbers.
+\newblock {\em New Journal of Physics}, 9(8):300, 2007.
+
 \end{thebibliography}
