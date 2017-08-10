@@ -1,0 +1,96 @@
+# eDNS 2012/eDNS_MHD 2013
+# Example input file
+# Run using: mpirun -n <N> ./mdns.x -i input.in
+
+## Set the timestep and simulation time
+DT            0.002
+TIME          400
+## End time (overridden by -T)
+
+## Output frequency for spectra / velocity field [and magnetic field if running MHD]
+INTERVAL       0.01
+VEL_INTERVAL   0.0
+
+## Set the viscosity and lattice size
+## VISCPOWER sets the power of the viscosity, 1 is normal viscosity
+VISC          0.9
+HYPOVISC      0.0
+LATTICE       128
+VISCPOWER     1
+
+## Set the initial spectrum: To run Orszag-Tang vortex (MHD) or Taylor-Green vortex 
+## (HD) set to -1. Set to 3 for adjustable peak wavenumber
+SPECTRUM       1
+
+## if SPECTRUM 3 chosen: Set peak wavenumber
+WAVENUMBER     5 
+
+## Set the forcing type, wavenumber, helicity and energy input rate
+## type = 1 negative damping
+## type = 2 adjustable helicity forcing
+## type = 3 sineforce
+## range is essentially the maximum wavenumber to be forced
+## range > 0 force up to this wavenumber
+## range < 0 force only at this wavenumber
+FORCING_TYPE  2
+FORCING_RANGE  2
+FORCING_RATE  0.5
+F_UHELICITY 1.0
+
+## Additional
+## set start time label
+START_TIME  0
+
+## set the seed for the random number generator
+SEED  5
+
+## set output prefix
+OUTPUT	testing.
+
+## Set how regularly to backup (in hours)
+BACKUP_INTERVAL	0.00
+
+## Set the initial kinetic helicity. This needs to be a value in [-1,1] as it is the 
+## ratio between helicity and energy spectrum/wavenumber. 1 and -1 produce a maximally helical field.
+U_HELICITY   0
+
+##-------------------MHD input---------------------------------------------
+## Set the magnetic Prandtl number (viscosity/resistivity, or, equivalently: Re_B/Re_u)
+PRANDTL     90.0
+HYPORES     0.0
+
+## Set the initial magnetic helicity. This needs to be a value in [-1,1] as it is the 
+## ratio between helicity and energy spectrum/wavenumber. 1 and -1 produce a maximally helical field.
+HELICITY   0
+
+## Set the initial cross helicity. This needs to be a value in [-1,1] as it is the 
+## ratio between cross helicity and energy spectra. 1 and -1 produce maximally helical fields, 
+##i.e. u parallel or antiparallel to b.
+CROSS_HELICITY   0.0
+
+## Set the forcing type, wavenumber, helicities and energy input rate
+## type = 1 negative damping
+## type = 2 adjustable helicity forcing
+## type = 3 sineforce
+## range is essentially the maximum wavenumber to be forced
+## range > 0 force up to this wavenumber
+## range < 0 force only at this wavenumber
+## FUFB_HELICITY sets relative cross-helicity of helical forces
+B_FORCING_TYPE  2
+B_FORCING_RANGE  2
+B_FORCING_RATE  0.0
+F_BHELICITY 0.0
+FUFB_HELICITY 0.0
+
+## Set the initial spectrum for the magnetic field. For OT-vortex set to -1.
+## if B_SPECTRUM set to 3, peak wavenumber same as u-field 
+B_SPECTRUM      1
+
+##-------------------------BINNING-------------------------------------------
+## Set how often to calculate the binned fields, ie binning happens every time t is a multiple of BIN_FREQ
+## If BIN_FREQ = -1, binning will be done only once, at a time specified by BIN_TIME
+BIN_FREQ        -1
+BIN_TIME        1
+
+## Set a maximum wavenumber for binning, or -1 for the maximum in the simulation
+BIN_MAX         -1

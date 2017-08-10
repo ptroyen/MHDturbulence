@@ -451,6 +451,7 @@ Having stated \textit{some} important theoretical results regarding homogeneous 
 As far as numerical methods for solving (magneto)hydrodynamic equations go, DNS is by far the most complex and computationally expensive. As a consequence, DNS was very limited in the size of simulations that it could preform in its early stages\footnote{The size of a DNS simulation determines the wave numbers (length scales) that it can achieve, and thus the Reynolds number that can be simulated. The number of operations required for DNS scales with $Re^{9/4}$~\cite{mccomb1990physics}.}. Direct numerical simulations were developed by Orszag and Patterson in the 1970s, where they simulated 3D hydrodynamic isotropic turbulence in a periodic box of $32^3$ grid points with periodic boundary conditions~\cite{orszag1970analytical}. Around $50$ years after their pioneering work, and with the use of paralellisation and graphic card units (GPUs), the largest DNS simulation is one of $4096^3$ grid points~\cite{yokota2013petascale}. A brief account of what is DNS and how codes that use it are set up is initially provided. 
 
 \section{DNS basics}
+\label{sec4.1}
 
 Broadly, DNS is a type of simulation that solves the Navier-Stokes equations for hydrodynamics, and the Maxwell equations as well for MHD, without the use of turbulence models. Alternatively, DNS resolves all the spatial and temporal scales related to a specific problem. In order to solve the Navier-Stokes equations, DNS uses a pseudo-spectral method. A brief description of a DNS procedure is provided in this section. 
 
@@ -482,9 +483,9 @@ Direct numerical simulations are done in a cubic box with a predetermined number
 \end{align}
 
 
-The main problem with computational fluid dynamics is the nonlinear term $(\bm u \cdot \bm \nabla) \bm u$ in the Navier-Stokes (and MHD) equations. As it was mentioned previously, this term is directly related to turbulence in a system. In order to reformulate the Navier-Stokes equations to have only one dynamic variable, the velocity field, it is necessary to Fourier transform (FT) them and to use the incompressibility condition $\dot{p}=\bm \nabla \cdot \bm u = 0$ (or an equation of state $p=p(\rho)$)\footnote{For MHD two dynamic variables will exist, the velocity and the magnetic fields.}. This means to set the pressure term as a function of the velocity field. However, the nonlinear term remains in the new equations and now it is a convolution over all possible wave numbers~\cite{mccomb1990physics}!
+The main problem with computational fluid dynamics is the nonlinear term $(\bm u \cdot \bm \nabla) \bm u$ in the Navier-Stokes (and MHD) equations. As it was mentioned previously, this term is directly related to turbulence in a system. In order to reformulate the Navier-Stokes equations to have only one dynamic variable\footnote{For MHD two dynamic variables will exist, the velocity and the magnetic fields.}, the velocity field, it is necessary to Fourier transform (FT) them and to use the incompressibility condition $\dot{p}=\bm \nabla \cdot \bm u = 0$ (or an equation of state $p=p(\rho)$). This means to set the pressure term as a function of the velocity field. However, the nonlinear term remains in the new equations and now it is a convolution over all possible wave numbers~\cite{mccomb1990physics}!
  
-After generating a velocity field, the Fourier-transformed Navier-Stokes equations are then numerically solved. It is worth noting that the nonlinear convolution alone will require $\mathcal{O}(N^6)$ operations~\cite{mccomb1990physics}. This will scale horribly when dealing with large boxes. But wait, that's $\mathcal{O}(N^6)$ operations for the nonlinear term per time step! In order to mitigate this problem, the convolution theorem is used. The convolution theorem states that a convolution's Fourier transform $\mathcal{F}\{f \ast g\}$ is defined by the point-wise product of the Fourier transform of its components $\mathcal{F}\{f\} \cdot \mathcal{F}\{g\}$. This means that the convolution can be described as $f \ast g = \mathcal{F}^{-1}\{ \mathcal{F}\{f\} \cdot \mathcal{F}\{g\} \}$. Using fast Fourier transforms (FFT), and considering that for the nonlinear term in the Navier-Stokes equation both $f$ and $g$ are the velocity field $\bm u (\bm k, t)$, the computational complexity for obtaining the nonlinear term is decreased to $\mathcal{O}(N^3 \log_2 N)$~\cite{mccomb1990physics}.
+After generating a velocity field, the Fourier-transformed Navier-Stokes equations are then numerically solved. It is worth noting that the nonlinear convolution alone will require $\mathcal{O}(N^6)$ operations~\cite{mccomb1990physics}. This will scale horribly when dealing with large boxes. But wait, that's $\mathcal{O}(N^6)$ operations for the nonlinear term per time step! In order to mitigate this problem, the convolution theorem is used. The convolution theorem states that a convolution's Fourier transform $\mathcal{F}\{f \ast g\}$ is defined by the point-wise product of the Fourier transform of its components $\mathcal{F}\{f\} \cdot \mathcal{F}\{g\}$. This means that the convolution can be described as $f \ast g = \mathcal{F}^{-1}\{ \mathcal{F}\{f\} \cdot \mathcal{F}\{g\} \}$. Using fast Fourier transforms\footnote{Since Fourier transforms involve infinite sums, which cannot be numerically performed, FFTs are used as an alternative. This, however, generates aliasing errors. More on aliasing errors on eDNS2017 can be found in ~\cite{yoffe2013investigation}.} (FFT), and considering that for the nonlinear term in the Navier-Stokes equation, the computational complexity for obtaining the nonlinear term is decreased to $\mathcal{O}(N^3 \log_2 N)$~\cite{mccomb1990physics}.
 
 The pseudo-spectral method does help in decreasing the number of operations required to obtain the nonlinear term. However, this needs to be done in every single time step (and for two fields in MHD). Exactly what time stepping strategy is used, that depends on different codes. As far as the actual value of the time step, each code will have a Courant–Friedrichs–Lewy (CFL) condition to make sure the results do not diverge. For the MHD code that was used for the simulations shown later, a forward in time Heun's method was used and the CFL condition was $dt < 0.1/(u_{rms}k_{max})$. This means that $dt$ is inversely proportional to the box size, which means that larger boxes will need smaller time steps. It is clear how expensive it is to get simulations that resolve all length scales, and why making simulations in larger boxes is very time consuming~\cite{yoffe2013investigation, LinkmannMoritzFrederikLeon2016Spim}. 
 
@@ -504,11 +505,58 @@ Consequently, to fully resolve any simulation, the requirement that must be fulf
 
 \section{eDNS2017}
 
-All the simulations that are shown in this work were preformed in the eDNS2017 code. This code was initially written by S. Yoffe in 2012 to study hydrodynamic turbulence~\cite{yoffe2013investigation}. It was later extended my M. Linkmann to simulate MHD as well. All benchmarking for the MHD code was done by M. Linkmann as a part of his doctoral research~\cite{LinkmannMoritzFrederikLeon2016Spim}.
+All the simulations that are shown in this work were preformed in the eDNS2017 code. This code was initially written by S. Yoffe in 2012 to study hydrodynamic turbulence~\cite{yoffe2013investigation}. It was later extended my M. Linkmann to simulate MHD as well. All benchmarking for the MHD code was done by M. Linkmann as a part of his doctoral research~\cite{LinkmannMoritzFrederikLeon2016Spim}. The eDNS code first discretises the cubical box depending on table~\ref{table4.1}.
 
+Afterwards, the velocity and magnetic fields are initialised. This is done by using Gaussian distributions (with mean 0 and variance 1) for the velocity and magnetic fields in configuration space~\cite{yoffe2013investigation}. These fields do not have to be a solution of the MHD equations. These are then Fourier transformed to inject initial helicity into the system (depending on the given initial conditions). Both fields are then normalised with an equipartition of kinetic and magnetic energy. 
 
+Fourier analysis methods are widely used when systems are described by coupled partial differential equations. This is mainly because only temporal derivatives remain and spatial derivatives transform as $\bm \nabla \rightarrow -i \bm k$. This turns partial differential equations to linear ordinary differential equations in Fourier space. As it was mentioned before, the convolution term when dealing with the Fourier representation of the Navier-Stokes (or MHD) equations is problematic and can be dealt with by using the convolution theorem. To do so, FFTs are used to go back and forth between spectral and configuration space. The time stepping strategy used for eDNS2017 is Heun's method, which is an explicit second-order predictor-corrector scheme. A more detailed description of the eDNS2017 code can be found in~\cite{LinkmannMoritzFrederikLeon2016Spim, yoffe2013investigation}.
 
+\subsection{Forcing}
 
+Another important part of the eDNS2017 code is the type of forcing used to inject energy into the system. It is worth noting that the code allows to study isotropic turbulence for decaying (no energy injected into the system) or forcing (energy injected in order to reach a steady state)~\cite{LinkmannMoritzFrederikLeon2016Spim}. This forcing comes as $\bm f_u$ and $\bm f_b$ in eqns.~\ref{eq3.1} and~\ref{eq3.2}. However, for the simulations that were performed only the velocity field was forced, and from it energy was transferred to the magnetic field through the Lorentz force. From stationary simulations, the forcing function used injects energy by feeding a rescaling of the velocity field into the large spatial scales. More precisely, $\bm f_u$ is given by:
+
+\begin{align}
+ \bm f_u(\bm k, t) &= \frac{\varepsilon_W}{2 E_f} \bm u(\bm k, t) \qquad \text{for} \qquad 0 < \vert \bm k \vert \leq k_f; \nonumber \\
+ &= 0 \,\, \qquad \qquad \qquad \text{otherwise,} \nonumber
+\end{align}
+
+where $\varepsilon_W$ is the energy input rate, $E_f$ is the total energy contained in the forcing wave number band ($0 < \vert \bm k \vert \leq k_f$), and $k_f$ is the largest wave number for which forcing is applied ($k_f=2$ in all simulations). Finally, $\bm u(\bm k, t)$ is the velocity field in spectral space, i.e. the Fourier transform of the velocity field in configuration space~\cite{LinkmannMoritzFrederikLeon2016Spim}. This can be defined as an input parameter in the eDNS2017 code. 
+
+Determining the value of the energy input rate needs to be carefully considered. The main considerations that need to be made to determine what numerical value to assign to $\varepsilon_W$ are the time step $dt$, and the energy dissipation of the system. In order for a forced simulation to obtain a steady state, it must ensure that $\frac{dE}{dt}=\varepsilon_W - \varepsilon_T = 0$, where $\varepsilon_T$ is the total energy dissipation.
+
+\subsubsection{Helical forcing}
+
+In order to achieve large-scale dynamo action, the system must have kinetic helicity. The best way to do this is to have the forcing routine inject helicity to the system. This can be done by using a forcing routine given by:
+
+\begin{align}
+ \bm f_h(\bm k, t) &= A(\bm k, t) \bm{e_1}(\bm k) + B(\bm k, t) \bm{e_2}(\bm k), \nonumber
+\end{align}
+
+where the basis vectors $\bm{e_i}(\bm k) \perp \bm k$ for $i=1, 2$ and $\bm{e_1}(\bm k)\cdot \bm{e_2}(\bm k)^\dagger = 0$,  $A$ and $B$ are complex numbers defined below:
+
+\begin{align}
+ A(\bm k, t) = \sqrt{F(k)} \, g_A e^{i \alpha(\bm k)} \nonumber \\
+ B(\bm k, t) = \sqrt{F(k)} \, g_B e^{i \alpha(\bm k)} \nonumber
+\end{align}
+
+In the above equations, $F(k)$ is a normalisation factor, $g_A^2+g_B^2=1$, and $e^{i\alpha(\bm k)}$ is a uniform random phase. More information about the forcing routines used in eDNS2017 can be found in~\cite{yoffe2013investigation, LinkmannMoritzFrederikLeon2016Spim}.
+
+\section{Paralellisation}
+
+One of the problems with DNS is the memory required to hold the contents of the velocity and magnetic fields in every time step. Since working memory is not unlimited, box sizes larger than $32^3$ cannot be modeled without the use of paralellisation. In computer simulations, this means that the problem is split into different pieces and solved by different processors with (some) communication between them. Maximizing the number of processors while minimising communication between them allows for more time efficient numerical simulations. The paralellisation method used in eDNS is to divide the cubic box of size $N^3 = (2^n)^3$ in $2^m$ (where $m\leq n$) ``slices'' and have the $m$ processors take care of each slice, like shown in fig.~\ref{fig4.1}~\cite{yoffe2013investigation}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.4\textwidth]{img/slices}
+\caption{Paralellisation method through horizontal slices of the cubic box~\cite{yoffe2013investigation}.}
+\label{fig4.1}
+\end{figure}
+
+The eDNS2017 code uses OpenMPI\footnote{OpenMPI is an open-source Message Passing Interface implementation protocol.} to run on ARCHER, a Cray XC30 supercomputer at the University of Edinburgh’s Advanced Computing Facility. When working on ARCHER, parallel jobs are submitted to a queue and, for a predetermined amount of time, run on a large number of nodes. %Each process has access only to its own data, but they need to know information from the neighboring processes. This means that some communication has to occur between processors.
+
+\section{Running the code}
+
+The code written by Yoffe and Linkmann handles an input file to read the parameters of the simulation, \texttt{input.in}. In said file, the time step \texttt{DT} has to be determined by making use of the CFL condition mentioned in section~\ref{sec4.1}, the simulation time \texttt{TIME} is also stated. 
 
 
 

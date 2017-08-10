@@ -15,7 +15,12 @@
 \contentsline {section}{\numberline {4.1}DNS basics}{18}
 \contentsline {section}{\numberline {4.2}DNS resolution}{19}
 \contentsline {section}{\numberline {4.3}eDNS2017}{20}
-\contentsline {chapter}{\numberline {5}Critical magnetic Prandtl number for small-scale dynamos}{21}
-\contentsline {chapter}{\numberline {6}Results and Analysis}{22}
-\contentsline {section}{\numberline {6.1}Discussion of your results}{22}
-\contentsline {chapter}{\numberline {7}Conclusions}{23}
+\contentsline {subsection}{\numberline {4.3.1}Forcing}{21}
+\contentsline {subsubsection}{Helical forcing}{21}
+\contentsline {section}{\numberline {4.4}Paralellisation}{22}
+\contentsline {section}{\numberline {4.5}Running the code}{22}
+\contentsline {chapter}{\numberline {5}Critical magnetic Prandtl number for small-scale dynamos}{23}
+\contentsline {chapter}{\numberline {6}Results and Analysis}{24}
+\contentsline {section}{\numberline {6.1}Discussion of your results}{24}
+\contentsline {chapter}{\numberline {7}Conclusions}{25}
+\contentsline {chapter}{\numberline {A}Sample input file for eDNS2017}{26}
