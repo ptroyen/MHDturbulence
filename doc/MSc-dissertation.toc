@@ -7,10 +7,11 @@
 \contentsline {chapter}{\numberline {3}Magnetohydrodynamics}{9}
 \contentsline {section}{\numberline {3.1}MHD equations}{9}
 \contentsline {section}{\numberline {3.2}MHD turbulence}{11}
-\contentsline {section}{\numberline {3.3}Dynamo action}{12}
+\contentsline {subsection}{\numberline {3.2.1}Self-organisation and inverse cascade}{12}
+\contentsline {section}{\numberline {3.3}Dynamo action}{13}
 \contentsline {subsection}{\numberline {3.3.1}Linear and nonlinear dynamos}{14}
 \contentsline {subsection}{\numberline {3.3.2}Small scale and large scale dynamos}{15}
-\contentsline {subsubsection}{Kazantsev theory}{15}
+\contentsline {subsubsection}{Kazantsev theory}{16}
 \contentsline {chapter}{\numberline {4}Direct numerical simulations}{17}
 \contentsline {section}{\numberline {4.1}DNS basics}{18}
 \contentsline {section}{\numberline {4.2}DNS resolution}{19}
@@ -19,8 +20,10 @@
 \contentsline {subsubsection}{Helical forcing}{21}
 \contentsline {section}{\numberline {4.4}Paralellisation}{22}
 \contentsline {section}{\numberline {4.5}Running the code}{22}
-\contentsline {chapter}{\numberline {5}Critical magnetic Prandtl number for small-scale dynamos}{23}
-\contentsline {chapter}{\numberline {6}Results and Analysis}{24}
-\contentsline {section}{\numberline {6.1}Discussion of your results}{24}
-\contentsline {chapter}{\numberline {7}Conclusions}{25}
-\contentsline {chapter}{\numberline {A}Sample input file for eDNS2017}{26}
+\contentsline {section}{\numberline {4.6}Post-processing}{23}
+\contentsline {chapter}{\numberline {5}Results}{25}
+\contentsline {section}{\numberline {5.1}Critical magnetic Prandtl number for small-scale dynamos}{25}
+\contentsline {chapter}{\numberline {6}Results and Analysis}{27}
+\contentsline {section}{\numberline {6.1}Discussion of your results}{27}
+\contentsline {chapter}{\numberline {7}Conclusions}{28}
+\contentsline {chapter}{\numberline {A}Sample input file for eDNS2017}{29}

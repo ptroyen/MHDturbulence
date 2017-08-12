@@ -269,6 +269,13 @@ From it, it is possible to determine the wave number related to the viscous diss
  k_\nu = \left( \frac{\varepsilon}{\nu^3} \right)^{\frac{1}{4}} \label{eq2.7}
 \end{align}
 
+The inertial range of the energy cascade of fig.~\ref{fig2.2} has an analytic description by Kolmogorov. In said figure, the kinetic energy spectrum $E(k)$, which describes the energy at each wave number $k$, is shown. The total energy of the system is the summation of the energy of each wave number:
+
+\begin{align}
+ E = \sum_k^{k_{max}} E(k)
+\end{align}
+
+
 \chapter{Magnetohydrodynamics}
 
 The field of magnetohydrodynamics (MHD) studies electrically conducting fluids. These can occur in different scales from the flow of liquid sodium in laboratories to the plasma inside nuclear fusion reactors or to the movement of material inside the cores of planets and stars. 
@@ -358,6 +365,12 @@ Where $\eta$ is the magnetic diffusivity and $\varepsilon$ is the total energy d
 \begin{align}
  k_\eta = \left( \frac{\varepsilon}{\eta^3} \right)^{\frac{1}{4}} \label{eq3.5}
 \end{align}
+
+\subsection{Self-organisation and inverse cascade}
+
+As it was mentioned for the case of hydrodynamic turbulence, section~\ref{sec2.4}, when energy is input into the system at the largest length scales (smallest wave numbers), there is transfer of kinetic energy from the large scales towards the small scales, where it is dissipated into heat due to viscosity. This is the so called energy cascade, shown in fig.~\ref{fig2.2}, and it is caused by the nonlinear term of eqn.~\ref{eq2.1}. In MHD turbulence, the kinetic energy still undergoes such a process, but the spectral profile of the magnetic energy has an important difference. 
+
+The magnetic helicity was shown to have a different type of dynamics - an \textit{inverse cascade}, where there was a transfer from the small length scales to the large scales (large wave numbers to smaller ones). Connected to this, it was shown that some magnetic energy should also be transferred from large wave numbers to smaller wave numbers. This occurs due to the emergence of spatially large magnetic fields~\cite{LinkmannMoritzFrederikLeon2016Spim}. The magnetic energy, when close enough to the kinetic range (wave number is small enough such that the nonlinear term is unimportant) should follow the Kazantsev $k^{3/2}$ scaling~\cite{kazantsev1968enhancement, haugen2004simulations}. One consistency check that can be done for the simulations generated is that for the ones with dynamo action the Kazantsev $k^{3/2}$ scaling law is fulfilled.
 
 \section{Dynamo action}
 
@@ -546,7 +559,7 @@ In the above equations, $F(k)$ is a normalisation factor, $g_A^2+g_B^2=1$, and $
 
 \section{Paralellisation}
 
-One of the problems with DNS is the memory required to hold the contents of the velocity and magnetic fields in every time step. Since working memory is not unlimited, box sizes larger than $32^3$ cannot be modeled without the use of paralellisation. In computer simulations, this means that the problem is split into different pieces and solved by different processors with (some) communication between them. Maximizing the number of processors while minimising communication between them allows for more time efficient numerical simulations. The paralellisation method used in eDNS is to divide the cubic box of size $N^3 = (2^n)^3$ in $2^m$ (where $m\leq n$) ``slices'' and have the $m$ processors take care of each slice, like shown in fig.~\ref{fig4.1}~\cite{yoffe2013investigation}.
+One of the problems with DNS is the memory required to hold the contents of the velocity and magnetic fields in every time step. Since working memory is not unlimited, box sizes larger than $32^3$ cannot be modeled without the use of paralellisation. In computer simulations, this means that the problem is split into different pieces and solved by different processors with (some) communication between them. Maximizing the number of processors while minimising communication between them allows for more time efficient numerical simulations. The paralellisation method used in eDNS is to divide the cubic box of size $N^3 = (2^n)^3$ in $2^m$ (where $m\leq n$) ``slices'' and have the $m$ processors take care of each slice, like shown in fig.~\ref{fig4.1}~\cite{yoffe2013investigation}. 
 
 \begin{figure}[!ht]
 \centering
@@ -561,24 +574,67 @@ The eDNS2017 code uses OpenMPI\footnote{OpenMPI is an open-source Message Passin
 
 The code written by Yoffe and Linkmann handles an input file to read the parameters of the simulation, \texttt{input.in}. In said file, the time step \texttt{DT} has to be determined by making use of the CFL condition mentioned in section~\ref{sec4.1}, the simulation time \texttt{TIME} is also stated. The fluid's kinematic viscosity, \texttt{VISC}, and the magnetic Prandtl number \texttt{PRANDTL} can also be modified (and with them the magnetic diffusivity can be changed too). The lattice size, \texttt{LATTICE}, can be changed, but only such that $N=2^n$, where $n \in \mathbb{Z}$. Other parameters like the hypoviscosity, hyporesistivity, cross-helicity, forcing through the magnetic channel, that have not been discussed here can also be changed. For the simulations performed, however, these were all kept unchanged. 
 
-A sample input file for eDNS2017 is shown in the Appendix~\ref{apx1}. For said input file, the only things that were changed for the simulations presented in this work were: the
+A sample input file for eDNS2017 is shown in the Appendix~\ref{apx1}. For said input file, the only things that were changed for the simulations presented in this work were: the time step that was used had to be changed depending on the size of the box. Table~\ref{table4.2} was used as a guide to choose the time step\footnote{It is worth noting that the time step also shows a dependence with the viscosity and the resistivity: $dt_\nu < 0.1/(\nu k_{max}^2)$ and $dt_\eta < 0.1/(\eta k_{max}^2)$. But for the values of $\nu$ and $\eta$ used, $dt<min(dt_\nu, dt_\eta)$~\cite{yoffe2013investigation}.}.
 
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Grid points} & $\bm{dt_{max}}$ \\
+\hline
+  $16^3$            &  0.0387          \\ \hline
+  $32^3$            &  0.0172          \\ \hline
+  $64^3$            &  0.0077          \\ \hline
+  $128^3$            &  0.0038          \\ \hline
+  $256^3$            &  0.0018          \\ \hline
+  $512^3$            &  0.0009          \\ \hline
+  $1024^3$            &  0.0004          \\ \hline
+  $2048^3$            &  0.0002       \\ \hline
+\end{tabular}
+\end{center}
+\caption{This table shows the maximum time step that can be used for boxes of different sizes. It is built with the CFL condition mentioned in section~\ref{sec4.1} ($dt < 0.1 / (u_{rms} k_{max})$).}
+\label{table4.2}
+\end{table}
 
+For most cases, a total code time of \texttt{TIME~~100} was enough to reach a steady state, but for simulations close to the transition from dynamo on to dynamo off it was needed to go to around \texttt{TIME~~400}. Viscosity was varied from $\nu=$\texttt{VISC~~0.0005} to \texttt{1.0}, where the largest values of viscosity are related to flows that are not particularly turbulent, or even laminar. The lattice sizes that were used were $N$=\texttt{LATTICE~~64}, \texttt{128}, \texttt{256}, and one simulation with \texttt{1024}.
 
+In order to have non-helical simulations the parameter \texttt{F\_UHELICITY} was set to \texttt{0.0}, while for fully helical simulations it was set to \texttt{1.0}. Finally, the magnetic Prandtl number was changed by modifying \texttt{PRANDTL}. The working range for $Pr_M$ in this work was \texttt{0.1} to \texttt{100}. All other parameters were kept unchanged from the sample input file, \texttt{input.in}, shown in appendix~\ref{apx1}.
 
+\section{Post-processing}
 
+Once a simulation reaches the final time that was chosen in the input file, two files are given to work with. These hold the spectral information of the velocity and magnetic fields for each time step. Three post-processing scripts written by Yoffe and Linkmann in \texttt{bash} were used to analyse these spectral files. One (\texttt{ensemble\_spectra.sh}) takes each spectral file and averages their values in a given time range, e.g. \texttt{TIME}=[\texttt{50:100}], for a given time interval, e.g. \texttt{1} to take 50 samples or \texttt{2} to take 25. In order to get the parameters of the spectral files as a function of time, \texttt{process\_MHD.sh}, is used. This script performs summations like $\sum_k^{k_{max}}$ to obtain various quantities (like the kinetic and magnetic energies) as functions of time. Finally, in order to obtain temporal averages of the quantities generated by the \texttt{process\_MHD.sh} script, \texttt{time\_average.sh} is used in a similar way as \texttt{ensemble\_spectra.sh} by giving a time range and a time interval. It is worth noting that these post-processing scripts output their respective results with the appropriate statistical errors.
 
+In addition to the post-processing scripts mentioned above, several others were written to automate the use of \texttt{gnuplot} to perform graphs and heat maps, check for the existence of dynamo action in the end of every simulation, or obtain relevant values to each simulation. For example, and with the use of some information from the input file, the Kolmogorov microscales (along to their relation to the maximum wave number), Reynolds number, and magnetic Reynolds number with their appropriate statistical errors.
 
+\chapter{Results}
 
+A detailed account of the simulations that were generated, along with their motivations, is laid out here. The first simulation was done in a large box, $N^3=1024^3$, for which viscosity was ten times larger than magnetic diffusivity, i.e. $Pr_M=\nu/\eta=10$. As it was mentioned before, the magnetic Prandtl number compares the kinetic and the magnetic channel. That is, it compares how turbulent the magnetic field is relative to the velocity field, which is equivalent of comparing how much energy is dissipated through the magnetic channel against the kinetic channel. 
 
-
-
-
-\chapter{Critical magnetic Prandtl number for small-scale dynamos}
-
-Results!\\
+\section{Critical magnetic Prandtl number for small-scale dynamos}
 
 A critical magnetic Reynolds number was found to be $Re_M^{crit}=55\pm5$ for simulations with $Pr_M\gtrsim1$, which is very close to a reported value of $Re_M^{crit}\sim60$ (also for $Pr_M\gtrsim1$) in~\cite{schekochihin2007fluctuation}.\\
+
+other result for checks!\\
+
+in~\cite{haugen2004simulations} they claim to have a critical magnetic Reynolds number of around 35, when defined with $Re_M=u_{rms}/(\eta k_f)$, for magnetic Prandtl number of unity. Doing that in my simulations, an equivalent simulation is \texttt{128\_0.0125\_1}, for which the critical magnetic Reynolds number defined with the forcing wavenumber is $21 \pm 1$.
+
+more result for checks!\\
+
+in~\cite{haugen2004simulations} they mention that the Kazantsev $k^{3/2}$ spectrum should appear when the magnetic field is strong enough and in the kinetic regime (small enough wave numbers such that nonlinear term is unimportant). This happens in the highPrM runs! a plot of it is in {highPrM/img/Kazantsev} for $\eta=0.01$. It is comparable with figure 4(a) in~\cite{schekochihin2004simulations} 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.4\textwidth]{img/slices}
+\caption{Magnetic energy for $Pr_M=500$, $\nu=5e-2$~\cite{schekochihin2004simulations}.}
+\label{figure}
+\end{figure}
+
+
+
+AAAnd, the Kolmogorov $k^{-5/3}$ for the kinetic energy should also appear if the magnetic field is weak enough. This is shown in \texttt{DYNAMO\_256\_0.002\_0.2}, \texttt{DYNAMO/256\_0.0025\_0.2}, \texttt{DYNAMO/256\_0.003\_0.2}. They are in {img/kolmogorov}
+
+
+
 
 
 

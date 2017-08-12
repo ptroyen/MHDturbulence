@@ -27,6 +27,12 @@ Henry~K Moffatt and Michael~RE Proctor.
 \newblock Topological constraints associated with fast dynamo action.
 \newblock {\em Journal of Fluid Mechanics}, 154:493--507, 1985.
 
+\bibitem{schekochihin2004simulations}
+Alexander~A Schekochihin, Steven~C Cowley, Samuel~F Taylor, Jason~L Maron, and
+  James~C McWilliams.
+\newblock Simulations of the small-scale turbulent dynamo.
+\newblock {\em The Astrophysical Journal}, 612(1):276, 2004.
+
 \bibitem{sir1919larmor}
 J~Sir.
 \newblock Larmor, how could a rotating body such as the sun become a magnet?,
@@ -93,6 +99,11 @@ Ganapati Sahoo, Prasad Perlekar, and Rahul Pandit.
 \newblock Systematics of the magnetic-prandtl-number dependence of homogeneous,
   isotropic magnetohydrodynamic turbulence.
 \newblock {\em New Journal of Physics}, 13(1):013036, 2011.
+
+\bibitem{haugen2004simulations}
+Nils Erland~L Haugen, Axel Brandenburg, and Wolfgang Dobler.
+\newblock Simulations of nonhelical hydromagnetic turbulence.
+\newblock {\em Physical Review E}, 70(1):016308, 2004.
 
 \bibitem{stern2002millennium}
 David~P Stern.

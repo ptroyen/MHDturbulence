@@ -261,6 +261,13 @@ keywords = "turbulence; magnetohydrodynamic; chaotic dynamics",
   publisher={Elsevier}
 }
 
+@article{yoffe2013investigation,
+  title={Investigation of the transfer and dissipation of energy in isotropic turbulence},
+  author={Yoffe, Samuel R},
+  journal={arXiv preprint arXiv:1306.3408},
+  year={2013}
+}
+
 @article{norman2010historical,
   title={Historical perspective on astrophysical MHD simulations},
   author={Norman, Michael L},
