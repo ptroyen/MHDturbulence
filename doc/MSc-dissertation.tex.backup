@@ -244,32 +244,41 @@ This effect of energy transfer from the larger to the smaller length scales is c
 
 From the \textit{Gedankenexperiment} above, it is clear that there are three important length scales related homogeneous isotropic turbulence. The largest one is that at which energy is input into the system, and consequently the one which contains most of the kinetic energy, then the inertial range defines the intermediary length scales where the system's nonlinearity dominates, but viscous effects are also important. Finally, the smallest length scale is related to energy dissipation from viscous effects. When dealing with numerical simulations, the contribution of all these length scales has to be determined in order to have a properly resolved simulation.
 
-In order to obtain the characteristic length scale relevant to the system (\textbf{integral scale}), eqn.~\ref{eq2.5} is used. This describes the correlation of the fluctuating component of the velocity field at the large scales. This is then used to obtain the Reynolds number~\cite{mccomb1990physics}. To do so, a corresponding characteristic velocity needs to be defined. Since the type of turbulence that is being studied is HIT, it is possible to take the root-mean-squared velocity to be the aforementioned characteristic velocity. This rms velocity is defined with the kinetic energy $E_K=\frac{1}{2}(u_x^2+u_y^2+u_z^2)=\frac{3}{2}u_{rms}^2$ since the isotropy condition requires rotational invariance, and thus $\langle u_x \rangle = \langle u_y \rangle = \langle u_z \rangle$.
+In order to obtain the characteristic length scale relevant to the system (\textbf{integral scale}), the longitudinal two-point correlation function of eqn.~\ref{eq2.5} is used. This value of $L$ describes the correlation of the fluctuating component of the velocity field at the large scales, and it is used to obtain the Reynolds number~\cite{mccomb1990physics}. To do so, a corresponding characteristic velocity needs to be defined. Since the type of turbulence that is being studied is HIT, it is possible to take the root-mean-squared (rms) velocity to be the aforementioned characteristic velocity. The rms velocity is defined with the kinetic energy $E_K=\frac{1}{2}(u_x^2+u_y^2+u_z^2)=\frac{3}{2}u_{rms}^2$ since the isotropy condition requires rotational invariance, and thus $\langle u_x \rangle = \langle u_y \rangle = \langle u_z \rangle = u_{rms}$.
 
 \begin{align}
  L_u(t) &= \frac{1}{U^2} \int_0^\infty C_{LL}^{uu}(\bm r, t) dr \nonumber \\
  U&=u_{rms}=\sqrt{\frac{2}{3}E_K} \nonumber
 \end{align}
 
-A smaller length scale that determines the inertial range mentioned above is the \textbf{Taylor length scale}. It is also referred to as the turbulent length scale for this very reason. With the energy dissipation rate as $\varepsilon$, and the kinetic viscosity $\nu$, the Taylor microscale is defined~\cite{LinkmannMoritzFrederikLeon2016Spim}:
+An intermediary length scale that describes the range where viscosity starts to become important (in comparison to the nonlinear term) is the \textbf{Taylor length scale}. It is also referred to as the turbulent length scale for this very reason. With the energy dissipation rate as $\varepsilon$, and the kinetic viscosity $\nu$, the Taylor microscale is defined~\cite{LinkmannMoritzFrederikLeon2016Spim}:
 
 \begin{align}
  \lambda_u = \sqrt{\frac{15 \nu}{\varepsilon}} u_{rms} \nonumber
 \end{align}
 
-Finally, the smallest length scales of the system are close to the \textbf{Kolmogorov microscale}. At this scale (large wave numbers), most energy is being dissipated into heat~\cite{mccomb1990physics}. Working through dimensional analysis it is possible to arrive at the following length scale related to viscous dissipation:
+Finally, the smallest length scales of the system are close to the \textbf{Kolmogorov microscale}. At this scale (large wave numbers), most energy is being dissipated into heat~\cite{mccomb1990physics}. The Kolmogorov microscale ``starts'' when the viscous term is equally important to the nonlinear term, i.e. $Re=1$. Working through dimensional analysis it is possible to arrive at the following Kolmogorov microscale related to viscous dissipation:
 
 \begin{align}
  \ell_\nu = \left( \frac{\nu^3}{\varepsilon} \right)^{\frac{1}{4}} \nonumber
 \end{align}
 
-From it, it is possible to determine the wave number related to the viscous dissipation, which is then determined by eqn.~\ref{eq2.7}. These large wave numbers will then be necessary to determine important parameters for a given numerical simulation. 
+From it, it is possible to determine the wave number related to the viscous dissipation, which is then determined by eqn.~\ref{eq2.7}. These large wave numbers will then be necessary to determine important parameters for a given numerical simulation.
 
 \begin{align}
  k_\nu = \left( \frac{\varepsilon}{\nu^3} \right)^{\frac{1}{4}} \label{eq2.7}
 \end{align}
 
-The inertial range of the energy cascade of fig.~\ref{fig2.2} has an analytic description by Kolmogorov.
+The inertial range of the energy cascade of fig.~\ref{fig2.2} has an analytic description by Kolmogorov. In said figure, the kinetic energy spectrum $E(k)$, which describes the energy at each wave number $k$, is shown. The total energy of the system is the summation of the energy of each wave number:
+
+\begin{align}
+ E = \sum_k^{k_{max}} E(k)
+\end{align}
+
+
+
+
+
 
 \chapter{Magnetohydrodynamics}
 
@@ -599,11 +608,22 @@ In order to have non-helical simulations the parameter \texttt{F\_UHELICITY} was
 
 Once a simulation reaches the final time that was chosen in the input file, two files are given to work with. These hold the spectral information of the velocity and magnetic fields for each time step. Three post-processing scripts written by Yoffe and Linkmann in \texttt{bash} were used to analyse these spectral files. One (\texttt{ensemble\_spectra.sh}) takes each spectral file and averages their values in a given time range, e.g. \texttt{TIME}=[\texttt{50:100}], for a given time interval, e.g. \texttt{1} to take 50 samples or \texttt{2} to take 25. In order to get the parameters of the spectral files as a function of time, \texttt{process\_MHD.sh}, is used. This script performs summations like $\sum_k^{k_{max}}$ to obtain various quantities (like the kinetic and magnetic energies) as functions of time. Finally, in order to obtain temporal averages of the quantities generated by the \texttt{process\_MHD.sh} script, \texttt{time\_average.sh} is used in a similar way as \texttt{ensemble\_spectra.sh} by giving a time range and a time interval. It is worth noting that these post-processing scripts output their respective results with the appropriate statistical errors.
 
-In addition to the post-processing scripts mentioned above, several others were written to automate the use of \texttt{gnuplot} to perform graphs and heat maps, check for the existence of dynamo action in the end of every simulation, or obtain relevant values to each simulation. For example, and with the use of some information from the input file, the Kolmogorov microscales (along to their relation to the maximum wave number), Reynolds number, and magnetic Reynolds number with their appropriate statistical errors.
+In addition to the post-processing scripts mentioned above, several others were written to automate the use of \texttt{Gnuplot} to perform graphs and heat maps, check for the existence of dynamo action in the end of every simulation, or obtain relevant values to each simulation. For example, and with the use of some information from the input file, the Kolmogorov microscales (along to their relation to the maximum wave number), Reynolds number, and magnetic Reynolds number with their appropriate statistical errors. These additional post-processing scripts were performed using \texttt{Bash} and \texttt{Python}. Finally, \texttt{Paraview} was used in order to generate plots of the velocity and the magnetic fields for some simulations. 
 
 \chapter{Results}
 
-A detailed account of the simulations that were generated, along with their motivations, is laid out here. The first simulation was done in a large box, $N^3=1024^3$, for which viscosity was ten times larger than magnetic diffusivity, i.e. $Pr_M=\nu/\eta=10$. As it was mentioned before, the magnetic Prandtl number compares the kinetic and the magnetic channel. That is, it compares how turbulent the magnetic field is relative to the velocity field, which is equivalent of comparing how much energy is dissipated through the magnetic channel against the kinetic channel. 
+A detailed account of the simulations that were generated, along with their motivations, is provided here. The first simulation was done in a large box, $N^3=1024^3$, for which viscosity was ten times larger than magnetic diffusivity, i.e. $Pr_M=\nu/\eta=10$. As it was mentioned before, the magnetic Prandtl number compares the kinetic and the magnetic channel. That is, it compares how turbulent the magnetic field is relative to the velocity field, which is equivalent of comparing how much energy is dissipated through the magnetic channel against the kinetic channel. 
+
+Using \texttt{Paraview}, a slice of the velocity and the magnetic fields was plotted. Figure~\ref{fig5.1} shows this slice, where the magnetic field is clearly more fine-grained than the velocity field. 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{{img/f_1024_0.005_10_fieldslice}.png}
+\caption{Heat map of $\vert u \vert$ (left) and $\vert b \vert$ (right) of a vertical  slice of a $N^3=1024^3$ box ~\cite{schekochihin2004simulations}.}
+\label{fig5.1}
+\end{figure}
+
+dd
 
 \section{Critical magnetic Prandtl number for small-scale dynamos}
 
@@ -619,8 +639,8 @@ in~\cite{haugen2004simulations} they mention that the Kazantsev $k^{3/2}$ spectr
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.4\textwidth]{img/slices}
-\caption{Magnetic energy for $Pr_M=500$, $\nu=5e-2$~\cite{schekochihin2004simulations}.}
+\includegraphics[width=0.7\textwidth]{img/k3halfs}
+\caption{Magnetic energy for $Pr_M=500$~\cite{schekochihin2004simulations}.}
 \label{figure}
 \end{figure}
 

@@ -8,7 +8,8 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Paralellisation method through horizontal slices of the cubic box\nobreakspace {}\cite {yoffe2013investigation}.}}{22}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Magnetic energy for $Pr_M=500$, $\nu =5e-2$\nobreakspace {}\cite {schekochihin2004simulations}.}}{26}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Heat map of $\delimiter "026A30C u \delimiter "026A30C $ (left) and $\delimiter "026A30C b \delimiter "026A30C $ (right) of a vertical slice of a $N^3=1024^3$ box \nobreakspace {}\cite {schekochihin2004simulations}.}}{25}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Magnetic energy for $Pr_M=500$\nobreakspace {}\cite {schekochihin2004simulations}.}}{26}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
