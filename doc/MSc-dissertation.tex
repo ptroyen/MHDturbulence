@@ -647,7 +647,7 @@ The first simulation was done in a large box, $N^3=1024^3$, for which viscosity 
 
 For this simulation, \texttt{Paraview} was used to create a two-dimensional slice of the velocity and the magnetic fields' magnitude. Figure~\ref{fig5.1} shows these slices, and a few comments can be made about them. First of all, it is noted that the velocity field has a much stronger magnitude than the magnetic field. This is likely due to the fact that the velocity field is the one that is forced with the negative damping forcing at $k_f=2$. It is also interesting to note that there appears to be a sort of duality between $\vert u \vert$ and $\vert b \vert$ - which is apparent by the structures formed by each field. For example, the bright red area in the top central section of the $\vert b \vert $ image has an inverse dual on the $\vert u \vert$ slice. This inverse duality can be seen all over fig.~\ref{fig5.1}. 
 
-Additionally, the magnetic field is clearly more fine-grained than the velocity field, which makes sense given that the $\bm b$ is ten times more turbulent than $\bm u$. Quantitatively, this can be interpreted through the kinetic and magnetic Reynolds numbers. As it was mentioned before, these are a measure of how turbulent a specific field is. For the magnetic field, $Re_M=1291\pm50$ and for the velocity field, $Re=129\pm5$, where the errors obtained come from the errors output by the \texttt{time\_av.sh} post-processing script along with basic (addition, division, powers) error propagation rules (eqns.~\ref{eq5.1}). This difference in Reynolds numbers comes with an important difference of the dissipation wave numbers of each field.
+Additionally, the magnetic field is clearly more fine-grained than the velocity field, which makes sense given that the $\bm b$ is ten times more turbulent than $\bm u$. Quantitatively, this can be interpreted through the kinetic and magnetic Reynolds numbers. As it was mentioned before, these are a measure of how turbulent a specific field is. For the magnetic field, $Re_M=1291\pm50$ and for the velocity field, $Re=129\pm5$, where the errors obtained come from the errors output by the \texttt{time\_av.sh} post-processing script along with basic (addition, division, powers) error propagation rules (eqns.~\ref{eq5.1}). This difference in Reynolds numbers comes with an important difference of the dissipation wave numbers of each field. A similar behaviour, both for the inverse duality and for the fine-graininess of the field with comparatively lower Reynolds number, is also observed in~\cite{schekochihin2007fluctuation}'s figure 2 for the cross section of $\vert u \vert$ and $\vert b \vert$. 
 
 \begin{subequations}
  \begin{align}
@@ -672,7 +672,7 @@ Given that laminar flows have a smaller dissipation wave numbers ($k_\nu$ and $k
 
 In fig.~\ref{fig5.2} the kinetic energy spectrum ($E_K(k)$) is only more energetic in the smaller wave numbers (largest eddies), and decays quickly for the large ones (smaller length scales). In particular, the maximum value of $E_K(k)$ is at the forcing wave number $k_f=2$, and decays as $k$ increases. On the other hand, $E_M(k)$ is maximally energetic around $k\sim10$, and remains at a high energy for a broad range of wave numbers until $k$ is close to the magnetic diffusive wave number $k_\eta$. 
 
-Another important qualitative description that can be obtained regards the energy dissipation through each field. Namely, since the magnetic Prandtl number compares the Reynolds numbers of both fields $Pr_M=Re_M/Re$, which is a comparison the energy dissipation of each channel (since the $k_\nu$ and $k_\eta$ are intimately related to energy dissipation)~\cite{brandenburg2011dissipation}. As a result, for the simulation of $N^3=1024^3$ grid points with $Pr_M=10$, one would expect that the energy dissipation through the magnetic channel to be larger than that of the kinetic channel, which is exactly what fig.~\ref{fig5.3} shows.
+Another important qualitative description that can be obtained regards the energy dissipation through each field. Namely, since the magnetic Prandtl number coA similar behaviour is observed in~\cite{schekochihin2007fluctuation}'s figure 2 for the cross section of $\vert u \vert$ and $\vert b \vert$. mpares the Reynolds numbers of both fields $Pr_M=Re_M/Re$, which is a comparison the energy dissipation of each channel (since the $k_\nu$ and $k_\eta$ are intimately related to energy dissipation)~\cite{brandenburg2011dissipation}. As a result, for the simulation of $N^3=1024^3$ grid points with $Pr_M=10$, one would expect that the energy dissipation through the magnetic channel to be larger than that of the kinetic channel, which is exactly what fig.~\ref{fig5.3} shows.
 
 \begin{figure}[!ht]
 \centering
@@ -724,15 +724,88 @@ Figure~\ref{fig5.6} clearly shows that the magnetic energy that is calculated by
 
 If a similar problem happens when calculating the growth rate in decaying simulations, then the results of~\cite{schekochihin2004critical} can be criticised. The main reason to claim this is because all their remarks are given for simulations with $\eta=0.001$ (and some with $\nu$ as small as $0.000125$), which in the eDNS2017 code would have to be resolved by (at least)\footnote{For a simulation generated with eDNS2017 with $\nu=0.001$, the associated dissipative wave number is $k_\nu=103$. $N^3=128^3$ simulations have a maximum wave number $k_{max}^{128^3}=41$ and for a $N^3=256^3$ it is $k_{max}^{256^3}=84$. Consequently, a box size of at least $N^3=512^3$ would be required to resolve a simulation with $\nu=0.001$ (assuming $\eta \geq \nu$), since $k_{max}^{512^3}=169$.} a box size of of $N^3=512^3$ and, for $\nu=0.000125$, $N^3=1024^3$ grid points (or larger)\footnote{For the $N^3=1024^3$ simulation generated ($\nu=0.005$ and $\eta=0.0005$), $k_\eta=183$. $N^3=1024^3$ simulations have a maximum wave number $k_{max}^{256^3}=340$. Consequently, a box size of at least $N^3=1024^3$ would be required to resolve a simulation with $\eta=0.0005$ (assuming $\nu \geq \eta$). Thus it is possible that for a simulation with $\nu=0.000125$ a box even larger than $N^3=1024^3$ would need to be used since $k_{\nu, \eta}$ increase as $\nu, \eta$ decrease.}. This would mean that the simulation performed in~\cite{schekochihin2004critical} are under resolved. And, as a result, some simulations which they claim to have not achieved dynamo action might actually have.  However, a different behaviour could be seen for the growth rate in decaying simulations, in which case the simulations in~\cite{schekochihin2004critical} could have been adequately generated (than that for the magnetic energy). Nonetheless, if the box sizes used in~\cite{schekochihin2004critical} would have been replicated in the forced non-helical simulations generated with the eDNS2017 code for the aforementioned parameters, then all simulations would not have encompassed the entire physical picture. 
 
-Finally, the kinetic and magnetic energy spectra were also plotted and, surprisingly, found to be very similar.
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/resolution/kazantsev_0.0005}.png}
+\caption{Magnetic (dashed blue line $N^3=1024^3$ and dashed dark blue line $N^3=128^3$) and kinetic (solid red line $N^3=1024^3$ and solid dark red line $N^3=128^3$) energy spectra. The dissipation wave numbers $k_\nu=33$ and $k_\eta=183$ are also shown. $k=41, 340$ are the maximum wave numbers for the $N^3=128^3$ and $N^3=1024^3$ boxes.}
+\label{fig5.7}
+\end{figure}
+
+Finally, the kinetic and magnetic energy spectra were also plotted and found to be very similar. This occurs since each box size only provides results for wave number smaller than its own maximum wave number. As a result, the simulation with the smaller box should provide a similar spectral image of both kinetic and magnetic energies in the wave number range [1:41]. Since there is (some) energy transfer from the large wave numbers to the smaller ones, the main difference between the energy spectra between simulations is located close to $k_{max}^{128^3}$, and it is clearly shown in fig.~\ref{fig5.6}.
 
 \section{Kolmogorov and Kazantsev scales}
 
-A well known theoretical prediction regarding the spectral energy cascade in hydrodynamics is the so-called Kolmogorov scaling (section~\ref{sec2.4}). Namely, Kolmogorov's theory focuses on the inertial subrange, which is close to the Taylor length scale ($\lambda_u=\sqrt{15\nu/\varepsilon}u_{rms}=\sqrt{10\nu E_K/\varepsilon}$) and large enough that dissipative effects due to viscosity do not affect the fluid motion and small enough that the fluid's large scale motions are also neglected. 
+\subsection{Kolmogorov $k^{-5/3}$ scaling}
 
+A well known theoretical prediction regarding the spectral energy cascade in hydrodynamics is the so-called Kolmogorov scaling (section~\ref{sec2.4}). Namely, Kolmogorov's theory focuses on the inertial subrange, which is close to the Taylor length scale ($\lambda_u=\sqrt{15\nu/\varepsilon}u_{rms}$). More specifically, large enough that dissipative effects due to viscosity do not affect the fluid motion and small enough that the fluid's large scale motions are also neglected. The main theoretical finding was that the kinetic energy spectrum should see a $k^{-5/3}$ scaling in the inertial subrange. 
 
+However, this scaling changes in magnetohydrodynamics depending on the strength of the magnetic energy. Specifically, when the magnetic energy is strong when compared to the kinetic energy, the dynamics of the velocity field is heavily modified by the magnetic field. This leads to a deviation from the Kolmogorov scaling. Nonetheless, when the magnetic energy is considerably weak in comparison to the kinetic energy then the Kolmogorov scaling could exist. Thus it is claimed that the Kolmogorov $k^{-5/3}$ scaling should exist at magnetic Prandtl numbers smaller than one. 
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/scaling/kolmogorov_0.2}.png}
+\caption{Kolmogorov scaling showing convergence in an intermediary wave number range for MHD simulations with low magnetic Prandtl number $Pr_M=0.2$.}
+\label{fig5.8}
+\end{figure}
 
+Effectively, when running a series of simulations with low magnetic Prandtl number $Pr_M=0.2$ ($\nu=[0.01, 0.0125, 0.015, 0.0175, 0.02, 0.0225]$) it can be seen that the $k^{-5/3}$ scaling is indeed achieved at intermediary wave numbers. The kinetic energy spectra of these runs is shown in fig.~\ref{fig5.8}. For comparison, a second set of simulations was generated with the same values of magnetic diffusivity, but with $Pr_M=2$. As expected, this set of runs does not follow the Kolmogorov scaling (fig.~\ref{fig5.9}) since the magnetic field is strong enough to interfere with the velocity field.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/scaling/kolmogorov_2}.png}
+\caption{Set of runs with high $Pr_M=2$ that do not show convergence with Kolmogorov $k^{-5/3}$ scaling at any intermediary wave number scale.}
+\label{fig5.9}
+\end{figure}
+
+\subsection{Kazantsev $k^{3/2}$ scaling}
+
+A theoretical description for magnetohydrodynamics exists for the larger spatial scales, i.e. scales were the nonlinear term's contribution is negligible and neither viscosity nor magnetic diffusivity are important, in non-helical flows with $Pr_M \geq 1$. Said description was developed by Kazantsev~\cite{kazantsev1968enhancement}, who found a scaling law of $k^{3/2}$ for the magnetic field in small wave numbers. 
+
+It was mentioned before that to get the hydrodynamic Kolmogorov $k^{-5/3}$ scaling law in MHD the magnetic field had to be weak enough that it did not interfere strongly with the velocity field. For Kazantsev scaling its quite the opposite since the magnetic field needs to be strong (compared to $E_K(k)$) in order to achieve the Kazantsev $k^{3/2}$ scaling. This range is called the kinematic regime. More specifically, Kazantsev theory is only valid when the velocity field is exclusively made up of spatially large components, which is equivalent of having $Pr_M \gg 1$~\cite{haugen2004simulations}. An extensive description of Kazantsev theory and its limitations is discussed in~\cite{haugen2004simulations}. 
+
+In order to check whether the spectral image of the magnetic field calculated by eDNS2017 follow Kazantsev $k^{3/2}$ scaling a series of runs with high magnetic Prandtl number were generated. It was found that Kazantsev scaling was indeed followed by simulation with $Pr_M \geq 1$, but only in the case were said simulations had achieved dynamo action. Figure~\ref{fig5.10} shows $E_M(k)$ for several runs ($\eta=0.01$ and $\nu=[0.01, 0.05, 0.06, 0.07, 0.1, 1]$) and confirms that the Kazantsev scaling is (roughly) followd at the largest spatial scales (smallest wave numbers), except for the $\nu=1$ ($Pr_M=100$) run because this one did not achieve dynamo action. It can thus be concluded that Kazantsev scaling describes the large spatial scales for $Pr_M \geq 1$ only for simulations that sustain dynamo action.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/scaling/kazantsev_0.01_close}.png}
+\caption{Set of runs with high $Pr_M$ that show convergence with Kazantsev $k^{3/2}$ scaling at the kinematic regime.}
+\label{fig5.10}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.6\textwidth]{img/scaling/k3halfs}
+\caption{Kazantsev scaling for the magnetic energy for simulations with ${Pr_M=500}$~\cite{schekochihin2004simulations}.}
+\label{fig5.11}
+\end{figure}
+
+The Kazantsev scaling of $k^{3/2}$ can also be seen in the kinematic range in the spectral image of the magnetic field for very large magnetic Prandtl number in~\cite{schekochihin2004simulations}. The simulations shown in fig.~\ref{fig5.11} are the corresponding $E_M(k)$ (dubbed $M(k)$ in the figure). It is worth noting that these simulations have considerably smaller magnetic diffusivity ($\eta=0.0001$), which is why at $Pr_M=500$ dynamo action is still sustained. However, there exists a large enough magnetic Prandtl number that will indubitably shut down the dynamo~\cite{schekochihin2004critical}. 
+
+\section{Onset of dynamo action}
+\label{sec5.3}
+
+This section details studies done regarding the onset of dynamo action by changing the kinematic viscosity and the magnetic diffusivity of forced, non-helical simulations on magnetohydrodynamic homogeneous isotropic turbulence in a triply periodic box. Using the definition of dynamo action presented in section~\ref{sec3.3}, that states that an MHD system sustains dynamo action as long as the total magnetic energy when time goes to infinity is nonzero~\cite{schnack2009lectures}. 
+
+Having defined dynamo action, the first thing that is important is to provide a method to tell whether or not dynamo action has been reached. For the purpose of trying to determine if dynamo action is obtained in simulations from the eDNS code the method used was to check the value of the time-averaged total magnetic energy (once the steady state of the simulation was reached). As it was mentioned earlier, the ergodic theorem states that these temporal averages are equivalent to ensemble averages~\cite{biskamp1997nonlinear}. This can be justified by saying that the temporal average (ensemble average) value of the total magnetic energy in the steady state is the same as the total magnetic energy when time goes to infinity, $E_M(t\rightarrow\infty)=\langle E_M^{ss} \rangle$.
+
+\subsection{$Re_M^{crit}$ for $Pr_M=1$}
+
+For the following simulations the forcing that was done was exclusively kinetic, i.e. $\bm f_b = \bm 0$, and there was no injection of helicity. Looking at these non-helical simulations the question about when does the onset of dynamo action occurs. Looking at runs with $Pr_M = 1$ lead to the conclusion that there exists a critical value for the magnetic diffusivity $\eta$ for which small-scale dynamo action appears. This is obviously related to a critical magnetic Reynolds number since $Re_M=uL/\eta$, and it is widely documented in the study of dynamo action both from a theoretical (Kazantsev and Batchelor theories) and a numerical point of view~\cite{kazantsev1968enhancement, schekochihin2004critical, haugen2004simulations, batchelor1950spontaneous, schekochihin2007fluctuation, tobias2011mhd}. In fact, there seems to be a consensus about the critical magnetic Reynolds number for unity magnetic Prandtl number within the range [30:60]~\cite{brandenburg2005astrophysical, kazantsev1968enhancement}.
+
+Doing a series of simulations with unity magnetic Prandtl number with varying magnetic diffusivity within the range $\eta=[0.01-1.75]$ up to code-time $100$ the onset of dynamo action was observed between $\eta=0.015$ and $\eta=0.0175$. The total magnetic energy in time can be seen in fig.~\ref{fig5.12}, which corresponds to runs S0 to S3 in table~\ref{tableB1}. The relation between the maximum wave number and the Kolmogorov microscales $k_{max}/k_\nu$ and $k_{max}/k_\eta$ is helpful to know how well resolved a given simulation is. Particularly, and as it was mentioned in section~\ref{sec4.2}, when $k_{max}/max(k_\nu, k_\eta) \geq 1.25$ then the simulation is said to be fully resolved, whereas if $1 < k_{max}/max(k_\nu, k_\eta) < 1.25$ a partially resolved similation, and if $k_{max}/max(k_\nu, k_\eta) \leq 1$ the simulation is under resolved. Having said this, it is noted that in table~\ref{tableB1} two simulations for the S-runs are partially resolved that correspond to $\eta=0.015$ and $\eta=0.0175$, and the same is true for the L-runs. 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/prm1/ss_prm_1_short}.png}
+\caption{Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=100$.}
+\label{fig5.12}
+\end{figure}
+
+\subsection{$Re_M^{crit}$ for $Pr_M > 1$}
+
+The range of magnetic Prandtl number was then broadened and it was seen that this critical value of magnetic Reynolds number depends on $Pr_M$. The first thing that was necessary to study the onset of small-scale dynamo action was to define a way to determine weather there was dynamo action or not in a specific simulation.
+
+For simulations with $Pr_M$ larger than unity it was possible to identify a critical magnetic Reynolds number $Re_M$. After doing this it was possible to obtain a critical magnetic Prandtl number for which dynamo action is shut down. This qualitatively agrees with the results shown in~\cite{schekochihin2004critical}.
 
 
 
@@ -747,41 +820,15 @@ other result for checks!\\
 
 in~\cite{haugen2004simulations} they claim to have a critical magnetic Reynolds number of around 35, when defined with $Re_M=u_{rms}/(\eta k_f)$, for magnetic Prandtl number of unity. Doing that in my simulations, an equivalent simulation is \texttt{128\_0.0125\_1}, for which the critical magnetic Reynolds number defined with the forcing wavenumber is $21 \pm 1$.
 
-more result for checks!\\
-
-in~\cite{haugen2004simulations} they mention that the Kazantsev $k^{3/2}$ spectrum should appear when the magnetic field is strong enough and in the kinetic regime (small enough wave numbers such that nonlinear term is unimportant). This happens in the highPrM runs! a plot of it is in {highPrM/img/Kazantsev} for $\eta=0.01$. It is comparable with figure 4(a) in~\cite{schekochihin2004simulations} x
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.7\textwidth]{img/k3halfs}
-\caption{Magnetic energy for $Pr_M=500$~\cite{schekochihin2004simulations}.}
-\label{figure}
-\end{figure}
-
-
-
-AAAnd, the Kolmogorov $k^{-5/3}$ for the kinetic energy should also appear if the magnetic field is weak enough. This is shown in \texttt{DYNAMO\_256\_0.002\_0.2}, \texttt{DYNAMO/256\_0.0025\_0.2}, \texttt{DYNAMO/256\_0.003\_0.2}. They are in {img/kolmogorov}
 
 
 
 
 
-\chapter{Results and Analysis}
 
-This section should detail the obtained results in a clear,
-easy-to-follow manner. It is important to make clear what are original
-results and what are repeats of previous calculations or computations.
-Remember that long tables of numbers are just as boring to read as
-they are to type-in!
 
-Use graphs to present your results wherever practicable.
 
-Results or computations should be presented with uncertainties
-(errors), both statistical and systematic where applicable.
 
-Be selective in what you include: half a dozen \emph{e.g.}~tables that
-contain wrong data you collected while you forgot to switch on the
-computer are not relevant and may mask the correct results.
 
 \section{Discussion of your results}
 
@@ -810,6 +857,26 @@ Sample input file for a run going to \texttt{TIME~~400} with $\nu=0.9$ and $Pr_M
 
 \lstinputlisting[language=bash]{input.in}
 
+\chapter{Tables for section~\ref{sec5.3}}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{||c|c|c|c|c|c|c|c||}
+\hline
+\textbf{Run} & $ \bm{\eta} $ & $ \bm{ Pr_M} $ & $ \bm{ Re} $ & $ \bm{ Re_M} $ & $ \bm{ \frac{k_{max}}{k_\nu}} $ & $ \bm{ \frac{k_{max}}{k_\eta}} $ & $ \bm{ \langle E_M^{ss}} \rangle $ \\ \hline \hline
+S0 & 0.01 & 1 & $ 69 \pm 6 $ & $ 69 \pm 6 $ & $ 2.33911 $ & $ 2.33911 $ & $ 0.022 \pm 0.003 $ \\ \hline
+S1 & 0.0125 & 1 & $ 55 \pm 4 $ & $ 68 \pm 5 $ & $ 2.77289 $ & $ 2.34558 $ & $ 0.014 \pm 0.001 $ \\ \hline
+S2 & 0.015 & 1 & $ 43 \pm 3 $ & $ 64 \pm 5 $ & $ 1.5311 $ & $ 1.12962 $ & $ 0.005 \pm 0.001 $ \\ \hline
+S3 & 0.0175 & 1 & $ 37 \pm 2 $ & $ 65 \pm 3 $ & $ 1.69408 $ & $ 1.11341 $ & $ 0.001 \pm 0.000 $ \\ \hline \hline
+L0 & 0.01 & 1 & $ 69 \pm 4 $ & $ 69 \pm 4 $ & $ 2.30562 $ & $ 2.30562 $ & $ 0.023 \pm 0.004 $ \\ \hline
+L1 & 0.0125 & 1 & $ 56 \pm 4 $ & $ 70 \pm 4 $ & $ 2.70774 $ & $ 2.29048 $ & $ 0.007 \pm 0.003 $ \\ \hline
+L2 & 0.015 & 1 & $ 46 \pm 4 $ & $ 69 \pm 6 $ & $ 1.52046 $ & $ 1.12177 $ & $ 0.000 \pm 0.000 $ \\ \hline
+L3 & 0.0175 & 1 & $ 39 \pm 3 $ & $ 69 \pm 6 $ & $ 1.70577 $ & $ 1.1211 $ & $ 0.000 \pm 0.000 $ \\ \hline
+\end{tabular}
+\end{center}
+\caption{Runs for the onset of dynamo action in the $Pr_M=1$ case. The S-runs are only from code time 0 to 100, while the L-runs are (at least) from code time 0 to 300.}
+\label{tableB1}
+\end{table}
 
 
 \bibliography{MSc-dissertation}

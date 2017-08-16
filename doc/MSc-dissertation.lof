@@ -14,7 +14,12 @@
 \contentsline {figure}{\numberline {5.4}{\ignorespaces Time evolution of the total magnetic (dashed blue line) and kinetic (solid red line) energies for the simulation with $N^3=1024^3$ grid points.\relax }}{28}
 \contentsline {figure}{\numberline {5.5}{\ignorespaces Time evolution of the total magnetic (dashed blue line $N^3=1024^3$ and dashed dark blue line $N^3=128^3$) and kinetic (solid red line $N^3=1024^3$ and dashed dark red line $N^3=128^3$) energy dissipations.\relax }}{29}
 \contentsline {figure}{\numberline {5.6}{\ignorespaces Time evolution of the total magnetic (dashed blue line $N^3=1024^3$ and dashed dark blue line $N^3=128^3$) and kinetic (solid red line $N^3=1024^3$ and dashed dark red line $N^3=128^3$) energies.\relax }}{29}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Magnetic energy for $Pr_M=500$\nobreakspace {}\cite {schekochihin2004simulations}.\relax }}{31}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Magnetic (dashed blue line $N^3=1024^3$ and dashed dark blue line $N^3=128^3$) and kinetic (solid red line $N^3=1024^3$ and solid dark red line $N^3=128^3$) energy spectra. The dissipation wave numbers $k_\nu =33$ and $k_\eta =183$ are also shown. $k=41, 340$ are the maximum wave numbers for the $N^3=128^3$ and $N^3=1024^3$ boxes.\relax }}{30}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Kolmogorov scaling showing convergence in an intermediary wave number range for MHD simulations with low magnetic Prandtl number $Pr_M=0.2$.\relax }}{31}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Set of runs with high $Pr_M=2$ that do not show convergence with Kolmogorov $k^{-5/3}$ scaling at any intermediary wave number scale.\relax }}{32}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Set of runs with high $Pr_M$ that show convergence with Kazantsev $k^{3/2}$ scaling at the kinematic regime.\relax }}{33}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Kazantsev scaling for the magnetic energy for simulations with ${Pr_M=500}$\nobreakspace {}\cite {schekochihin2004simulations}.\relax }}{33}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=100$.\relax }}{35}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
