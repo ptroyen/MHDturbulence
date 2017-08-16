@@ -2,8 +2,8 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces This table shows the maximum wave number that can be reached for different box sizes in the eDNS code written by Dr. Sam Yoffe and modified by Dr. Moritz Linkmann\nobreakspace {}\cite {yoffe2013investigation, LinkmannMoritzFrederikLeon2016Spim}.}}{18}
-\contentsline {table}{\numberline {4.2}{\ignorespaces This table shows the maximum time step that can be used for boxes of different sizes. It is built with the CFL condition mentioned in section\nobreakspace {}4.1\hbox {} ($dt < 0.1 / (u_{rms} k_{max})$).}}{23}
+\contentsline {table}{\numberline {4.1}{\ignorespaces This table shows the maximum wave number that can be reached for different box sizes in the eDNS code written by Dr. Sam Yoffe and modified by Dr. Moritz Linkmann\nobreakspace {}\cite {yoffe2013investigation, LinkmannMoritzFrederikLeon2016Spim}.\relax }}{18}
+\contentsline {table}{\numberline {4.2}{\ignorespaces This table shows the maximum time step that can be used for boxes of different sizes. It is built with the CFL condition mentioned in section\nobreakspace {}4.1\hbox {} ($dt < 0.1 / (u_{rms} k_{max})$).\relax }}{23}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

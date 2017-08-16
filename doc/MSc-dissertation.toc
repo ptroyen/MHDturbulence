@@ -22,8 +22,11 @@
 \contentsline {section}{\numberline {4.5}Running the code}{22}
 \contentsline {section}{\numberline {4.6}Post-processing}{23}
 \contentsline {chapter}{\numberline {5}Results}{25}
-\contentsline {section}{\numberline {5.1}Critical magnetic Prandtl number for small-scale dynamos}{26}
-\contentsline {chapter}{\numberline {6}Results and Analysis}{28}
-\contentsline {section}{\numberline {6.1}Discussion of your results}{28}
-\contentsline {chapter}{\numberline {7}Conclusions}{29}
-\contentsline {chapter}{\numberline {A}Sample input file for eDNS2017}{30}
+\contentsline {section}{\numberline {5.1}Simulation with $N^3=1024^3$ grid points}{26}
+\contentsline {subsection}{\numberline {5.1.1}Simulation resolution}{28}
+\contentsline {section}{\numberline {5.2}Kolmogorov and Kazantsev scales}{30}
+\contentsline {section}{\numberline {5.3}Critical magnetic Prandtl number for small-scale dynamos}{30}
+\contentsline {chapter}{\numberline {6}Results and Analysis}{32}
+\contentsline {section}{\numberline {6.1}Discussion of your results}{32}
+\contentsline {chapter}{\numberline {7}Conclusions}{33}
+\contentsline {chapter}{\numberline {A}Sample input file for eDNS2017}{34}

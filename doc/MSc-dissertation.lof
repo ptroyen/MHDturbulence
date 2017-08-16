@@ -1,15 +1,20 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Perfect cup with single excited eddy\nobreakspace {}\cite {schnack2009lectures}.}}{6}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Energy cascade form large to small length scales (wavelengths)\nobreakspace {}\cite {schnack2009lectures}.}}{7}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Perfect cup with single excited eddy\nobreakspace {}\cite {schnack2009lectures}.\relax }}{6}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Energy cascade form large to small length scales (wavelengths)\nobreakspace {}\cite {schnack2009lectures}.\relax }}{7}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Magnetic Prandtl number isolines\nobreakspace {}\cite {plunian2013shell}.}}{11}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Stretch-twist-fold cycle\nobreakspace {}\cite {moffatt1985topological}.}}{15}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Magnetic Prandtl number isolines\nobreakspace {}\cite {plunian2013shell}.\relax }}{11}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Stretch-twist-fold cycle\nobreakspace {}\cite {moffatt1985topological}.\relax }}{15}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Paralellisation method through horizontal slices of the cubic box\nobreakspace {}\cite {yoffe2013investigation}.}}{22}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Paralellisation method through horizontal slices of the cubic box\nobreakspace {}\cite {yoffe2013investigation}.\relax }}{22}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Heat map of $\delimiter "026A30C u \delimiter "026A30C $ (left) and $\delimiter "026A30C b \delimiter "026A30C $ (right) of a vertical slice of a $N^3=1024^3$ box \nobreakspace {}\cite {schekochihin2004simulations}.}}{25}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Magnetic energy for $Pr_M=500$\nobreakspace {}\cite {schekochihin2004simulations}.}}{26}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Heat map of $\delimiter "026A30C u \delimiter "026A30C $ (left) and $\delimiter "026A30C b \delimiter "026A30C $ (right) of a vertical slice of a $N^3=1024^3$ box.\relax }}{26}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Kinetic (solid red line) and magnetic (dashed blue line) energy spectra. The dissipation wave numbers $k_\nu =33$ and $k_\eta =183$ are also shown. $k=340$ is the maximum wave number that the $N^3=1024^3$ box allows.\relax }}{27}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Time evolution of the total magnetic (dashed blue line) and kinetic (solid red line) energy dissipations for the simulation with $N^3=1024^3$ grid points.\relax }}{28}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Time evolution of the total magnetic (dashed blue line) and kinetic (solid red line) energies for the simulation with $N^3=1024^3$ grid points.\relax }}{28}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Time evolution of the total magnetic (dashed blue line $N^3=1024^3$ and dashed dark blue line $N^3=128^3$) and kinetic (solid red line $N^3=1024^3$ and dashed dark red line $N^3=128^3$) energy dissipations.\relax }}{29}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Time evolution of the total magnetic (dashed blue line $N^3=1024^3$ and dashed dark blue line $N^3=128^3$) and kinetic (solid red line $N^3=1024^3$ and dashed dark red line $N^3=128^3$) energies.\relax }}{29}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Magnetic energy for $Pr_M=500$\nobreakspace {}\cite {schekochihin2004simulations}.\relax }}{31}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
