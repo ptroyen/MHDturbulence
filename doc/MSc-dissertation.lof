@@ -23,9 +23,12 @@
 \contentsline {figure}{\numberline {5.13}{\ignorespaces Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=300$. These correspond to the L-runs in table\nobreakspace {}B.1\hbox {}.\relax }}{35}
 \contentsline {figure}{\numberline {5.14}{\ignorespaces Ensemble average of the total magnetic energy from $t=90$ to $t=100$ ($dt=0.1$) for all simulations in table\nobreakspace {}B.2\hbox {}.\relax }}{36}
 \contentsline {figure}{\numberline {5.15}{\ignorespaces Magnetic Reynolds number for all simulations in table\nobreakspace {}B.2\hbox {}.\relax }}{37}
-\contentsline {figure}{\numberline {5.16}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.0125$ and $Pr_M=[0.6, 0.8, 1, 1.2]$.\relax }}{38}
-\contentsline {figure}{\numberline {5.17}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.015$ and $Pr_M=[0.8, 1, 1.2]$.\relax }}{38}
-\contentsline {figure}{\numberline {5.18}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.0125$ and ${Pr_M=[4, 6, 8]}$ in the range $t=[60:600]$.\relax }}{39}
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.0125$ and $Pr_M=[0.6, 0.8, 1, 1.2]$.\relax }}{37}
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.015$ and $Pr_M=[0.8, 1, 1.2]$.\relax }}{37}
+\contentsline {figure}{\numberline {5.18}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.0125$ and ${Pr_M=[4, 6, 8]}$ in the large range $t=[60:600]$.\relax }}{39}
+\contentsline {figure}{\numberline {5.19}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.01$ and $Pr_M=[20, 10, 7, 0.5, 0.2]$ in the range $t=[60:400]$.\relax }}{39}
+\contentsline {figure}{\numberline {5.20}{\ignorespaces Time evolution of the total magnetic energy for helically forced simulations with $\eta =0.01$ and $Pr_M=[50, 40, 30, 0.2]$ in the range $t=[60:400]$, table\nobreakspace {}B.5\hbox {}.\relax }}{40}
+\contentsline {figure}{\numberline {5.21}{\ignorespaces Runs with $Pr_M=[0.1:100]$, showing a clear difference in behaviour for $Pr_M\geq 1$ and $Pr_M<1$.\relax }}{41}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

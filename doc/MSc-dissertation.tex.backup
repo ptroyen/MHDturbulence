@@ -73,14 +73,15 @@
 \pagenumbering{roman}
 
 \begin{abstract}
-This is where you summarise what is in your thesis. It should
-be around 100 words, but not more than 200 words.
+This project details the onset of small-scale and large-scale dynamos (SSD and LSD) by numerically solving the incompressible MHD equations in a homogeneous isotropic scenario with the eDNS2017 code that uses pseudo-spectral methods in a triply periodic box. The performed simulations found an overall threshold magnetic Reynolds number ($Re_M^{th}=[39:50]$) (smallest $Re_M=u L /\eta$ to possibly sustain SSD) for the onset of SSD. Additionally, the critical magnetic Reynolds number for a fixed value of magnetic diffusivity ($\eta=0.0125$ was found to be the maximum $\eta$ able to sustain dynamo action) showed a dependence on the turbulence of the velocity field ($Re=u L/\nu$), and thus of $Pr_M=\nu/\eta$, which qualitatively matches~\cite{schekochihin2004critical}. This dependence was such that $Re_M^{crit}$ was larger for $Pr_M<1$ than for $Pr_M>1$ compared for a fixed $\eta$. A similar behaviour is expected for the LSD (mean-field theory of $\alpha$-effect shows this theoretically), but was not directly observed numerically, and is suggested as further work. 
 \end{abstract}
 
 \pagenumbering{roman}
 
 
-\textbf{Declaration} - goes here. Write some examples!
+\textbf{Declaration}
+
+All simulations were performed in the ARCHER supercomputer cluster at the Edinburgh Computing and Data Facility in the eDNS2017 code written for hydrodynamics by Dr. Sam Yoffe and extended to magnetohydrodynamics by Dr. Moritz Linkmann in C.
 
 For example, MC generation code, measurement code, fit code, whether
 calculations were done using Mathematica, with(out) gamma matrix code,
@@ -99,29 +100,12 @@ master integrals, etc.
 % environment as this initialises things like section and page numbering.
 \section*{Acknowledgements}
 
-Put your acknowledgements here. Thanking your supervisor for his/her
-help is standard practice, but you don't have to do this\ldots
+I would like to thank Prof. Arjun Berera for guidance, supervision, and fruitful discussions on the underlying physical aspects of HIT MHD. I also thank Mairi McKay for her constant help throughout the project and stimulating discussions.
 
-This template is is modification of the one for the MSc in High
-Performance Computing, which is apparently descended from a template
-developed by Prof Charles Duncan for MSc students in Meteorology. His
-acknowledgement follows:
+I acknowledge ECDF (Edinburgh Computing and Data Facility) for providing ARCHER
+time for the MHD group.
 
-\emph{This template has been produced with help from many former
-  students who have shown different ways of doing things. Please make
-  suggestions for further improvements.}
-
-Some parts of this template were lifted unashamedly from the Edinburgh
-MPhys project report guide, with little or no modification. I have no
-idea who wrote the first version of that\ldots
-
-You don't have to use \LaTeX\ for your dissertation. You can use
-Microsoft Word or Apple Pages if you wish, but it's \emph{much} easier
-to typeset equations in \LaTeX, and references look after
-themselves. Whatever you use, your dissertation should have the same
-general structure, and it should look similar to this one --
-especially the front page.
-
+Finally, I would like to thank my parents for their unwavering support and trust, and to my wife, Paula Espinosa Valarezo, for all her help and encouragement - she's a saint. 
 
 \end{titlepage}
 
@@ -799,20 +783,23 @@ The relation between the maximum wave number and the Kolmogorov microscales $k_{
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.7\textwidth]{{img/prm1/ss_prm_1_short}.png}
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+\includegraphics[width=0.95\textwidth]{{img/prm1/ss_prm_1_short}.png}
 \caption{Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=100$. These correspond to the S-runs in table~\ref{tableB1}.}
 \label{fig5.12}
-\end{figure}
-
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.7\textwidth]{{img/prm1/ss_prm_1_long}.png}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+\includegraphics[width=0.95\textwidth]{{img/prm1/ss_prm_1_long}.png}
 \caption{Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=300$. These correspond to the L-runs in table~\ref{tableB1}.}
 \label{fig5.13}
+\end{minipage}
 \end{figure}
 
-Driven by the substantial difference between the total magnetic energy of S1 and S2/3, and because of doubts regarding having reached a real steady state in figure~\ref{fig5.12}, a set of runs with longer times was performed. This second set of simulations was done up to (at least) code time 300, but only for the magnetic diffusivity range $\eta=[0.01:0.0175]$. These simulations correspond to the L-runs (long) of table~\ref{tableB1}, and are plotted in the code time range 60 to 300 and shown in fig.~\ref{fig5.13}. It is clear that a transition from no dynamo action to dynamo action occurs somewhere between $\eta=0.015$ and $\eta=0.0125$. As a result, it is now possible to state that the critical magnetic Reynolds number lays somewhere in the range $Re_M^{crit}=[42:60]$. This is consistent with values found in the literature~\cite{brandenburg2005astrophysical, kazantsev1968enhancement}. A quick check of the L-runs in table~\ref{tableB1} shows that all the simulations used for fig.~\ref{fig5.13} are also fully resolved. 
+Driven by the substantial difference between the total magnetic energy of S1 and S2/3, and because of doubts regarding having reached a real steady state in figure~\ref{fig5.12}, a set of runs with longer times was performed. This second set of simulations was done up to (at least) code time 300, but only for the magnetic diffusivity range $\eta=[0.01:0.0175]$. These simulations correspond to the L-runs (long) of table~\ref{tableB1}, and are plotted in the code time range 60 to 300 and shown in fig.~\ref{fig5.13}. It is clear that a transition from no dynamo action to dynamo action occurs somewhere between $\eta=0.015$ and $\eta=0.0125$. As a result, it is now possible to state that the critical magnetic Reynolds number lays somewhere in the range $Re_M^{crit}=[42:60]$. This is consistent with values found in the literature~\cite{brandenburg2005astrophysical, kazantsev1968enhancement}. A quick check of the L-runs in table~\ref{tableB1} shows that all the simulations used for fig.~\ref{fig5.13} are also fully resolved.
 
 \subsection{Dynamo onset map}
 
@@ -858,67 +845,78 @@ The first thing that was done was generate two sets of longer runs to check what
 \end{minipage}
 \end{figure}
 
-Regarding the $\eta=0.0125$ simulation, which is the largest magnetic diffusivity that is able to sustain dynamo action that was worked with, it is interesting to note that a small enough magnetic Prandtl number, large enough Reynolds number, is able to shut down dynamo action. Furthermore, it is possible to state that the critical magnetic Reynolds number for $Pr_M < 1$ in this case is somewhere in the range $Re_M^{crit}=[50:59]$. 
+Regarding the $\eta=0.0125$ simulation, which is the largest magnetic diffusivity that is able to sustain dynamo action that was worked with, it is interesting to note that a small enough magnetic Prandtl number, large enough Reynolds number, is able to shut down dynamo action. The associated critical magnetic Prandtl number for this is somewhere in the range $Pr_M^{crit}=[0.6:0.8]$. Furthermore, it is possible to state that the critical magnetic Reynolds number for $Pr_M < 1$ in this case is somewhere in the range $Re_M^{crit}=[50:59]$. 
 
 \subsection{$Re_M^{crit}$ for $Pr_M > 1$}
 
-After seeing that decreasing the magnetic Prandtl number to values below unity was detrimental for dynamo action, and remembering the inverse duality observed in the two dimensional field slices in fig.~\ref{fig5.1}, larger values of $Pr_M > 1$ became of interest. It is well known that there exists a duality between the kinetic and the magnetic fields. As a matter of fact, a set of variables called the Els\"asser variables, which are defined by eqn.~\ref{eq5.2}, are commonly used in the description of MHD. 
+After seeing that decreasing the magnetic Prandtl number to values below unity was detrimental for dynamo action, and remembering the inverse duality observed in the two dimensional field slices in fig.~\ref{fig5.1}, larger values of $Pr_M > 1$ became of interest. It is well known that there exists a duality between the kinetic and the magnetic fields. As a matter of fact, a set of variables called the Els\"asser variables, which are defined by eqn.~\ref{eq5.2}, are commonly used in the description of MHD because of the especially simple form the MHD equations take with these~\cite{tobias2011mhd, biskamp1997nonlinear}. Due to this duality of the fields, it would be expected that, for a fixed $\eta$, increasing $Pr_M$ above unity would give a critical value that kills dynamo action, just like decreasing $Pr_M$ below unity does. 
 
 \begin{align}
  \bm z^{\pm} = \bm u \pm \bm b \label{eq5.2}
 \end{align}
 
 
-The range of magnetic Prandtl number was then broadened and it was seen that the critical value of magnetic Reynolds number needed to sustain dynamo action depends on $Pr_M$, which is the central argument of~\cite{schekochihin2004critical}. Namely, they state that a rough velocity field can affect the critical magnetic Reynolds number by increasing it substantially when compared with a system with the same magnetic diffusivity, but more laminar velocity field (higher $Pr_M$).
+With this in mind, the range of magnetic Prandtl number was then broadened and it was seen that the critical value of magnetic Reynolds number needed to sustain dynamo action depends on $Pr_M$. It has been documented that that a rough velocity field can affect the critical magnetic Reynolds number by increasing it substantially when compared with a system with the same magnetic diffusivity, but more laminar velocity field (higher $Pr_M$)~\cite{schekochihin2004critical, schekochihin2005onset}.
 
-For simulations with $Pr_M$ larger than unity it was possible to identify a critical magnetic Reynolds number $Re_M^{crit}$. For the $\eta=0.0125$ case, it is clear that $Pr_M=1.2$ is not large enough to shut down dynamo action (fig.~\ref{fig5.16}). As a result, various simulations with $\eta=0.0125$, but $Pr_M=[4, 6,\text{ and }8]$, were generated (ML0-ML2 in table~\ref{tableB3}). Then, $E_M(t)$ is shown in fig.~\ref{fig5.18} for the range $t=[60:600]$, and it is concluded that the, higher than unity, critical magnetic Prandtl number for $\eta=0.0125$ lies somewhere between $Pr_M^{crit}=[6:8]$. Comparing the magnetic Reynolds numbers of these simulations, along with their respective errors, $Re_M^{crit}$ is found to be somewhere in the range $Re_M^{crit}=[39:50]$. Recalling that for the $Pr_M < 1$ case with the same value of $\eta=0.0125$, the critical magnetic Reynolds number was $Re_M^{crit}=[50:59]$. Therefore, it looks like  ~\cite{schekochihin2004critical}.
+For simulations with $Pr_M$ larger than unity it was possible to identify a critical magnetic Reynolds number $Re_M^{crit}$. For the $\eta=0.0125$ case, it is clear that $Pr_M=1.2$ is not large enough to shut down dynamo action (fig.~\ref{fig5.16}). As a result, various simulations with $\eta=0.0125$, but $Pr_M=[4, 6,\text{ and }8]$, were generated (ML0-ML2 in table~\ref{tableB3}). Then, $E_M(t)$ is shown in fig.~\ref{fig5.18} for the range $t=[60:600]$, and it is concluded that the larger than unity critical magnetic Prandtl number for $\eta=0.0125$ lies somewhere between $Pr_M^{crit}=[6:8]$. Comparing the magnetic Reynolds numbers of these simulations, along with their respective errors, $Re_M^{crit}$ is found to be somewhere in the range $Re_M^{crit}=[39:50]$. Since this $Re_M^{crit}$ was the smallest for which dynamo action was achieved (for the maximum $\eta$ that can maintain dynamo action), it can be dubbed the threshold magnetic Reynolds number $Re_M^{th}$. Recalling that for the $Pr_M < 1$ case with the same value of $\eta=0.0125$, the critical magnetic Reynolds number was $Re_M^{crit}=[50:59]$. Which is the same behaviour found in~\cite{schekochihin2004critical}. 
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.7\textwidth]{{img/map/long/ss_eta_0.0125_4-6-8}.png}
-  \caption{Time evolution of the total magnetic energy for $\eta=0.0125$ and ${Pr_M=[4, 6, 8]}$ in the range $t=[60:600]$.}
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+\includegraphics[width=0.95\textwidth]{{img/prm>1/ss_eta_0.0125_4-6-8}.png}
+  \caption{Time evolution of the total magnetic energy for $\eta=0.0125$ and ${Pr_M=[4, 6, 8]}$ in the large range $t=[60:600]$.}
 \label{fig5.18}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/prm>1/ss_eta_0.01}.png}
+  \caption{Time evolution of the total magnetic energy for $\eta=0.01$ and $Pr_M=[20, 10, 7, 0.5, 0.2]$ in the range $t=[60:400]$.}
+  \label{fig5.19}
+\end{minipage}
 \end{figure}
 
+Afterwards, a similar treatment was done by keeping the magnetic diffusivity constant and set to $\eta=0.01$. These runs are summarised in table~\ref{tableB4}, and the exact same behaviour was observed when compared to the $\eta=0.0125$ case, or to~\cite{schekochihin2004critical, schekochihin2005onset}. The $E_M(t)$ for these simulations is plotted in fig.~\ref{fig5.19}. Particularly, critical magnetic Reynolds and Prandtl numbers were found for the cases with $Pr_M < 1$ and $Pr_M > 1$. Neither of these was equal to the values obtained for the $\eta=0.0125$. Particularly, the critical Prandtl number for simulations with $Pr_M < 1$ was found to be somewhere in the range $Pr_M^{crit}=[0.2:0.5]$, and for simulations with $Pr_M > 1$, $Pr_M^{crit}=[10:20]$. 
 
+As far as the critical magnetic Reynolds number is concerned, for $Pr_M$ less than unity it is somewhere within $Re_M^{crit}=[54:69]$, while for $Pr_M>1$ it lays in the range ${Re_M^{crit}=[35:58]}$. For this smaller value of magnetic diffusivity, the difference between the critical magnetic Reynolds numbers from either side of $Pr_M=1$ is larger than for the $\eta=0.0125$ case. Consequently, it can be said more convincingly that turbulence in the velocity field (such that $Re > Re_M$, or $Pr_M<1$) leads to an increase in the critical magnetic Reynolds number. As it was mentioned before, the simulations in~\cite{schekochihin2004critical} are possibly under resolved due to the size of the boxes that they use for $\eta=0.001\text{ and }0.002$. However, the aforementioned behaviour for the critical magnetic Reynolds number is perfectly matched. Since the values they use for the magnetic diffusivity are considerably (one order of magnitude) smaller than the ones simulated with the eDNS2017 code, then it is not surprising to see that the difference they found in critical magnetic Reynolds numbers from either side of $Pr_M=1$ is considerably larger than the one documented here - $Re_M^{crit}\sim226$ for $Pr_M<1$ and $Re_M^{crit}\sim63$ for $Pr_M>1$~\cite{schekochihin2004critical}.
 
+\section{Injection of kinetic helicity}
 
-\section{Critical magnetic Prandtl number for small-scale dynamos}
+As it was mentioned in section~\ref{sec3.3}, the main difference between small-scale and large-scale dynamos is the presence of helicity in the system. Since the previous simulations were exclusively non-helical, then it is possible to state that they were showing the characteristics of small-scale dynamo action. In this section, the effect of injecting helicity into the system is studied, i.e. large-scale dynamo action is studied. 
 
-A critical magnetic Reynolds number was found to be $Re_M^{crit}=55\pm5$ for simulations with $Pr_M\gtrsim1$, which is very close to a reported value of $Re_M^{crit}\sim60$ (also for $Pr_M\gtrsim1$) in~\cite{schekochihin2007fluctuation}.\\
+A series of simulations with constant $\eta=0.01$ was generated by varying $Pr_M$ in the range $[0.2:50]$, and their information is shown in table~\ref{tableB5}. Additionally, $E_M(t)$ is plotted in the temporal range $t=[60:400]$ (fig.~\ref{fig5.20}). In the $Pr_M>1$ regime, the critical magnetic Prandtl number was found to be around $Pr_M^{crit}=[40:50]$, and the corresponding critical magnetic Reynolds number in the range $Re_M^{crit}=[22:31]$. This is expected theoretically from the mean-field description of the $\alpha$-effect, i.e. at least some turbulence in the velocity field is necessary to activate the $\alpha$-effect~\cite{schnack2009lectures}. A small enough $Pr_M$ was not found such that it shut down the large-scale dynamo. However,~\cite{schnack2009lectures}, on purely analytic grounds, shows that a too large value of $Re$ (too much turbulence in the velocity field) must also shut down the $\alpha$-effect, and the large-scale dynamo with it. 
 
-other result for checks!\\
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/helical/ss_eta_0.01}.png}
+\caption{Time evolution of the total magnetic energy for helically forced simulations with $\eta=0.01$ and $Pr_M=[50, 40, 30, 0.2]$ in the range $t=[60:400]$, table~\ref{tableB5}.}
+\label{fig5.20}
+\end{figure}
 
-in~\cite{haugen2004simulations} they claim to have a critical magnetic Reynolds number of around 35, when defined with $Re_M=u_{rms}/(\eta k_f)$, for magnetic Prandtl number of unity. Doing that in my simulations, an equivalent simulation is \texttt{128\_0.0125\_1}, for which the critical magnetic Reynolds number defined with the forcing wavenumber is $21 \pm 1$.
+\section{Small-scale dynamo?}
 
+Extending fig.~\ref{fig5.10} to simulations with $Pr_M<1$ showed very interesting spectral behaviour for the magnetic energy. It is clear that in fig.~\ref{fig5.10} all simulations show the characteristic Kazantsev scaling except for the one that does not sustain dynamo action, $Pr_M=100$. Nonetheless, all simulations show a similar spectral profile for the magnetic energy in the intermediary and large wave numbers. In fig.~\ref{fig5.21}, that shows the $Pr_M<1$ simulations along with those of fig.~\ref{fig5.10}, it is interest to note the difference in the spectral behaviour between simulations with $Pr_M \geq 1$ and $Pr_M < 1$. 
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/kazantsev_0.01}.png}
+\caption{Runs with $Pr_M=[0.1:100]$, showing a clear difference in behaviour for $Pr_M\geq1$ and $Pr_M<1$.}
+\label{fig5.21}
+\end{figure}
 
-
-
-
-
-
-
-
-
-\section{Discussion}
-
-This section should give a picture of what you have taken out of your
-project and how you can put it into context.
-
-This section should summarise the results obtained, detail conclusions
-reached, suggest future work, and changes that you would make if you
-repeated the project.
+Comparing the simulations with $Pr_M=1\text{ and }0.5$, both of which sustain dynamo action, shows that the magnetic energy spectrum for the latter is more energetic at the larger wave numbers. The same behaviour is found when comparing all simulations with the $Pr_M=0.1$ one, with the clear difference that all (except $Pr_M=100$) compared simulations sustain dynamo action. This substantial difference could be related to remarks in~\cite{schekochihin2004critical} that state that only large-$Pr_M$ non-helical simulations show small-scale dynamo action. A thorough investigation into this difference would be definitely interesting further work and, if successful, might help elucidate exactly what are the small-$Pr_M$ non-helical systems.
 
 \chapter{Conclusions}
 
-This is the place to put your conclusions about your work. You can
-split it into different sections if appropriate. You may want to include
-a section of future work which could be carried out to continue your
-research.
+This project was based on studying the onset of small-scale and large-scale dynamo action by performing numerical simulations in the eDNS2017 code, written by Yoffe~\cite{yoffe2013investigation} and extended by Linkmann~\cite{LinkmannMoritzFrederikLeon2016Spim}, to solve the incompressible MHD equations (eqns.~\ref{eq3.1}-\ref{eq3.3}) in a scenario of homogeneous isotropic turbulence inside a triply periodic box using the pseudo-spectral method common to DNS. All simulations that were carried out applied forcing to the velocity field $\bm f_u$. For most simulations the forcing that was used was of a non-helical nature. By embracing the definition of~\cite{tobias2011mhd} for small-scale and large-scale dynamo action as those which are non-helical and generating spatially small magnetic fields, and helical and generating spatially coherent large magnetic fields, respectively, it is possible to characterise the simulations that were run. 
 
-The conclusion section should be at least one page long, preferably 2
-pages, but not much longer.
+By first making consistency checks that the eDNS2017 code gave the appropriate physics of known analytic behaviours a ``verification'' stage was performed. This included checking that the fields exhibited a sort of duality between themselves (this was done by showing two dimensional slices of $\vert \bm u \vert\text{ and }\vert \bm b \vert$ using \texttt{Paraview}), observing the effects of under resolved simulations in the energy and energy dissipation temporal evolutions, confirming that Kolmogorov $k^{-5/3}$ scaling (for cases where the magnetic energy spectrum was comparatively weak to the kinetic spectrum) was found to fit at intermediary length scales for several simulations (fig.~\ref{fig5.8}). Additionally, it was confirmed that for cases with sustained small-scale dynamo action (non-helical) the Kazantsev $k^{3/2}$ scaling was met when $Pr_M \geq 1$, as required by~\cite{kazantsev1968enhancement, haugen2004simulations}. 
+
+After checking the consistency of the eDNS2017 code, the onset of ``small''-scale dynamo action (this was done for both large-$Pr_M$ and small-$Pr_M$ non-helical systems) was studied. The critical magnetic Reynolds number for a fixed $\eta$ was found to be dependent of the turbulence of the velocity field ($Re$), and hence of $Pr_M$. It was found that $Re_M^{crit}$ for a fixed $\eta$ was larger in the $Pr_M<1$ region than in the $Pr_M\geq1$ region. This could have something to do with the difference in spectral behaviour seen in fig.~\ref{fig5.21}, but was not investigated further due to time constraints. A valuable result obtained was an overall threshold magnetic Reynolds number for the onset of small-scale dynamo action, i.e. the smallest possible value of $Re_M$ that would lead to a small-scale dynamo for the maximum $\eta$ that can sustain dynamo action, somewhere in the range $Re_M^{th}=[39:50]$. This is close to values found both in analytical results~\cite{kazantsev1968enhancement} and in numerical simulations~\cite{haugen2004simulations}.
+
+Finally, a brief study of the injection of helicity into the velocity field was done. This was made by using the helical forcing option of the eDNS2017 code and running several simulations with $\eta=0.01$ and different values of $Pr_M=[0.2:50]$, which meant that large-scale dynamos were being simulated. A $Re_M^{crit}$ was found for $Pr_M>1$, $Re_M^{crit}=[22:31]$. However, no critical magnetic Reynolds number was found for $Pr_M<1$ despite reaching magnetic Reynolds numbers of up to $Re_M=65\pm7$. In order to look for the $Re_M^{crit}$ that will kill the large-scale dynamo while keeping $\eta=0.01$ constant, larger boxes would have to be used. Due to time (and computational budget) constraints this was not possible. A thorough numerical description of the onset of large-scale dynamo action would be an interesting thing to study in the future with the eDNS2017 code since such analysis could help elucidate about astrophysically large magnetic fields, such as solar magnetism, which exist in low-$Pr_M$~\cite{schekochihin2007fluctuation}. However, as it has been seen for the $\eta=0.01$ cases with helicity, this would potentially require considerably more computational power in order to fully resolve the velocity field (at least $N^3=512^3$ boxes would be required).
 
 \appendix
 \chapter{Sample input file for eDNS2017}
@@ -930,7 +928,7 @@ Sample input file for a run going to \texttt{TIME~~400} with $\nu=0.9$ and $Pr_M
 
 \chapter{Tables for section~\ref{sec5.3}}
 
-\begin{table}[h]
+\begin{table}[ht]
 \begin{center}
 \begin{tabular}{||c|c|c|c|c|c|c|c||}
 \hline
@@ -1058,7 +1056,7 @@ M98 & 0.03 & 0.2 & $ 110 \pm 9 $ & $ 22 \pm 2 $ & $ 1.57576 $ & $ 5.26887 $ & $ 
 \end{longtable}
 \end{center}
 
-\begin{table}[h]
+\begin{table}[ht]
 \begin{center}
 \begin{tabular}{||c|c|c|c|c|c|c|c||}
 \hline
@@ -1079,7 +1077,38 @@ ML9 & 0.015 & 0.8 & $ 56 \pm 4 $ & $ 45 \pm 3 $ & $ 1.2787 $ & $ 1.51165 $ & $ 0
 \label{tableB3}
 \end{table}
 
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{||c|c|c|c|c|c|c|c||}
+\hline
+\textbf{Run} & $ \bm{\eta} $ & $ \bm{ Pr_M} $ & $ \bm{ Re} $ & $ \bm{ Re_M} $ & $ \bm{ \frac{k_{max}}{k_\nu}} $ & $ \bm{ \frac{k_{max}}{k_\eta}} $ & $ \bm{ \langle E_M^{ss}} \rangle $ \\ \hline
+HP0 & 0.01 & 20 & $ 2 \pm 0 $ & $ 39 \pm 4 $ & $ 22.6818 $ & $ 2.39831 $ & $ 0.000 \pm 0.000 $ \\ \hline
+HP1 & 0.01 & 10 & $ 5 \pm 0 $ & $ 53 \pm 5 $ & $ 13.4169 $ & $ 2.3859 $ & $ 0.001 \pm 0.001 $ \\ \hline
+HP2 & 0.01 & 7 & $ 8 \pm 1 $ & $ 58 \pm 5 $ & $ 10.1898 $ & $ 2.36778 $ & $ 0.009 \pm 0.003 $ \\ \hline
+HP3 & 0.01 & 1 & $ 67 \pm 3 $ & $ 67 \pm 3 $ & $ 4.8067 $ & $ 4.8067 $ & $ 0.017 \pm 0.001 $ \\ \hline
+HP4 & 0.01 & 0.5 & $ 128 \pm 11 $ & $ 64 \pm 5 $ & $ 2.78292 $ & $ 4.68029 $ & $ 0.005 \pm 0.001 $ \\ \hline
+HP5 & 0.01 & 0.2 & $ 295 \pm 27 $ & $ 59 \pm 5 $ & $ 1.39756 $ & $ 4.67303 $ & $ 0.000 \pm 0.000 $ \\ \hline
+\end{tabular}
+\end{center}
+\caption{Long runs for the onset of dynamo action in the $\nu=0.01$ case. These runs are (at least) from code time 0 to 400.}
+\label{tableB4}
+\end{table}
 
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{||c|c|c|c|c|c|c|c||}
+\hline
+\textbf{Run} & $ \bm{\eta} $ & $ \bm{ Pr_M} $ & $ \bm{ Re} $ & $ \bm{ Re_M} $ & $ \bm{ \frac{k_{max}}{k_\nu}} $ & $ \bm{ \frac{k_{max}}{k_\eta}} $ & $ \bm{ \langle E_M^{ss}} \rangle $ \\ \hline
+H0 & 0.01 & 50 & $ 0 \pm 0 $ & $ 25 \pm 3 $ & $ 44.9783 $ & $ 2.39208 $ & $ 0.000 \pm 0.000 $ \\ \hline
+H1 & 0.01 & 40 & $ 1 \pm 0 $ & $ 27 \pm 4 $ & $ 38.0896 $ & $ 2.39476 $ & $ 0.001 \pm 0.000 $ \\ \hline
+H2 & 0.01 & 30 & $ 1 \pm 0 $ & $ 31 \pm 4 $ & $ 30.6877 $ & $ 2.39399 $ & $ 0.020 \pm 0.003 $ \\ \hline
+H3 & 0.01 & 1 & $ 62 \pm 7 $ & $ 62 \pm 7 $ & $ 4.6374 $ & $ 4.6374 $ & $ 0.135 \pm 0.005 $ \\ \hline
+H4 & 0.01 & 0.2 & $ 323 \pm 34 $ & $ 65 \pm 7 $ & $ 1.40207 $ & $ 4.68813 $ & $ 0.111 \pm 0.020 $ \\ \hline
+\end{tabular}
+\end{center}
+\caption{Long runs for the onset of dynamo action in the $\nu=0.01$ case. These runs are (at least) from code time 0 to 400.}
+\label{tableB5}
+\end{table}
 
 
 

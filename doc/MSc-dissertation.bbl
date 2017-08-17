@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{schekochihin2004critical}
+Alexander~A Schekochihin, Steven~C Cowley, Jason~L Maron, and James~C
+  McWilliams.
+\newblock Critical magnetic prandtl number for small-scale dynamo.
+\newblock {\em Physical review letters}, 92(5):054502, 2004.
+
 \bibitem{yoffe2013investigation}
 Samuel~R Yoffe.
 \newblock Investigation of the transfer and dissipation of energy in isotropic
@@ -59,12 +65,6 @@ Steven~A Orszag.
 AP~Kazantsev.
 \newblock Enhancement of a magnetic field by a conducting fluid.
 \newblock {\em Sov. Phys. JETP}, 26(5):1031--1034, 1968.
-
-\bibitem{schekochihin2004critical}
-Alexander~A Schekochihin, Steven~C Cowley, Jason~L Maron, and James~C
-  McWilliams.
-\newblock Critical magnetic prandtl number for small-scale dynamo.
-\newblock {\em Physical review letters}, 92(5):054502, 2004.
 
 \bibitem{schekochihin2002small}
 Alexander~A Schekochihin, Jason~L Maron, Steven~C Cowley, and James~C
