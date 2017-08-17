@@ -8,4 +8,6 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {B.1}{\ignorespaces Runs for the onset of dynamo action in the $Pr_M=1$ case. The S-runs are only from code time 0 to 100, while the L-runs are (at least) from code time 0 to 300.\relax }}{41}
+\contentsline {table}{\numberline {B.1}{\ignorespaces Runs for the onset of dynamo action in the $Pr_M=1$ case. The S-runs are only from code time 0 to 100, while the L-runs are (at least) from code time 0 to 300.\relax }}{45}
+\contentsline {table}{\numberline {B.2}{\ignorespaces Runs for the onset of dynamo action Map. All runs are only from code time 0 to 100, with the temporal averages taken between 90 and 100 every 0.1 code time.\relax }}{47}
+\contentsline {table}{\numberline {B.3}{\ignorespaces Long runs for the onset of dynamo action in the $\nu =0.0125\text { and }0.015$ cases. These runs are (at least) from code time 0 to 300.\relax }}{48}

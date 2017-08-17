@@ -19,7 +19,13 @@
 \contentsline {figure}{\numberline {5.9}{\ignorespaces Set of runs with high $Pr_M=2$ that do not show convergence with Kolmogorov $k^{-5/3}$ scaling at any intermediary wave number scale.\relax }}{32}
 \contentsline {figure}{\numberline {5.10}{\ignorespaces Set of runs with high $Pr_M$ that show convergence with Kazantsev $k^{3/2}$ scaling at the kinematic regime.\relax }}{33}
 \contentsline {figure}{\numberline {5.11}{\ignorespaces Kazantsev scaling for the magnetic energy for simulations with ${Pr_M=500}$\nobreakspace {}\cite {schekochihin2004simulations}.\relax }}{33}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=100$.\relax }}{35}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=100$. These correspond to the S-runs in table\nobreakspace {}B.1\hbox {}.\relax }}{35}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=300$. These correspond to the L-runs in table\nobreakspace {}B.1\hbox {}.\relax }}{35}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Ensemble average of the total magnetic energy from $t=90$ to $t=100$ ($dt=0.1$) for all simulations in table\nobreakspace {}B.2\hbox {}.\relax }}{36}
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Magnetic Reynolds number for all simulations in table\nobreakspace {}B.2\hbox {}.\relax }}{37}
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.0125$ and $Pr_M=[0.6, 0.8, 1, 1.2]$.\relax }}{38}
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.015$ and $Pr_M=[0.8, 1, 1.2]$.\relax }}{38}
+\contentsline {figure}{\numberline {5.18}{\ignorespaces Time evolution of the total magnetic energy for $\eta =0.0125$ and ${Pr_M=[4, 6, 8]}$ in the range $t=[60:600]$.\relax }}{39}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

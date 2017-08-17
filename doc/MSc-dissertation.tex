@@ -2,7 +2,7 @@
 
 \usepackage{graphics}
 \usepackage{listings}
-\usepackage{fullpage,epsf,graphicx, amstext,url,bm,amsmath, amssymb, caption} 
+\usepackage{fullpage,epsf,graphicx, amstext,url,bm,amsmath, amssymb, caption, longtable} 
 
 %
 % head.sty is no longer needed
@@ -789,25 +789,96 @@ This section details studies done regarding the onset of dynamo action by changi
 Having defined dynamo action, the first thing that is important is to provide a method to tell whether or not dynamo action has been reached. For the purpose of trying to determine if dynamo action is obtained in simulations from the eDNS code the method used was to check the value of the time-averaged total magnetic energy (once the steady state of the simulation was reached). As it was mentioned earlier, the ergodic theorem states that these temporal averages are equivalent to ensemble averages~\cite{biskamp1997nonlinear}. This can be justified by saying that the temporal average (ensemble average) value of the total magnetic energy in the steady state is the same as the total magnetic energy when time goes to infinity, $E_M(t\rightarrow\infty)=\langle E_M^{ss} \rangle$.
 
 \subsection{$Re_M^{crit}$ for $Pr_M=1$}
+\label{subsec5.3.1}
 
 For the following simulations the forcing that was done was exclusively kinetic, i.e. $\bm f_b = \bm 0$, and there was no injection of helicity. Looking at these non-helical simulations the question about when does the onset of dynamo action occurs. Looking at runs with $Pr_M = 1$ lead to the conclusion that there exists a critical value for the magnetic diffusivity $\eta$ for which small-scale dynamo action appears. This is obviously related to a critical magnetic Reynolds number since $Re_M=uL/\eta$, and it is widely documented in the study of dynamo action both from a theoretical (Kazantsev and Batchelor theories) and a numerical point of view~\cite{kazantsev1968enhancement, schekochihin2004critical, haugen2004simulations, batchelor1950spontaneous, schekochihin2007fluctuation, tobias2011mhd}. In fact, there seems to be a consensus about the critical magnetic Reynolds number for unity magnetic Prandtl number within the range [30:60]~\cite{brandenburg2005astrophysical, kazantsev1968enhancement}.
 
-Doing a series of simulations with unity magnetic Prandtl number with varying magnetic diffusivity within the range $\eta=[0.01-1.75]$ up to code-time $100$ the onset of dynamo action was observed between $\eta=0.015$ and $\eta=0.0175$. The total magnetic energy in time can be seen in fig.~\ref{fig5.12}, which corresponds to runs S0 to S3 in table~\ref{tableB1}. The relation between the maximum wave number and the Kolmogorov microscales $k_{max}/k_\nu$ and $k_{max}/k_\eta$ is helpful to know how well resolved a given simulation is. Particularly, and as it was mentioned in section~\ref{sec4.2}, when $k_{max}/max(k_\nu, k_\eta) \geq 1.25$ then the simulation is said to be fully resolved, whereas if $1 < k_{max}/max(k_\nu, k_\eta) < 1.25$ a partially resolved similation, and if $k_{max}/max(k_\nu, k_\eta) \leq 1$ the simulation is under resolved. Having said this, it is noted that in table~\ref{tableB1} two simulations for the S-runs are partially resolved that correspond to $\eta=0.015$ and $\eta=0.0175$, and the same is true for the L-runs. 
+Doing a series of simulations with unity magnetic Prandtl number with varying magnetic diffusivity within the range $\eta=[0.01-0.02]$ up to code-time $100$ the onset of dynamo action was observed between $\eta=0.02$ and $\eta=0.0175$. The total magnetic energy in time can be seen in fig.~\ref{fig5.12}, which corresponds to runs S0 to S4 in table~\ref{tableB1}. From these simulations it is concluded that the critical magnetic Reynolds number lies somewhere in the range $Re_M^{crit}=[31:39]$, where $Re_M=u_{rms}L/\eta$ and $L$ is the kinetic integral scale given by the eDNS2017 code.
+
+The relation between the maximum wave number and the Kolmogorov microscales $k_{max}/k_\nu$ and $k_{max}/k_\eta$ is helpful to know how well resolved a given simulation is. Particularly, and as it was mentioned in section~\ref{sec4.2}, when $k_{max}/max(k_\nu, k_\eta) \geq 1.25$ then the simulation is said to be fully resolved, whereas if $1 < k_{max}/max(k_\nu, k_\eta) < 1.25$ a partially resolved simulation, and if $k_{max}/max(k_\nu, k_\eta) \leq 1$ the simulation is under resolved. Having said this, it is noted that in table~\ref{tableB1} all simulations for the S-runs (short) are fully resolved.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=0.7\textwidth]{{img/prm1/ss_prm_1_short}.png}
-\caption{Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=100$.}
+\caption{Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=100$. These correspond to the S-runs in table~\ref{tableB1}.}
 \label{fig5.12}
 \end{figure}
 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/prm1/ss_prm_1_long}.png}
+\caption{Temporal evolution of the total magnetic energy for simulations with ${Pr_M=1}$ from $t=60$ to $t=300$. These correspond to the L-runs in table~\ref{tableB1}.}
+\label{fig5.13}
+\end{figure}
+
+Driven by the substantial difference between the total magnetic energy of S1 and S2/3, and because of doubts regarding having reached a real steady state in figure~\ref{fig5.12}, a set of runs with longer times was performed. This second set of simulations was done up to (at least) code time 300, but only for the magnetic diffusivity range $\eta=[0.01:0.0175]$. These simulations correspond to the L-runs (long) of table~\ref{tableB1}, and are plotted in the code time range 60 to 300 and shown in fig.~\ref{fig5.13}. It is clear that a transition from no dynamo action to dynamo action occurs somewhere between $\eta=0.015$ and $\eta=0.0125$. As a result, it is now possible to state that the critical magnetic Reynolds number lays somewhere in the range $Re_M^{crit}=[42:60]$. This is consistent with values found in the literature~\cite{brandenburg2005astrophysical, kazantsev1968enhancement}. A quick check of the L-runs in table~\ref{tableB1} shows that all the simulations used for fig.~\ref{fig5.13} are also fully resolved. 
+
+\subsection{Dynamo onset map}
+
+After obtaining an estimate for the magnetic Reynolds number for unity $Pr_M$, and motivated in~\cite{schekochihin2004critical}'s discussion of the dependence of $Re_M^{crit}$ with $Re$, a larger set of runs was performed. The aim of this set of runs was to check what happened with the total magnetic energy at ``infinity'' through ensemble averages for values of $\nu$, that showed no dynamo action in the $Pr_M=1$ case, by varying the magnetic Prandtl number below and above unity. These simulations correspond to M-runs in table~\ref{tableB2}. There it can be checked that all simulations are appropriately resolved since for all simulations $min(k_{max}/k_\nu, k_{max}/k_\eta) > 1.25$.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{{img/map/3d_ss}.png}
+\caption{Ensemble average of the total magnetic energy from $t=90$ to $t=100$ ($dt=0.1$) for all simulations in table~\ref{tableB2}.}
+\label{fig5.14}
+\end{figure}
+
+Using the information of table~\ref{tableB2} a heat map was generated that shows the temporal average of the total magnetic energy in the range 60 to 100 of code time, every 0.1 units of code time, fig.~\ref{fig5.14}, where it is clear that for the higher values of magnetic diffusivity dynamo action cannot be sustained. This is a result of the magnetic field not being turbulent enough, i.e. the magnetic Reynolds number is too small. A heat map for the magnetic Reynolds number can be generated in a similar way than for $\langle E_M(t\rightarrow\infty) \rangle$, and it is shown in fig.~\ref{fig5.15}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{{img/map/3d_ss_Rm}.png}
+\caption{Magnetic Reynolds number for all simulations in table~\ref{tableB2}.}
+\label{fig5.15}
+\end{figure}
+
+There is an obvious resemblance between fig.~\ref{fig5.14} and~\ref{fig5.15} because the dark parts of the $\langle E_M \rangle$ heat map, which did not achieve dynamo action, have magnetic Reynolds number smaller than $Re_M^{crit}(=[42:60]$ for $Pr_M=1)$. The shape of fig.~\ref{fig5.15} is not surprising at all since the magnetic Reynolds number is inversely proportional to $\eta$ ($Re_M=u_{rms}L/\eta$), so by decreasing the magnetic diffusivity the $Re_M$ increases.
+
+Regarding fig.~\ref{fig5.14}, an interesting feature of the simulations that appear to have dynamo action when $Pr_M \sim 1$ ($\nu=[0.01, 0.0125, 0.015]$) is that no dynamo action is sustained when the magnetic Prandtl number is $Pr_M=0.2$. However, since in subsection~\ref{subsec5.3.1} it was seen that the simulations for $\eta=0.015\text{ and }0.0175$ did not reach a steady state after 100 units of code time, it is important to extend some of the simulations that appear to have dynamo action to longer times such that they reach a steady state and it is possible to confirm whether or not they sustain dynamo action.
+
+The first thing that was done was generate two sets of longer runs to check what happens with the apparent dynamo action for $\eta=0.0125\text{ and }0.015$. These runs correspond to table~\ref{tableB3} and the total magnetic energy for different magnetic Prandtl numbers are shown in figs.~\ref{fig5.16} and~\ref{fig5.17} for $\nu=0.0125$ and $\nu=0.015$ respectively. The simulations with $\eta=0.0125, Pr_M=0.6$ and $\eta=0.015, Pr_M=1.2$ were run until $t=600$, and by that time both of them had completely lost their total magnetic energy due to dissipation. This leads to the statement that simulations with $\eta \geq 0.015$ cannot sustain dynamo action, and the largest magnetic Reynolds number of a simulation with $\eta=0.015$ is $Re_M=47\pm4$.
+
+\begin{figure}[!ht]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/map/long/ss_eta_0.0125}.png}
+  \caption{Time evolution of the total magnetic energy for $\eta=0.0125$ and $Pr_M=[0.6, 0.8, 1, 1.2]$.}
+  \label{fig5.16}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=0.95\linewidth]{{img/map/long/ss_eta_0.015}.png}
+  \caption{Time evolution of the total magnetic energy for $\eta=0.015$ and $Pr_M=[0.8, 1, 1.2]$.}
+  \label{fig5.17}
+\end{minipage}
+\end{figure}
+
+Regarding the $\eta=0.0125$ simulation, which is the largest magnetic diffusivity that is able to sustain dynamo action that was worked with, it is interesting to note that a small enough magnetic Prandtl number, large enough Reynolds number, is able to shut down dynamo action. Furthermore, it is possible to state that the critical magnetic Reynolds number for $Pr_M < 1$ in this case is somewhere in the range $Re_M^{crit}=[50:59]$. 
+
 \subsection{$Re_M^{crit}$ for $Pr_M > 1$}
 
-The range of magnetic Prandtl number was then broadened and it was seen that this critical value of magnetic Reynolds number depends on $Pr_M$. The first thing that was necessary to study the onset of small-scale dynamo action was to define a way to determine weather there was dynamo action or not in a specific simulation.
+After seeing that decreasing the magnetic Prandtl number to values below unity was detrimental for dynamo action, and remembering the inverse duality observed in the two dimensional field slices in fig.~\ref{fig5.1}, larger values of $Pr_M > 1$ became of interest. It is well known that there exists a duality between the kinetic and the magnetic fields. As a matter of fact, a set of variables called the Els\"asser variables, which are defined by eqn.~\ref{eq5.2}, are commonly used in the description of MHD because of the especially simple form the MHD equations take with these~\cite{tobias2011mhd, biskamp1997nonlinear}. Due to this duality of the fields, it would be expected that, for a fixed $\eta$, increasing $Pr_M$ above unity would give a critical value that kills dynamo action, just like decreasing $Pr_M$ below unity does. 
 
-For simulations with $Pr_M$ larger than unity it was possible to identify a critical magnetic Reynolds number $Re_M$. After doing this it was possible to obtain a critical magnetic Prandtl number for which dynamo action is shut down. This qualitatively agrees with the results shown in~\cite{schekochihin2004critical}.
+\begin{align}
+ \bm z^{\pm} = \bm u \pm \bm b \label{eq5.2}
+\end{align}
 
 
+With this in mind, the range of magnetic Prandtl number was then broadened and it was seen that the critical value of magnetic Reynolds number needed to sustain dynamo action depends on $Pr_M$, which is part of the central argument of~\cite{schekochihin2004critical, schekochihin2005onset}. Namely, they state that a rough velocity field can affect the critical magnetic Reynolds number by increasing it substantially when compared with a system with the same magnetic diffusivity, but more laminar velocity field (higher $Pr_M$).
+
+For simulations with $Pr_M$ larger than unity it was possible to identify a critical magnetic Reynolds number $Re_M^{crit}$. For the $\eta=0.0125$ case, it is clear that $Pr_M=1.2$ is not large enough to shut down dynamo action (fig.~\ref{fig5.16}). As a result, various simulations with $\eta=0.0125$, but $Pr_M=[4, 6,\text{ and }8]$, were generated (ML0-ML2 in table~\ref{tableB3}). Then, $E_M(t)$ is shown in fig.~\ref{fig5.18} for the range $t=[60:600]$, and it is concluded that the, higher than unity, critical magnetic Prandtl number for $\eta=0.0125$ lies somewhere between $Pr_M^{crit}=[6:8]$. Comparing the magnetic Reynolds numbers of these simulations, along with their respective errors, $Re_M^{crit}$ is found to be somewhere in the range $Re_M^{crit}=[39:50]$. Recalling that for the $Pr_M < 1$ case with the same value of $\eta=0.0125$, the critical magnetic Reynolds number was $Re_M^{crit}=[50:59]$. Therefore, it looks like  ~\cite{schekochihin2004critical}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{{img/map/long/ss_eta_0.0125_4-6-8}.png}
+  \caption{Time evolution of the total magnetic energy for $\eta=0.0125$ and ${Pr_M=[4, 6, 8]}$ in the range $t=[60:600]$.}
+\label{fig5.18}
+\end{figure}
 
 
 
@@ -830,7 +901,7 @@ in~\cite{haugen2004simulations} they claim to have a critical magnetic Reynolds 
 
 
 
-\section{Discussion of your results}
+\section{Discussion}
 
 This section should give a picture of what you have taken out of your
 project and how you can put it into context.
@@ -863,20 +934,154 @@ Sample input file for a run going to \texttt{TIME~~400} with $\nu=0.9$ and $Pr_M
 \begin{center}
 \begin{tabular}{||c|c|c|c|c|c|c|c||}
 \hline
-\textbf{Run} & $ \bm{\eta} $ & $ \bm{ Pr_M} $ & $ \bm{ Re} $ & $ \bm{ Re_M} $ & $ \bm{ \frac{k_{max}}{k_\nu}} $ & $ \bm{ \frac{k_{max}}{k_\eta}} $ & $ \bm{ \langle E_M^{ss}} \rangle $ \\ \hline \hline
+\textbf{Run} & $ \bm{\eta} $ & $ \bm{ Pr_M} $ & $ \bm{ Re} $ & $ \bm{ Re_M} $ & $ \bm{ \frac{k_{max}}{k_\nu}} $ & $ \bm{ \frac{k_{max}}{k_\eta}} $ & $ \bm{ \langle E_M^{ss}} \rangle $ \\ \hline
 S0 & 0.01 & 1 & $ 69 \pm 6 $ & $ 69 \pm 6 $ & $ 2.33911 $ & $ 2.33911 $ & $ 0.022 \pm 0.003 $ \\ \hline
-S1 & 0.0125 & 1 & $ 55 \pm 4 $ & $ 68 \pm 5 $ & $ 2.77289 $ & $ 2.34558 $ & $ 0.014 \pm 0.001 $ \\ \hline
-S2 & 0.015 & 1 & $ 43 \pm 3 $ & $ 64 \pm 5 $ & $ 1.5311 $ & $ 1.12962 $ & $ 0.005 \pm 0.001 $ \\ \hline
-S3 & 0.0175 & 1 & $ 37 \pm 2 $ & $ 65 \pm 3 $ & $ 1.69408 $ & $ 1.11341 $ & $ 0.001 \pm 0.000 $ \\ \hline \hline
+S1 & 0.0125 & 1 & $ 55 \pm 4 $ & $ 55 \pm 4 $ & $ 2.77289 $ & $ 2.77289 $ & $ 0.014 \pm 0.001 $ \\ \hline
+S2 & 0.015 & 1 & $ 43 \pm 3 $ & $ 43 \pm 3 $ & $ 1.5311 $ & $ 1.5311 $ & $ 0.005 \pm 0.001 $ \\ \hline
+S3 & 0.0175 & 1 & $ 37 \pm 2 $ & $ 37 \pm 2 $ & $ 1.69408 $ & $ 1.69408 $ & $ 0.001 \pm 0.000 $ \\ \hline
+S4 & 0.02 & 1 & $ 33 \pm 2 $ & $ 33 \pm 2 $ & $ 1.93261 $ & $ 1.93261 $ & $ 0.000 \pm 0.000 $ \\ \hline \hline
 L0 & 0.01 & 1 & $ 69 \pm 4 $ & $ 69 \pm 4 $ & $ 2.30562 $ & $ 2.30562 $ & $ 0.023 \pm 0.004 $ \\ \hline
-L1 & 0.0125 & 1 & $ 56 \pm 4 $ & $ 70 \pm 4 $ & $ 2.70774 $ & $ 2.29048 $ & $ 0.007 \pm 0.003 $ \\ \hline
-L2 & 0.015 & 1 & $ 46 \pm 4 $ & $ 69 \pm 6 $ & $ 1.52046 $ & $ 1.12177 $ & $ 0.000 \pm 0.000 $ \\ \hline
-L3 & 0.0175 & 1 & $ 39 \pm 3 $ & $ 69 \pm 6 $ & $ 1.70577 $ & $ 1.1211 $ & $ 0.000 \pm 0.000 $ \\ \hline
+L1 & 0.0125 & 1 & $ 56 \pm 4 $ & $ 56 \pm 4 $ & $ 2.70774 $ & $ 2.70774 $ & $ 0.007 \pm 0.003 $ \\ \hline
+L2 & 0.015 & 1 & $ 46 \pm 4 $ & $ 46 \pm 4 $ & $ 1.52046 $ & $ 1.52046 $ & $ 0.000 \pm 0.000 $ \\ \hline
+L3 & 0.0175 & 1 & $ 39 \pm 3 $ & $ 39 \pm 3 $ & $ 1.70577 $ & $ 1.70577 $ & $ 0.000 \pm 0.000 $ \\ \hline
 \end{tabular}
 \end{center}
 \caption{Runs for the onset of dynamo action in the $Pr_M=1$ case. The S-runs are only from code time 0 to 100, while the L-runs are (at least) from code time 0 to 300.}
 \label{tableB1}
 \end{table}
+
+\begin{center}
+\begin{longtable}{||c|c|c|c|c|c|c|c||}
+\hline
+\textbf{Run} & $ \bm{\eta} $ & $ \bm{ Pr_M} $ & $ \bm{ Re} $ & $ \bm{ Re_M} $ & $ \bm{ \frac{k_{max}}{k_\nu}} $ & $ \bm{ \frac{k_{max}}{k_\eta}} $ & $ \bm{ \langle E_M^{ss}} \rangle $ \\ \hline
+M0 & 0.01 & 2.2 & $ 31 \pm 3 $ & $ 68 \pm 6 $ & $ 4.16081 $ & $ 2.30336 $ & $ 0.028 \pm 0.002 $ \\ \hline
+M1 & 0.0125 & 2.2 & $ 25 \pm 2 $ & $ 54 \pm 5 $ & $ 5.04814 $ & $ 2.79457 $ & $ 0.006 \pm 0.001 $ \\ \hline
+M2 & 0.015 & 2.2 & $ 19 \pm 1 $ & $ 42 \pm 3 $ & $ 2.79941 $ & $ 1.54971 $ & $ 0.002 \pm 0.000 $ \\ \hline
+M3 & 0.0175 & 2.2 & $ 16 \pm 1 $ & $ 35 \pm 3 $ & $ 3.16709 $ & $ 1.75325 $ & $ 0.003 \pm 0.000 $ \\ \hline
+M4 & 0.02 & 2.2 & $ 14 \pm 1 $ & $ 30 \pm 2 $ & $ 3.5067 $ & $ 1.94126 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M5 & 0.0225 & 2.2 & $ 12 \pm 1 $ & $ 26 \pm 2 $ & $ 3.83564 $ & $ 2.12335 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M6 & 0.025 & 2.2 & $ 10 \pm 1 $ & $ 23 \pm 2 $ & $ 4.16185 $ & $ 2.30393 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M7 & 0.0275 & 2.2 & $ 9 \pm 1 $ & $ 20 \pm 2 $ & $ 4.475 $ & $ 2.47729 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M8 & 0.03 & 2.2 & $ 8 \pm 1 $ & $ 18 \pm 2 $ & $ 4.77756 $ & $ 2.64477 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M9 & 0.01 & 2 & $ 34 \pm 3 $ & $ 69 \pm 5 $ & $ 3.85708 $ & $ 2.29344 $ & $ 0.028 \pm 0.001 $ \\ \hline
+M10 & 0.0125 & 2 & $ 27 \pm 2 $ & $ 53 \pm 4 $ & $ 4.6292 $ & $ 2.75255 $ & $ 0.003 \pm 0.000 $ \\ \hline
+M11 & 0.015 & 2 & $ 20 \pm 1 $ & $ 41 \pm 2 $ & $ 2.57955 $ & $ 1.53381 $ & $ 0.005 \pm 0.001 $ \\ \hline
+M12 & 0.0175 & 2 & $ 18 \pm 1 $ & $ 36 \pm 3 $ & $ 2.93851 $ & $ 1.74724 $ & $ 0.001 \pm 0.000 $ \\ \hline
+M13 & 0.02 & 2 & $ 15 \pm 1 $ & $ 30 \pm 2 $ & $ 3.2649 $ & $ 1.94131 $ & $ 0.001 \pm 0.000 $ \\ \hline
+M14 & 0.0225 & 2 & $ 13 \pm 1 $ & $ 26 \pm 2 $ & $ 3.56702 $ & $ 2.12096 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M15 & 0.025 & 2 & $ 12 \pm 1 $ & $ 23 \pm 2 $ & $ 3.86557 $ & $ 2.29848 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M16 & 0.0275 & 2 & $ 10 \pm 1 $ & $ 21 \pm 2 $ & $ 4.16171 $ & $ 2.47456 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M17 & 0.03 & 2 & $ 9 \pm 1 $ & $ 18 \pm 1 $ & $ 4.44702 $ & $ 2.64422 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M18 & 0.01 & 1.8 & $ 38 \pm 4 $ & $ 69 \pm 6 $ & $ 3.58194 $ & $ 2.30496 $ & $ 0.014 \pm 0.001 $ \\ \hline
+M19 & 0.0125 & 1.8 & $ 32 \pm 3 $ & $ 58 \pm 5 $ & $ 4.28528 $ & $ 2.75756 $ & $ 0.014 \pm 0.002 $ \\ \hline
+M20 & 0.015 & 1.8 & $ 24 \pm 2 $ & $ 44 \pm 3 $ & $ 2.39864 $ & $ 1.54352 $ & $ 0.002 \pm 0.000 $ \\ \hline
+M21 & 0.0175 & 1.8 & $ 20 \pm 1 $ & $ 36 \pm 2 $ & $ 2.69717 $ & $ 1.73561 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M22 & 0.02 & 1.8 & $ 17 \pm 1 $ & $ 31 \pm 2 $ & $ 3.00521 $ & $ 1.93384 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M23 & 0.0225 & 1.8 & $ 15 \pm 1 $ & $ 27 \pm 2 $ & $ 3.29136 $ & $ 2.11798 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M24 & 0.025 & 1.8 & $ 13 \pm 1 $ & $ 24 \pm 2 $ & $ 3.56672 $ & $ 2.29517 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M25 & 0.0275 & 1.8 & $ 12 \pm 1 $ & $ 21 \pm 2 $ & $ 3.83569 $ & $ 2.46825 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M26 & 0.03 & 1.8 & $ 11 \pm 1 $ & $ 19 \pm 2 $ & $ 4.10309 $ & $ 2.64032 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M27 & 0.01 & 1.6 & $ 43 \pm 3 $ & $ 69 \pm 5 $ & $ 3.29293 $ & $ 2.3147 $ & $ 0.025 \pm 0.002 $ \\ \hline
+M28 & 0.0125 & 1.6 & $ 36 \pm 3 $ & $ 57 \pm 4 $ & $ 3.89601 $ & $ 2.73859 $ & $ 0.013 \pm 0.002 $ \\ \hline
+M29 & 0.015 & 1.6 & $ 27 \pm 1 $ & $ 44 \pm 2 $ & $ 2.1799 $ & $ 1.53231 $ & $ 0.008 \pm 0.001 $ \\ \hline
+M30 & 0.0175 & 1.6 & $ 21 \pm 1 $ & $ 34 \pm 2 $ & $ 2.47805 $ & $ 1.74189 $ & $ 0.003 \pm 0.000 $ \\ \hline
+M31 & 0.02 & 1.6 & $ 20 \pm 1 $ & $ 32 \pm 2 $ & $ 2.74879 $ & $ 1.9322 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M32 & 0.0225 & 1.6 & $ 17 \pm 1 $ & $ 27 \pm 2 $ & $ 3.00358 $ & $ 2.11129 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M33 & 0.025 & 1.6 & $ 15 \pm 1 $ & $ 25 \pm 2 $ & $ 3.25022 $ & $ 2.28467 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M34 & 0.0275 & 1.6 & $ 14 \pm 1 $ & $ 22 \pm 2 $ & $ 3.5052 $ & $ 2.46389 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M35 & 0.03 & 1.6 & $ 12 \pm 1 $ & $ 20 \pm 2 $ & $ 3.74581 $ & $ 2.63303 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M36 & 0.01 & 1.4 & $ 48 \pm 3 $ & $ 67 \pm 5 $ & $ 2.98449 $ & $ 2.31886 $ & $ 0.026 \pm 0.001 $ \\ \hline
+M37 & 0.0125 & 1.4 & $ 39 \pm 3 $ & $ 55 \pm 4 $ & $ 3.56354 $ & $ 2.76875 $ & $ 0.011 \pm 0.001 $ \\ \hline
+M38 & 0.015 & 1.4 & $ 30 \pm 2 $ & $ 42 \pm 2 $ & $ 1.95532 $ & $ 1.51923 $ & $ 0.004 \pm 0.001 $ \\ \hline
+M39 & 0.0175 & 1.4 & $ 27 \pm 2 $ & $ 37 \pm 2 $ & $ 2.22137 $ & $ 1.72594 $ & $ 0.002 \pm 0.001 $ \\ \hline
+M40 & 0.02 & 1.4 & $ 22 \pm 1 $ & $ 31 \pm 2 $ & $ 2.41769 $ & $ 1.87846 $ & $ 0.001 \pm 0.000 $ \\ \hline
+M41 & 0.0225 & 1.4 & $ 20 \pm 1 $ & $ 27 \pm 2 $ & $ 2.68632 $ & $ 2.08719 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M42 & 0.025 & 1.4 & $ 18 \pm 1 $ & $ 26 \pm 2 $ & $ 2.9413 $ & $ 2.2853 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M43 & 0.0275 & 1.4 & $ 16 \pm 1 $ & $ 23 \pm 2 $ & $ 3.15001 $ & $ 2.44746 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M44 & 0.03 & 1.4 & $ 15 \pm 1 $ & $ 20 \pm 2 $ & $ 3.37335 $ & $ 2.62099 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M45 & 0.01 & 1.2 & $ 57 \pm 5 $ & $ 68 \pm 6 $ & $ 2.65279 $ & $ 2.31376 $ & $ 0.026 \pm 0.002 $ \\ \hline
+M46 & 0.0125 & 1.2 & $ 48 \pm 4 $ & $ 57 \pm 4 $ & $ 3.13341 $ & $ 2.73293 $ & $ 0.006 \pm 0.000 $ \\ \hline
+M47 & 0.015 & 1.2 & $ 36 \pm 2 $ & $ 43 \pm 2 $ & $ 1.75724 $ & $ 1.53265 $ & $ 0.004 \pm 0.000 $ \\ \hline
+M48 & 0.0175 & 1.2 & $ 31 \pm 2 $ & $ 37 \pm 2 $ & $ 1.98533 $ & $ 1.7316 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M49 & 0.02 & 1.2 & $ 27 \pm 2 $ & $ 32 \pm 2 $ & $ 2.17819 $ & $ 1.8998 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M50 & 0.0225 & 1.2 & $ 23 \pm 1 $ & $ 28 \pm 2 $ & $ 2.39159 $ & $ 2.08594 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M51 & 0.025 & 1.2 & $ 21 \pm 1 $ & $ 25 \pm 2 $ & $ 2.61559 $ & $ 2.2813 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M52 & 0.0275 & 1.2 & $ 19 \pm 1 $ & $ 23 \pm 2 $ & $ 2.78617 $ & $ 2.43009 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M53 & 0.03 & 1.2 & $ 18 \pm 1 $ & $ 21 \pm 1 $ & $ 2.99713 $ & $ 2.61408 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M54 & 0.01 & 1 & $ 69 \pm 6 $ & $ 69 \pm 6 $ & $ 2.33911 $ & $ 2.33911 $ & $ 0.022 \pm 0.003 $ \\ \hline
+M55 & 0.0125 & 1 & $ 55 \pm 4 $ & $ 55 \pm 4 $ & $ 2.77289 $ & $ 2.77289 $ & $ 0.014 \pm 0.001 $ \\ \hline
+M56 & 0.015 & 1 & $ 43 \pm 3 $ & $ 43 \pm 3 $ & $ 1.5311 $ & $ 1.5311 $ & $ 0.005 \pm 0.001 $ \\ \hline
+M57 & 0.0175 & 1 & $ 37 \pm 2 $ & $ 37 \pm 2 $ & $ 1.69408 $ & $ 1.69408 $ & $ 0.001 \pm 0.000 $ \\ \hline
+M58 & 0.02 & 1 & $ 33 \pm 2 $ & $ 33 \pm 2 $ & $ 1.93261 $ & $ 1.93261 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M59 & 0.0225 & 1 & $ 28 \pm 1 $ & $ 28 \pm 1 $ & $ 2.07697 $ & $ 2.07697 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M60 & 0.025 & 1 & $ 25 \pm 1 $ & $ 25 \pm 1 $ & $ 2.26018 $ & $ 2.26018 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M61 & 0.0275 & 1 & $ 24 \pm 2 $ & $ 24 \pm 2 $ & $ 2.41471 $ & $ 2.41471 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M62 & 0.03 & 1 & $ 21 \pm 1 $ & $ 21 \pm 1 $ & $ 2.60905 $ & $ 2.60905 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M63 & 0.01 & 0.8 & $ 91 \pm 8 $ & $ 72 \pm 6 $ & $ 1.94556 $ & $ 2.3 $ & $ 0.026 \pm 0.001 $ \\ \hline
+M64 & 0.0125 & 0.8 & $ 69 \pm 6 $ & $ 55 \pm 5 $ & $ 2.27997 $ & $ 2.69533 $ & $ 0.004 \pm 0.001 $ \\ \hline
+M65 & 0.015 & 0.8 & $ 55 \pm 3 $ & $ 44 \pm 2 $ & $ 1.28378 $ & $ 1.51766 $ & $ 0.004 \pm 0.001 $ \\ \hline
+M66 & 0.0175 & 0.8 & $ 48 \pm 2 $ & $ 38 \pm 2 $ & $ 1.43615 $ & $ 1.69778 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M67 & 0.02 & 0.8 & $ 41 \pm 2 $ & $ 33 \pm 2 $ & $ 1.61077 $ & $ 1.90422 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M68 & 0.0225 & 0.8 & $ 37 \pm 2 $ & $ 29 \pm 2 $ & $ 1.75671 $ & $ 2.07675 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M69 & 0.025 & 0.8 & $ 33 \pm 2 $ & $ 26 \pm 1 $ & $ 1.91926 $ & $ 2.26891 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M70 & 0.0275 & 0.8 & $ 29 \pm 1 $ & $ 23 \pm 1 $ & $ 2.05779 $ & $ 2.43267 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M71 & 0.03 & 0.8 & $ 27 \pm 1 $ & $ 22 \pm 1 $ & $ 2.19708 $ & $ 2.59734 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M72 & 0.01 & 0.6 & $ 109 \pm 5 $ & $ 66 \pm 3 $ & $ 3.18002 $ & $ 4.66465 $ & $ 0.014 \pm 0.001 $ \\ \hline
+M73 & 0.0125 & 0.6 & $ 90 \pm 7 $ & $ 54 \pm 4 $ & $ 1.84714 $ & $ 2.70947 $ & $ 0.002 \pm 0.000 $ \\ \hline
+M74 & 0.015 & 0.6 & $ 81 \pm 8 $ & $ 49 \pm 5 $ & $ 2.1209 $ & $ 3.11106 $ & $ 0.002 \pm 0.000 $ \\ \hline
+M75 & 0.0175 & 0.6 & $ 66 \pm 4 $ & $ 40 \pm 2 $ & $ 2.38061 $ & $ 3.49201 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M76 & 0.02 & 0.6 & $ 53 \pm 3 $ & $ 32 \pm 2 $ & $ 1.27477 $ & $ 1.86991 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M77 & 0.0225 & 0.6 & $ 49 \pm 2 $ & $ 29 \pm 1 $ & $ 1.40599 $ & $ 2.06237 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M78 & 0.025 & 0.6 & $ 41 \pm 2 $ & $ 24 \pm 1 $ & $ 1.53539 $ & $ 2.2522 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M79 & 0.0275 & 0.6 & $ 38 \pm 2 $ & $ 23 \pm 1 $ & $ 1.64486 $ & $ 2.41277 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M80 & 0.03 & 0.6 & $ 36 \pm 2 $ & $ 21 \pm 1 $ & $ 1.74271 $ & $ 2.55628 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M81 & 0.01 & 0.4 & $ 151 \pm 8 $ & $ 60 \pm 3 $ & $ 2.33385 $ & $ 4.64009 $ & $ 0.001 \pm 0.000 $ \\ \hline
+M82 & 0.0125 & 0.4 & $ 128 \pm 7 $ & $ 51 \pm 3 $ & $ 2.78602 $ & $ 5.53911 $ & $ 0.004 \pm 0.000 $ \\ \hline
+M83 & 0.015 & 0.4 & $ 112 \pm 8 $ & $ 45 \pm 3 $ & $ 1.54883 $ & $ 3.07935 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M84 & 0.0175 & 0.4 & $ 94 \pm 8 $ & $ 38 \pm 3 $ & $ 1.78229 $ & $ 3.54352 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M85 & 0.02 & 0.4 & $ 85 \pm 7 $ & $ 34 \pm 3 $ & $ 1.94756 $ & $ 3.87209 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M86 & 0.0225 & 0.4 & $ 76 \pm 5 $ & $ 30 \pm 2 $ & $ 2.09861 $ & $ 4.17241 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M87 & 0.025 & 0.4 & $ 69 \pm 6 $ & $ 28 \pm 2 $ & $ 2.33332 $ & $ 4.63906 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M88 & 0.0275 & 0.4 & $ 64 \pm 7 $ & $ 26 \pm 3 $ & $ 2.44254 $ & $ 4.85621 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M89 & 0.03 & 0.4 & $ 53 \pm 3 $ & $ 21 \pm 1 $ & $ 1.32458 $ & $ 2.6335 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M90 & 0.01 & 0.2 & $ 301 \pm 13 $ & $ 60 \pm 3 $ & $ 1.37295 $ & $ 4.59074 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M91 & 0.0125 & 0.2 & $ 223 \pm 11 $ & $ 45 \pm 2 $ & $ 1.69006 $ & $ 5.65105 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M92 & 0.015 & 0.2 & $ 206 \pm 7 $ & $ 41 \pm 1 $ & $ 1.8767 $ & $ 6.27512 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M93 & 0.0175 & 0.2 & $ 170 \pm 9 $ & $ 34 \pm 2 $ & $ 2.1526 $ & $ 7.1977 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M94 & 0.02 & 0.2 & $ 157 \pm 7 $ & $ 31 \pm 1 $ & $ 2.3235 $ & $ 7.76907 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M95 & 0.0225 & 0.2 & $ 134 \pm 5 $ & $ 27 \pm 1 $ & $ 2.60425 $ & $ 8.70781 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M96 & 0.025 & 0.2 & $ 134 \pm 11 $ & $ 27 \pm 2 $ & $ 1.35714 $ & $ 4.53788 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M97 & 0.0275 & 0.2 & $ 121 \pm 5 $ & $ 24 \pm 1 $ & $ 2.95753 $ & $ 9.8891 $ & $ 0.000 \pm 0.000 $ \\ \hline
+M98 & 0.03 & 0.2 & $ 110 \pm 9 $ & $ 22 \pm 2 $ & $ 1.57576 $ & $ 5.26887 $ & $ 0.000 \pm 0.000 $ \\ \hline
+\caption{Runs for the onset of dynamo action Map. All runs are only from code time 0 to 100, with the temporal averages taken between 90 and 100 every 0.1 code time.}
+\label{tableB2}
+\end{longtable}
+\end{center}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{||c|c|c|c|c|c|c|c||}
+\hline
+\textbf{Run} & $ \bm{\eta} $ & $ \bm{ Pr_M} $ & $ \bm{ Re} $ & $ \bm{ Re_M} $ & $ \bm{ \frac{k_{max}}{k_\nu}} $ & $ \bm{ \frac{k_{max}}{k_\eta}} $ & $ \bm{ \langle E_M^{ss}} \rangle $ \\ \hline
+ML0 & 0.0125 & 8 & $ 5 \pm 0 $ & $ 43 \pm 4 $ & $ 13.3995 $ & $ 2.8169 $ & $ 0.000 \pm 0.000 $ \\ \hline
+ML1 & 0.0125 & 6 & $ 8 \pm 1 $ & $ 46 \pm 4 $ & $ 10.7529 $ & $ 2.80488 $ & $ 0.006 \pm 0.002 $ \\ \hline
+ML2 & 0.0125 & 4 & $ 13 \pm 1 $ & $ 51 \pm 4 $ & $ 7.82161 $ & $ 2.76536 $ & $ 0.010 \pm 0.006 $ \\ \hline
+ML3 & 0.0125 & 1.2 & $ 45 \pm 4 $ & $ 54 \pm 4 $ & $ 3.1382 $ & $ 2.73713 $ & $ 0.013 \pm 0.004 $ \\ \hline
+ML4 & 0.0125 & 1 & $ 56 \pm 4 $ & $ 56 \pm 4 $ & $ 2.70774 $ & $ 2.70774 $ & $ 0.007 \pm 0.003 $ \\ \hline
+ML5 & 0.0125 & 0.8 & $ 69 \pm 5 $ & $ 55 \pm 4 $ & $ 2.29112 $ & $ 2.70851 $ & $ 0.008 \pm 0.004 $ \\ \hline
+ML6 & 0.0125 & 0.6 & $ 90 \pm 6 $ & $ 54 \pm 4 $ & $ 1.84338 $ & $ 2.70399 $ & $ 0.001 \pm 0.001 $ \\ \hline
+ML7 & 0.015 & 1.2 & $ 39 \pm 3 $ & $ 47 \pm 4 $ & $ 1.73471 $ & $ 1.51301 $ & $ 0.001 \pm 0.000 $ \\ \hline
+ML8 & 0.015 & 1 & $ 46 \pm 4 $ & $ 46 \pm 4 $ & $ 1.52046 $ & $ 1.52046 $ & $ 0.000 \pm 0.000 $ \\ \hline
+ML9 & 0.015 & 0.8 & $ 56 \pm 4 $ & $ 45 \pm 3 $ & $ 1.2787 $ & $ 1.51165 $ & $ 0.000 \pm 0.000 $ \\ \hline
+\end{tabular}
+\end{center}
+\caption{Long runs for the onset of dynamo action in the $\nu=0.0125\text{ and }0.015$ cases. These runs are (at least) from code time 0 to 300.}
+\label{tableB3}
+\end{table}
+
+
+
+
 
 
 \bibliography{MSc-dissertation}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.13)  16 AUG 2017 19:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.13)  17 AUG 2017 03:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -193,6 +193,24 @@ Package caption3 Info: TeX engine: e-TeX on input line 67.
 \c@ContinuedFloat=\count109
 Package caption Info: listings package is loaded.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip47
+\LTright=\skip48
+\LTpre=\skip49
+\LTpost=\skip50
+\LTchunksize=\count110
+\LTcapwidth=\dimen133
+\LT@head=\box30
+\LT@firsthead=\box31
+\LT@foot=\box32
+\LT@lastfoot=\box33
+\LT@cols=\count111
+\LT@rows=\count112
+\c@LT@tables=\count113
+\c@LT@chunks=\count114
+\LT@p@ftn=\toks21
+)
 (./MSc-dissertation.aux)
 \openout1 = `MSc-dissertation.aux'.
 
@@ -211,17 +229,17 @@ LaTeX Font Info:    ... okay on input line 17.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count110
-\scratchdimen=\dimen133
-\scratchbox=\box30
-\nofMPsegments=\count111
-\nofMParguments=\count112
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count113
-\MPscratchDim=\dimen134
-\MPnumerator=\count114
-\makeMPintoPDFobject=\count115
-\everyMPtoPDFconversion=\toks22
+\scratchcounter=\count115
+\scratchdimen=\dimen134
+\scratchbox=\box34
+\nofMPsegments=\count116
+\nofMParguments=\count117
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count118
+\MPscratchDim=\dimen135
+\MPnumerator=\count119
+\makeMPintoPDFobject=\count120
+\everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -270,8 +288,13 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count116
+\c@lstlisting=\count121
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: longtable package is loaded.
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
+)
 Package caption Info: End \AtBeginDocument code.
 
 <crest.pdf, id=1, 93.60963pt x 92.1871pt>
@@ -316,6 +339,19 @@ la-tions with $[]$ [[]]. []
 Overfull \hbox (14.0921pt too wide) in paragraph at lines 22--22
  [][] []\OT1/cmr/m/n/12 Temporal evo-lu-tion of the to-tal mag-netic en-ergy fo
 r sim-u-la-tions with $[]$ 
+ []
+
+
+Overfull \hbox (14.0921pt too wide) in paragraph at lines 23--23
+ [][] []\OT1/cmr/m/n/12 Temporal evo-lu-tion of the to-tal mag-netic en-ergy fo
+r sim-u-la-tions with $[]$ 
+ []
+
+
+Overfull \hbox (13.55734pt too wide) in paragraph at lines 28--28
+ [][] []\OT1/cmr/m/n/12 Time evo-lu-tion of the to-tal mag-netic en-ergy for $\
+OML/cmm/m/it/12 ^^Q \OT1/cmr/m/n/12 = 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0125$ 
+and $[]$ 
  []
 
 )
@@ -481,25 +517,75 @@ or sim-u-la-tions with
  []
 
 [33 <./img/scaling/kazantsev_0.01_close.png> <./img/scaling/k3halfs.png>]
-[34] <img/prm1/ss_prm_1_short.png, id=199, 1003.75pt x 702.625pt>
+[34]
+Overfull \hbox (2.9376pt too wide) in paragraph at lines 798--799
+[]\OT1/cmr/m/n/12 The re-la-tion be-tween the max-i-mum wave num-ber and the Ko
+l-mogorov mi-croscales $\OML/cmm/m/it/12 k[]=k[]$
+ []
+
+<img/prm1/ss_prm_1_short.png, id=199, 1003.75pt x 702.625pt>
 File: img/prm1/ss_prm_1_short.png Graphic file (type png)
 
 <use img/prm1/ss_prm_1_short.png>
-Package pdftex.def Info: img/prm1/ss_prm_1_short.png used on input line 799.
+Package pdftex.def Info: img/prm1/ss_prm_1_short.png used on input line 802.
 (pdftex.def)             Requested size: 317.07614pt x 221.94987pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 817--818
+<img/prm1/ss_prm_1_long.png, id=200, 1003.75pt x 702.625pt>
+File: img/prm1/ss_prm_1_long.png Graphic file (type png)
+
+<use img/prm1/ss_prm_1_long.png>
+Package pdftex.def Info: img/prm1/ss_prm_1_long.png used on input line 810.
+(pdftex.def)             Requested size: 317.07614pt x 221.94987pt.
+ [35 <./img/prm1/ss_prm_1_short.png> <./img/prm1/ss_prm_1_long.png>] <img/map/3
+d_ss.png, id=206, 1003.75pt x 702.625pt>
+File: img/map/3d_ss.png Graphic file (type png)
+
+<use img/map/3d_ss.png>
+Package pdftex.def Info: img/map/3d_ss.png used on input line 823.
+(pdftex.def)             Requested size: 407.66833pt x 285.36565pt.
+ [36 <./img/map/3d_ss.png>]
+<img/map/3d_ss_Rm.png, id=211, 1003.75pt x 702.625pt>
+File: img/map/3d_ss_Rm.png Graphic file (type png)
+
+<use img/map/3d_ss_Rm.png>
+Package pdftex.def Info: img/map/3d_ss_Rm.png used on input line 832.
+(pdftex.def)             Requested size: 407.66833pt x 285.36565pt.
+ [37 <./img/map/3d_ss_Rm.png>]
+<img/map/long/ss_eta_0.0125.png, id=216, 1003.75pt x 702.625pt>
+File: img/map/long/ss_eta_0.0125.png Graphic file (type png)
+
+<use img/map/long/ss_eta_0.0125.png>
+Package pdftex.def Info: img/map/long/ss_eta_0.0125.png used on input line 848.
+
+(pdftex.def)             Requested size: 215.15906pt x 150.61113pt.
+
+<img/map/long/ss_eta_0.015.png, id=217, 1003.75pt x 702.625pt>
+File: img/map/long/ss_eta_0.015.png Graphic file (type png)
+
+<use img/map/long/ss_eta_0.015.png>
+Package pdftex.def Info: img/map/long/ss_eta_0.015.png used on input line 855.
+(pdftex.def)             Requested size: 215.15906pt x 150.61113pt.
+ [38 <./img/map/long/ss_eta_0.0125.png> <./img/map/long/ss_eta_0.015.png>]
+<img/map/long/ss_eta_0.0125_4-6-8.png, id=224, 1003.75pt x 702.625pt>
+File: img/map/long/ss_eta_0.0125_4-6-8.png Graphic file (type png)
+
+<use img/map/long/ss_eta_0.0125_4-6-8.png>
+Package pdftex.def Info: img/map/long/ss_eta_0.0125_4-6-8.png used on input lin
+e 878.
+(pdftex.def)             Requested size: 317.07614pt x 221.94987pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 888--889
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 819--820
+Underfull \hbox (badness 10000) in paragraph at lines 890--891
 
  []
 
-[35 <./img/prm1/ss_prm_1_short.png>] [36]
+[39 <./img/map/long/ss_eta_0.0125_4-6-8.png>] [40]
 Chapter 6.
-[37
+[41
 
 ]
 Appendix A.
@@ -516,59 +602,63 @@ File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/it' in size <12> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 3.
- [38
+ [42
 
-] [39]) [40]
+] [43]) [44]
 Appendix B.
-(./MSc-dissertation.bbl [41
 
-]
+Underfull \vbox (badness 10000) detected at line 975
+ []
+
+[45
+
+] [46] [47] (./MSc-dissertation.bbl [48]
 Underfull \hbox (badness 6658) in paragraph at lines 10--13
 []\OT1/cmr/m/n/12 Moritz Fred-erik Leon Linkmann.  Self-organisation pro-cesses
  in (mag-
  []
 
-[42
+[49
 
-]) [43] (./MSc-dissertation.aux) ) 
+] [50]) [51] (./MSc-dissertation.aux) ) 
 Here is how much of TeX's memory you used:
- 5298 strings out of 494953
- 78111 string characters out of 6180976
- 257695 words of memory out of 5000000
- 8460 multiletter control sequences out of 15000+600000
+ 5467 strings out of 494953
+ 80780 string characters out of 6180976
+ 260198 words of memory out of 5000000
+ 8615 multiletter control sequences out of 15000+600000
  21909 words of font info for 81 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  38i,14n,52p,2134b,1548s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cmextra/cmmib6.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msbm10.pfb>
-Output written on MSc-dissertation.pdf (52 pages, 1929326 bytes).
+</usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cmextra/cmmib6.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/symbols/msbm10.pfb>
+Output written on MSc-dissertation.pdf (60 pages, 2242400 bytes).
 PDF statistics:
- 318 PDF objects out of 1000 (max. 8388607)
- 206 compressed objects within 3 object streams
+ 355 PDF objects out of 1000 (max. 8388607)
+ 223 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 

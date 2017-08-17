@@ -6,45 +6,45 @@ Database file #1: MSc-dissertation.bib
 Warning--empty journal in glatzmaier1995three
 Warning--can't use both volume and number fields in batchelor1950spontaneous
 Warning--empty journal in chalupa2017comparison
-You've used 30 entries,
+You've used 31 entries,
             1791 wiz_defined-function locations,
-            634 strings with 8447 characters,
-and the built_in function-call counts, 6434 in all, are:
-= -- 581
-> -- 257
+            640 strings with 8682 characters,
+and the built_in function-call counts, 6686 in all, are:
+= -- 598
+> -- 277
 < -- 3
-+ -- 100
-- -- 70
-* -- 445
-:= -- 1040
-add.period$ -- 92
-call.type$ -- 30
-change.case$ -- 28
++ -- 107
+- -- 76
+* -- 469
+:= -- 1085
+add.period$ -- 95
+call.type$ -- 31
+change.case$ -- 29
 chr.to.int$ -- 0
-cite$ -- 33
-duplicate$ -- 286
-empty$ -- 646
-format.name$ -- 70
-if$ -- 1412
+cite$ -- 34
+duplicate$ -- 295
+empty$ -- 667
+format.name$ -- 76
+if$ -- 1464
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 31
-newline$ -- 152
-num.names$ -- 30
-pop$ -- 66
+int.to.str$ -- 31
+missing$ -- 32
+newline$ -- 157
+num.names$ -- 31
+pop$ -- 67
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 119
+skip$ -- 122
 stack$ -- 0
-substring$ -- 433
-swap$ -- 50
+substring$ -- 445
+swap$ -- 51
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 3
-while$ -- 67
-width$ -- 32
-write$ -- 324
+while$ -- 69
+width$ -- 33
+write$ -- 335
 (There were 3 warnings)
